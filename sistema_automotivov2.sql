@@ -55,6 +55,41 @@ LOCK TABLES `clientes` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `fornecedores`
+--
+
+DROP TABLE IF EXISTS `fornecedores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fornecedores` (
+  `id_fornecedor` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(30) NOT NULL,
+  `email` varchar(40) DEFAULT NULL,
+  `cnpj` varchar(18) DEFAULT NULL,
+  `telefone` varchar(15) NOT NULL,
+  `endereco` varchar(50) NOT NULL,
+  `numero` smallint(5) unsigned NOT NULL,
+  `cep` varchar(9) NOT NULL,
+  `complemento` varchar(25) DEFAULT NULL,
+  `bairro` varchar(20) NOT NULL,
+  `cidade` varchar(25) NOT NULL,
+  `estado` varchar(19) NOT NULL,
+  PRIMARY KEY (`id_fornecedor`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `cnpj` (`cnpj`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fornecedores`
+--
+
+LOCK TABLES `fornecedores` WRITE;
+/*!40000 ALTER TABLE `fornecedores` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fornecedores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `funcionarios`
 --
 
@@ -103,4 +138,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-16 19:04:21
+-- Dump completed on 2025-02-16 19:08:43
