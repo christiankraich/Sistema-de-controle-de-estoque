@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `clientes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `clientes` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL,
   `sobrenome` varchar(30) NOT NULL,
   `data_nascimento` date DEFAULT NULL,
@@ -91,7 +91,7 @@ DROP TABLE IF EXISTS `fornecedores`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fornecedores` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL,
   `email` varchar(40) NOT NULL,
   `cnpj` varchar(18) NOT NULL,
@@ -126,7 +126,7 @@ DROP TABLE IF EXISTS `funcionarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `funcionarios` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL,
   `sobrenome` varchar(30) NOT NULL,
   `data_nascimento` date DEFAULT NULL,
@@ -176,8 +176,8 @@ CREATE TABLE `ordem_de_servico` (
   PRIMARY KEY (`id`),
   KEY `id_cliente` (`id_cliente`),
   KEY `id_funcionario` (`id_funcionario`),
-  CONSTRAINT `id_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id`),
-  CONSTRAINT `id_funcionario` FOREIGN KEY (`id_funcionario`) REFERENCES `funcionarios` (`id`)
+  CONSTRAINT `ordem_de_servico_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id`),
+  CONSTRAINT `ordem_de_servico_ibfk_2` FOREIGN KEY (`id_funcionario`) REFERENCES `funcionarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -198,7 +198,7 @@ DROP TABLE IF EXISTS `pecas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pecas` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_fornecedor` int(10) unsigned NOT NULL,
   `nome` varchar(30) NOT NULL,
   `descricao` text DEFAULT NULL,
@@ -207,7 +207,7 @@ CREATE TABLE `pecas` (
   `valor_unidade_cliente` decimal(8,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_fornecedor` (`id_fornecedor`),
-  CONSTRAINT `id_fornecedor` FOREIGN KEY (`id_fornecedor`) REFERENCES `fornecedores` (`id`)
+  CONSTRAINT `pecas_ibfk_1` FOREIGN KEY (`id_fornecedor`) REFERENCES `fornecedores` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -233,10 +233,10 @@ CREATE TABLE `pecas_os` (
   `id_os` int(10) unsigned NOT NULL,
   `quantidade` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_peca` (`id_peca`),
   KEY `id_os` (`id_os`),
-  CONSTRAINT `pecas_os_ibfk_1` FOREIGN KEY (`id_peca`) REFERENCES `pecas` (`id`),
-  CONSTRAINT `pecas_os_ibfk_2` FOREIGN KEY (`id_os`) REFERENCES `ordem_de_servico` (`id`)
+  KEY `id_peca` (`id_peca`),
+  CONSTRAINT `pecas_os_ibfk_2` FOREIGN KEY (`id_os`) REFERENCES `ordem_de_servico` (`id`),
+  CONSTRAINT `pecas_os_ibfk_3` FOREIGN KEY (`id_peca`) REFERENCES `pecas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -262,10 +262,10 @@ CREATE TABLE `pecas_pedidos` (
   `id_pedido` int(10) unsigned NOT NULL,
   `quantidade` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_peca` (`id_peca`),
   KEY `id_pedido` (`id_pedido`),
-  CONSTRAINT `pecas_pedidos_ibfk_1` FOREIGN KEY (`id_peca`) REFERENCES `pecas` (`id`),
-  CONSTRAINT `pecas_pedidos_ibfk_2` FOREIGN KEY (`id_pedido`) REFERENCES `pedidos` (`id`)
+  KEY `id_peca` (`id_peca`),
+  CONSTRAINT `pecas_pedidos_ibfk_2` FOREIGN KEY (`id_pedido`) REFERENCES `pedidos` (`id`),
+  CONSTRAINT `pecas_pedidos_ibfk_3` FOREIGN KEY (`id_peca`) REFERENCES `pecas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -315,4 +315,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-20 19:27:56
+-- Dump completed on 2025-02-20 20:00:44
