@@ -248,6 +248,63 @@ LOCK TABLES `pecas_os` WRITE;
 /*!40000 ALTER TABLE `pecas_os` DISABLE KEYS */;
 /*!40000 ALTER TABLE `pecas_os` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `pecas_pedidos`
+--
+
+DROP TABLE IF EXISTS `pecas_pedidos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pecas_pedidos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_peca` int(10) unsigned NOT NULL,
+  `id_pedido` int(10) unsigned NOT NULL,
+  `quantidade` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_peca` (`id_peca`),
+  KEY `id_pedido` (`id_pedido`),
+  CONSTRAINT `pecas_pedidos_ibfk_1` FOREIGN KEY (`id_peca`) REFERENCES `pecas` (`id`),
+  CONSTRAINT `pecas_pedidos_ibfk_2` FOREIGN KEY (`id_pedido`) REFERENCES `pedidos` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pecas_pedidos`
+--
+
+LOCK TABLES `pecas_pedidos` WRITE;
+/*!40000 ALTER TABLE `pecas_pedidos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pecas_pedidos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pedidos`
+--
+
+DROP TABLE IF EXISTS `pedidos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pedidos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_fornecedor` int(10) unsigned NOT NULL,
+  `data` date DEFAULT NULL,
+  `valor_total` decimal(9,2) DEFAULT NULL,
+  `status` enum('Concluído','Pendente') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_fornecedor` (`id_fornecedor`),
+  CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`id_fornecedor`) REFERENCES `fornecedores` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pedidos`
+--
+
+LOCK TABLES `pedidos` WRITE;
+/*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -258,4 +315,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-19 22:43:15
+-- Dump completed on 2025-02-20 19:27:56
