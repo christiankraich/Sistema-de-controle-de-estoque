@@ -52,6 +52,7 @@ Após a leitura da proposta optei por criar uma tabela resumindo os **Requisitos
 ---
 
 ### Segundo passo
+
 Também formulei algumas perguntas pra tentar entender como funcionaria o fluxo de trabalho do sistema.
 
 * Quem irá utilizar o sistema?  - O sistema deve ser utilizado por todos os funcionários cadastrados. Deverá ter níveis de acesso para as funcionalidades do sistema, dependendo do cargo do funcionário. Os 2 níveis definidos são ***Administrativo*** e ***Comum***.
@@ -62,18 +63,18 @@ Também formulei algumas perguntas pra tentar entender como funcionaria o fluxo 
 * Quem fará o controle de faturamento? Usuários ***Administrativos***.
 
 ### Terceiro passo
-Definindo as ferramentas que serão utilizadas.
+
+Definindo as Stacks que serão utilizadas.
 1. O diagrama ER será feito no site da LucidChart.
 2. As interfaces gráficas serão criadas no NetBeans utilizando JavaSwing.
 3. A conexão com o MySQL será feito através da API JDBC(Java DataBase Connection).
 
 ### Quarto passo
-Criar o diagrama Entidade-Relacionamento para entender como o DataBase será estruturado.
+
+Criei um diagrama Entidade-Relacionamento a partir dos requisitos funcionais para entender como o DataBase será estruturado.
 
 ### Quinto passo
-Criar o DataBase e as Tables, no **MySQL**, usando o diagrama do **quarto passo** como base.
 
-### Sexto passo
-Criar o projeto em **Java** com conexão ao **MySQL**.
+Criei uma DataBase e as Tables, no **MySQL**, usando o diagrama do **quarto passo** como base.
 
 --README ainda sendo atualizado
