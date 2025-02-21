@@ -63,8 +63,17 @@ Também formulei algumas perguntas pra tentar entender como funcionaria o fluxo 
 
 ### Terceiro passo
 Definindo as ferramentas que serão utilizadas.
-1. O diagrama ER será feito no site da Miro.
+1. O diagrama ER será feito no site da LucidChart.
 2. As interfaces gráficas serão criadas no NetBeans utilizando JavaSwing.
 3. A conexão com o MySQL será feito através da API JDBC(Java DataBase Connection).
+
+### Quarto passo
+Criar o diagrama Entidade-Relacionamento para entender como o DataBase será estruturado.
+
+### Quinto passo
+Criar o DataBase e as Tables, no **MySQL**, usando o diagrama do **quarto passo** como base.
+
+### Sexto passo
+Criar o projeto em **Java** com conexão ao **MySQL**.
 
 --README ainda sendo atualizado
