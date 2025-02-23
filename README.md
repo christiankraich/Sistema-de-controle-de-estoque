@@ -9,21 +9,21 @@
 ---
 
 ## Proposta
-Problema: Sistema Integrado de Controle de Estoque e Ordem de Serviço AutomotivaVocê é responsável por desenvolver um sistema integrado de controle de estoque de peçasautomotivas e ordens de serviço para uma oficina mecânica. O sistema deve permitir ocadastro de peças, consulta de estoque, solicitação de baixa de estoque, criação de pedidosde compras, cadastro de clientes, abertura de ordens de serviço e controle do faturamento.
+Problema: Sistema Integrado de Controle de Estoque e Ordem de Serviço Automotiva. Você é responsável por desenvolver um sistema integrado de controle de estoque de peças automotivas e ordens de serviço para uma oficina mecânica. O sistema deve permitir o cadastro de peças, consulta de estoque, solicitação de baixa de estoque, criação de pedidos de compras, cadastro de clientes, abertura de ordens de serviço e controle do faturamento.
 
 # Requisitos Funcionais:
-* Cadastro de peças no estoque: O sistema deve permitir o cadastro de novas peças, incluindo as informações de código dapeça, nome da peça, descrição, etc.
-* Consulta de Estoque: Deve ser possível visualizar o estoque atual de todas as peças cadastradas, incluindo aquantidade disponível de cada uma.
-* Solicitação de Baixa de Estoque: Os usuários devem poder solicitar a baixa de estoque de uma determinada peça, informandoa quantidade a ser removida do estoque (isto não caracteriza que a peça foi vendida, porexemplo: peças com defeito).
-* Criação de Pedido de Compras:Deve ser possível criar um pedido de compras para nosso estoque, selecionando as peçasdesejadas e suas respectivas quantidades. Ao efetuar um pedido de compras, o sistema deveatualizar o estoque SOMENTE quando o pedido de compra for setado para CONCLUÍDO, aumentando assim a quantidade das peças incluídas no pedido. Logo, você precisará teruma opção para listar todos os pedidos de compras que foram concluídos e os que não foramconcluídos ainda.
-* Cadastro de Clientes: Deve ser possível cadastrar novos clientes da oficina, incluindo informações como nome,endereço, telefone, etc.
-* Abertura de Ordem de Serviço (OS): Os usuários devem poder abrir uma OS, associando-a a um cliente e incluindo uma descriçãodo serviço a ser realizado.
-* Controle do Faturamento: O sistema deve permitir o registro do faturamento de cada ordem de serviço que for CONCLUÍDA, incluindo o valor do serviço realizado e o valor das peças utilizadas. Após oregistro do faturamento, o sistema deve atualizar o estoque das peças utilizadas na ordem deserviço (somente se a OS for concluída).
+* Cadastro de peças no estoque: O sistema deve permitir o cadastro de novas peças, incluindo as informações de código da peça, nome da peça, descrição, etc.
+* Consulta de Estoque: Deve ser possível visualizar o estoque atual de todas as peças cadastradas, incluindo a quantidade disponível de cada uma.
+* Solicitação de Baixa de Estoque: Os usuários devem poder solicitar a baixa de estoque de uma determinada peça, informando a quantidade a ser removida do estoque (isto não caracteriza que a peça foi vendida, por exemplo: peças com defeito).
+* Criação de Pedido de Compras: Deve ser possível criar um pedido de compras para nosso estoque, selecionando as peças desejadas e suas respectivas quantidades. Ao efetuar um pedido de compras, o sistema deve atualizar o estoque SOMENTE quando o pedido de compra for setado para CONCLUÍDO, aumentando assim a quantidade das peças incluídas no pedido. Logo, você precisará ter uma opção para listar todos os pedidos de compras que foram concluídos e os que não foram concluídos ainda.
+* Cadastro de Clientes: Deve ser possível cadastrar novos clientes da oficina, incluindo informações como nome, endereço, telefone, etc.
+* Abertura de Ordem de Serviço (OS): Os usuários devem poder abrir uma OS, associando-a a um cliente e incluindo uma descrição do serviço a ser realizado.
+* Controle do Faturamento: O sistema deve permitir o registro do faturamento de cada ordem de serviço que for CONCLUÍDA, incluindo o valor do serviço realizado e o valor das peças utilizadas. Após o registro do faturamento, o sistema deve atualizar o estoque das peças utilizadas na ordem de serviço (somente se a OS for concluída).
 
 # Requisitos Não Funcionais:
-* O sistema deve ser desenvolvido em Java, utilizando o banco de dados MySQL paraarmazenamento dos dados.
-* Deve ser implementada uma interface gráfica intuitiva para facilitar a interação dos usuárioscom o sistema.
-* Todas as operações de CRUD (Create, Read, Update, Delete) devem ser implementadas deforma segura e eficiente.
+* O sistema deve ser desenvolvido em Java, utilizando o banco de dados MySQL para armazenamento dos dados.
+* Deve ser implementada uma interface gráfica intuitiva para facilitar a interação dos usuários com o sistema.
+* Todas as operações de CRUD (Create, Read, Update, Delete) devem ser implementadas de forma segura e eficiente.
 ---
 
 ## Passos criados para ajudar na organização do projeto.
@@ -79,6 +79,17 @@ Criei uma DataBase e as Tables, no **MySQL**, usando o diagrama do **quarto pass
 
 ### Sexto passo
 
-Conectar o **NetBeans** com o Banco de Dados.
+Conectar o **NetBeans** com o Banco de Dados através da API JDBC.
 
---README ainda sendo atualizado
+### Sétimo passo
+
+Criei as respectivas *classes modelos* para cada entidade criada no Banco de Dados, onde os atributos das classes representam os campos das tabelas.
+
+# O que falta?
+
+- Criar as *classes DAO(Data Access Object)* que terão os métodos de consulta SQL, *CRUD(CREATE, READ, UPDATE and DELETE)*, que quando executadas, irão enviar e salvar os dados no Banco de Dados.
+- Criar as interfaces gráficas necessárias.
+- Implementar as ações/funcionalidades para cada uma das interfaces.
+- Testar o sistema.
+
+--README ainda sendo atualizado.
