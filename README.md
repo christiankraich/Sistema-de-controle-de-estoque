@@ -67,7 +67,7 @@ Também formulei algumas perguntas pra tentar entender como funcionaria o fluxo 
 Definindo as Stacks que serão utilizadas.
 1. O diagrama ER será feito no site da **LucidChart**.
 2. As interfaces gráficas serão criadas no **NetBeans** utilizando **JavaSwing**.
-3. A conexão com o **MySQL** será feito através da API JDBC(Java DataBase Connection).
+3. A conexão com o **MySQL** será feito através da API JDBC(Java DataBase Connectivity).
 
 ### Quarto passo
 
