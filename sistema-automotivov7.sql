@@ -4,8 +4,7 @@ USE `sistema automotivo`;
 DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE `clientes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nome` varchar(30) NOT NULL,
-  `sobrenome` varchar(30) NOT NULL,
+  `nome` varchar(50) NOT NULL,
   `data_nascimento` date DEFAULT NULL,
   `email` varchar(40) DEFAULT NULL,
   `cpf` varchar(14) NOT NULL,
@@ -66,8 +65,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `funcionarios`;
 CREATE TABLE `funcionarios` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nome` varchar(30) NOT NULL,
-  `sobrenome` varchar(30) NOT NULL,
+  `nome` varchar(50) NOT NULL,
   `data_nascimento` date DEFAULT NULL,
   `email` varchar(40) DEFAULT NULL,
   `cpf` varchar(14) NOT NULL,
