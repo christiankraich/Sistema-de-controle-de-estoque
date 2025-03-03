@@ -1,12 +1,13 @@
 package model;
 
+import java.util.Date;
+
 public class Funcionarios {
     
     //atributos
     private int id;
     private String nome;
-    private String sobrenome;
-    private String dataNascimento;
+    private Date dataNascimento;
     private String email;
     private String cpf;
     private String telefone;
@@ -38,19 +39,11 @@ public class Funcionarios {
         this.nome = nome;
     }
 
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
-    }
-
-    public String getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
