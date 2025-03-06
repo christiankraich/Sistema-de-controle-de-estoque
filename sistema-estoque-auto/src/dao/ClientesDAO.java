@@ -43,7 +43,7 @@ public class ClientesDAO {
                 JOptionPane.showMessageDialog(null, "Cliente salvo com sucesso!");
             }
         } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar o cliente!" + erro);
+            JOptionPane.showMessageDialog(null, "Erro ao salvar o cliente!");
         }
     }
     
@@ -53,27 +53,27 @@ public class ClientesDAO {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, cpf);
             ResultSet rs = stmt.executeQuery();
-            Clientes obj = new Clientes();
+            Clientes cliente = new Clientes();
             if (rs.next()) {
-                obj.setId(rs.getInt("id"));
-                obj.setNome(rs.getString("nome"));
-                obj.setDataNascimento(rs.getDate("data_nascimento"));
-                obj.setEmail(rs.getString("email"));
-                obj.setTelefone(rs.getString("telefone"));
-                obj.setCpf(rs.getString("cpf"));
-                obj.setBairro(rs.getString("telefone"));
-                obj.setCep(rs.getString("cep"));
-                obj.setEndereco(rs.getString("endereco"));
-                obj.setNumero(rs.getShort("numero"));
-                obj.setComplemento(rs.getString("complemento"));
-                obj.setBairro(rs.getString("bairro"));
-                obj.setCidade(rs.getString("cidade"));
-                obj.setEstado(rs.getString("estado"));
+                cliente.setId(rs.getInt("id"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setDataNascimento(rs.getDate("data_nascimento"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setTelefone(rs.getString("telefone"));
+                cliente.setCpf(rs.getString("cpf"));
+                cliente.setBairro(rs.getString("telefone"));
+                cliente.setCep(rs.getString("cep"));
+                cliente.setEndereco(rs.getString("endereco"));
+                cliente.setNumero(rs.getShort("numero"));
+                cliente.setComplemento(rs.getString("complemento"));
+                cliente.setBairro(rs.getString("bairro"));
+                cliente.setCidade(rs.getString("cidade"));
+                cliente.setEstado(rs.getString("estado"));
             }
-            return obj;
+            return cliente;
             
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao buscar o cliente.");            
+            JOptionPane.showMessageDialog(null, "Cliente não cadastrado.", "Aviso", JOptionPane.WARNING_MESSAGE);            
         }
         return null;        
     }

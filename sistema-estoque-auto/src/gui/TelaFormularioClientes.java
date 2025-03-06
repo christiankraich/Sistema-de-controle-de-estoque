@@ -3,15 +3,15 @@ package gui;
 import dao.ClientesDAO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import model.Clientes;
+import utilidades.Utilidades;
 
 public class TelaFormularioClientes extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaCadastroCliente
-     */
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private final Utilidades util = new Utilidades();
+
     public TelaFormularioClientes() {
         initComponents();
     }
@@ -134,7 +134,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
 
         jLabel15.setText("UF:");
 
-        cbUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        cbUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         btnPesquisarCPF.setText("Pesquisar");
         btnPesquisarCPF.addActionListener(new java.awt.event.ActionListener() {
@@ -331,6 +331,11 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         btnExcluir.setText("Excluir");
 
         btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
 
@@ -377,57 +382,58 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        Clientes obj = new Clientes();
-        obj.setNome(txtNome.getText());
-        obj.setCpf(txtCPF.getText());
+        Clientes cliente = new Clientes();
+        cliente.setNome(txtNome.getText());
+        cliente.setCpf(txtCPF.getText());
         try {
-            String data = txtDataNasc.getText();
-            SimpleDateFormat formatoEntrada = new SimpleDateFormat("dd/MM/yyyy");
-            Date dataNascimento = formatoEntrada.parse(data);
-            obj.setDataNascimento(dataNascimento);            
+            sdf.setLenient(false);
+            cliente.setDataNascimento(sdf.parse(txtDataNasc.getText()));
         } catch (ParseException erro) {
-            JOptionPane.showMessageDialog(null, "Data inválida! Use o formato dd/MM/yyyy.");
+            JOptionPane.showMessageDialog(null, "Data inválida!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        obj.setEmail(txtEmail.getText());
-        obj.setTelefone(txtTelefone.getText());
-        obj.setCep(txtCEP.getText());
-        obj.setEndereco(txtEndereco.getText());
-        obj.setNumero(Short.parseShort(txtNumero.getText()));
-        obj.setComplemento(txtComplemento.getText());
-        obj.setBairro(txtBairro.getText());
-        obj.setCidade(txtCidade.getText());
-        obj.setEstado(cbUF.getSelectedItem().toString());
-        
+        cliente.setEmail(txtEmail.getText());
+        cliente.setTelefone(txtTelefone.getText());
+        cliente.setCep(txtCEP.getText());
+        cliente.setEndereco(txtEndereco.getText());
+        cliente.setNumero(Short.parseShort(txtNumero.getText()));
+        cliente.setComplemento(txtComplemento.getText());
+        cliente.setBairro(txtBairro.getText());
+        cliente.setCidade(txtCidade.getText());
+        cliente.setEstado(cbUF.getSelectedItem().toString());
+
         ClientesDAO dao = new ClientesDAO();
-        dao.Salvar(obj);
+        dao.Salvar(cliente);
+        util.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCPFActionPerformed
         String cpf = txtCPF.getText();
-        Clientes obj = new Clientes();
-        ClientesDAO dao = new ClientesDAO();
-        
-        obj = dao.buscarCliente(cpf);
-        if (obj.getCpf() != null) {
-            txtId.setText(String.valueOf(obj.getId()));
-            txtNome.setText(obj.getNome());
-            txtCPF.setText(obj.getCpf());
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            txtDataNasc.setText(sdf.format(obj.getDataNascimento()));
-            txtEmail.setText(obj.getEmail());
-            txtTelefone.setText(obj.getTelefone());
-            txtCEP.setText(obj.getCep());
-            txtEndereco.setText(obj.getEndereco());
-            txtNumero.setText(String.valueOf(obj.getNumero()));
-            txtComplemento.setText(obj.getComplemento());
-            txtBairro.setText(obj.getBairro());
-            txtCidade.setText(obj.getCidade());
-            cbUF.setSelectedItem(obj.getEstado());
+        ClientesDAO clienteDao = new ClientesDAO();
+        Clientes cliente = clienteDao.buscarCliente(cpf);
+
+        if (cliente.getCpf() != null) {
+            txtId.setText(String.valueOf(cliente.getId()));
+            txtNome.setText(cliente.getNome());
+            txtCPF.setText(cliente.getCpf());
+            txtDataNasc.setText(sdf.format(cliente.getDataNascimento()));
+            txtEmail.setText(cliente.getEmail());
+            txtTelefone.setText(cliente.getTelefone());
+            txtCEP.setText(cliente.getCep());
+            txtEndereco.setText(cliente.getEndereco());
+            txtNumero.setText(String.valueOf(cliente.getNumero()));
+            txtComplemento.setText(cliente.getComplemento());
+            txtBairro.setText(cliente.getBairro());
+            txtCidade.setText(cliente.getCidade());
+            cbUF.setSelectedItem(cliente.getEstado());
         } else {
-            JOptionPane.showMessageDialog(null, "Cliente não encontrado.");
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnPesquisarCPFActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        util.limparCampos(pnlDadosPessoais);
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
      * @param args the command line arguments
