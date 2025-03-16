@@ -91,7 +91,6 @@ CREATE TABLE `funcionarios` (
   `cidade` varchar(25) DEFAULT NULL,
   `estado` varchar(19) DEFAULT NULL,
   `senha` varchar(20) DEFAULT NULL,
-  `cargo` varchar(20) DEFAULT NULL,
   `nivel_acesso` enum('Administrador','Comum') DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cpf` (`cpf`),
