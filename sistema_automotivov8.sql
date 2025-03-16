@@ -1,6 +1,17 @@
 CREATE DATABASE  IF NOT EXISTS `sistema automotivo`;
 USE `sistema automotivo`;
 
+DROP TABLE IF EXISTS `cargos`;
+CREATE TABLE `cargos` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(30) NOT NULL,
+  `salario` decimal(5,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+LOCK TABLES `cargos` WRITE;
+UNLOCK TABLES;
+
 DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE `clientes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -15,13 +26,14 @@ CREATE TABLE `clientes` (
   `complemento` varchar(17) DEFAULT NULL,
   `bairro` varchar(20) DEFAULT NULL,
   `cidade` varchar(25) DEFAULT NULL,
-  `estado` varchar(19) DEFAULT NULL,
+  `estado` varchar(2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cpf` (`cpf`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 LOCK TABLES `clientes` WRITE;
+INSERT INTO `clientes` VALUES (1,'alles gut','1990-12-12','allesgut@yahoo.com.br','654.646.654-65','(47) 9 9558-1447','69852-211','rua dos alfinetes',3000,'casa 04','crimlho','sabatina','ES'),(4,'Jão Lima','2005-05-05','jaolima@hotmail.com','696.014.725-66','(47) 9 8896-5566','85274-247','Rua getulio vargas',111,'casa','guanabara','florianopolis','SC'),(5,'Arthur Zannetti','2001-11-11','arthurzan@gmail.com','124.555.555-55','(12) 9 6744-7744','12885-588','Rua dos imigrantes',122,'casa','Boemia','Recife','PE'),(6,'Mateus Boas Dores','1985-06-30','mboasdores@hotmail.com','222.222.222-22','(99) 9 6588-5690','69885-101','Rua dos colonos',2,'casa','boqueirao','Curitiba','PR'),(9,'jonata gamoes rodrigues','2002-12-22','jonatagr@','232.323.232-32','(22) 2 2222-2333','22222-233','rua da vitoria',2,'casa','Madureira','Rio de Janeiro','RJ'),(10,'Felipe Farias','2000-10-10','fefa@yahoo.com.br','352.114.205-55','(59) 9 9585-2112','80555-154','rua padre kolb',209,'apartamento 101','cubatao','sao paulo','SP');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `faturamento`;
@@ -65,6 +77,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `funcionarios`;
 CREATE TABLE `funcionarios` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_cargo` int(11) unsigned NOT NULL,
   `nome` varchar(50) NOT NULL,
   `data_nascimento` date DEFAULT NULL,
   `email` varchar(40) DEFAULT NULL,
@@ -82,7 +95,9 @@ CREATE TABLE `funcionarios` (
   `nivel_acesso` enum('Administrador','Comum') DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cpf` (`cpf`),
-  UNIQUE KEY `email` (`email`)
+  UNIQUE KEY `email` (`email`),
+  KEY `funcionarios_ibfk_1` (`id_cargo`),
+  CONSTRAINT `funcionarios_ibfk_1` FOREIGN KEY (`id_cargo`) REFERENCES `cargos` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 LOCK TABLES `funcionarios` WRITE;
