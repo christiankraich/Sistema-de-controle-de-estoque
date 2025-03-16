@@ -3,14 +3,42 @@ package gui;
 import dao.ClientesDAO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.Clientes;
 import utilidades.Utilidades;
 
 public class TelaFormularioClientes extends javax.swing.JFrame {
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
     private final Utilidades util = new Utilidades();
+
+    public void listar() {
+        ClientesDAO clientesDao = new ClientesDAO();
+        List<Clientes> lista = clientesDao.listar();
+        DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
+        dados.setNumRows(0);
+        for (Clientes c : lista) {
+            dados.addRow(new Object[]{
+                c.getId(),
+                c.getNome(),
+                c.getDataNascimento(),
+                c.getEmail(),
+                c.getCpf(),
+                c.getTelefone(),
+                c.getCep(),
+                c.getEndereco(),
+                c.getNumero(),
+                c.getComplemento(),
+                c.getBairro(),
+                c.getCidade(),
+                c.getEstado()
+            });
+        }
+    }
 
     public TelaFormularioClientes() {
         initComponents();
@@ -61,7 +89,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnPesquisaNome = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaClientes = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
         btnAdicionar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -70,6 +98,11 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(854, 75));
@@ -103,6 +136,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtDataNasc.setText("");
 
         jLabel6.setText("E-mail:");
 
@@ -268,8 +302,13 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         jLabel4.setText("Nome:");
 
         btnPesquisaNome.setText("Pesquisar");
+        btnPesquisaNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisaNomeActionPerformed(evt);
+            }
+        });
 
-        tabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -285,7 +324,12 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tabelaClientes);
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabela);
 
         javax.swing.GroupLayout pnlConsultaLayout = new javax.swing.GroupLayout(pnlConsulta);
         pnlConsulta.setLayout(pnlConsultaLayout);
@@ -327,8 +371,18 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnLimpar.setText("Limpar");
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -387,7 +441,15 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         cliente.setCpf(txtCPF.getText());
         try {
             sdf.setLenient(false);
-            cliente.setDataNascimento(sdf.parse(txtDataNasc.getText()));
+            Date dataNasc = sdf.parse(txtDataNasc.getText());
+
+            if (dataNasc.after(new Date())) {
+                JOptionPane.showMessageDialog(null, "Data de nascimento fornecida está no futuro.\nForneça uma data válida.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            cliente.setDataNascimento(dataNasc);
+
         } catch (ParseException erro) {
             JOptionPane.showMessageDialog(null, "Data inválida!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
@@ -403,7 +465,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         cliente.setEstado(cbUF.getSelectedItem().toString());
 
         ClientesDAO dao = new ClientesDAO();
-        dao.Salvar(cliente);
+        dao.salvar(cliente);
         util.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
@@ -434,6 +496,103 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         util.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        listar();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void btnPesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaNomeActionPerformed
+        String nome = txtPesquisaNome.getText() + "%";
+        ClientesDAO clientesDao = new ClientesDAO();
+        List<Clientes> lista = clientesDao.filtrar(nome);
+        DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
+        dados.setNumRows(0);
+        for (Clientes c : lista) {
+            dados.addRow(new Object[]{
+                c.getId(),
+                c.getNome(),
+                c.getDataNascimento(),
+                c.getEmail(),
+                c.getCpf(),
+                c.getTelefone(),
+                c.getCep(),
+                c.getEndereco(),
+                c.getNumero(),
+                c.getComplemento(),
+                c.getBairro(),
+                c.getCidade(),
+                c.getEstado()
+            });
+        }
+    }//GEN-LAST:event_btnPesquisaNomeActionPerformed
+
+    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        painelGuias.setSelectedIndex(0);
+        txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
+        txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 1).toString());
+        String dataNasc = tabela.getValueAt(tabela.getSelectedRow(), 2).toString();
+        try {
+            Date data = sdf2.parse(dataNasc);
+            String dataNascFormatada = sdf.format(data);
+            txtDataNasc.setValue(dataNascFormatada);
+
+        } catch (ParseException e) {
+            System.out.println("Impossível formatar data" + e);
+        }
+        txtEmail.setText(tabela.getValueAt(tabela.getSelectedRow(), 3).toString());
+        txtCPF.setText(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
+        txtTelefone.setText(tabela.getValueAt(tabela.getSelectedRow(), 5).toString());
+        txtCEP.setText(tabela.getValueAt(tabela.getSelectedRow(), 6).toString());
+        txtEndereco.setText(tabela.getValueAt(tabela.getSelectedRow(), 7).toString());
+        txtNumero.setText(tabela.getValueAt(tabela.getSelectedRow(), 8).toString());
+        txtComplemento.setText(tabela.getValueAt(tabela.getSelectedRow(), 9).toString());
+        txtBairro.setText(tabela.getValueAt(tabela.getSelectedRow(), 10).toString());
+        txtCidade.setText(tabela.getValueAt(tabela.getSelectedRow(), 11).toString());
+        cbUF.setSelectedItem(tabela.getValueAt(tabela.getSelectedRow(), 12).toString());
+        txtNome.requestFocus();
+    }//GEN-LAST:event_tabelaMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        Clientes cliente = new Clientes();
+        cliente.setNome(txtNome.getText());
+        cliente.setCpf(txtCPF.getText());
+        try {
+            sdf.setLenient(false);
+            Date dataNasc = sdf.parse(txtDataNasc.getText());
+
+            if (dataNasc.after(new Date())) {
+                JOptionPane.showMessageDialog(null, "Data fornecida está no futuro.\nForneça uma data válida.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            cliente.setDataNascimento(sdf.parse(txtDataNasc.getText()));
+        } catch (ParseException erro) {
+            JOptionPane.showMessageDialog(null, "Data inválida!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        cliente.setEmail(txtEmail.getText());
+        cliente.setTelefone(txtTelefone.getText());
+        cliente.setCep(txtCEP.getText());
+        cliente.setEndereco(txtEndereco.getText());
+        cliente.setNumero(Short.parseShort(txtNumero.getText()));
+        cliente.setComplemento(txtComplemento.getText());
+        cliente.setBairro(txtBairro.getText());
+        cliente.setCidade(txtCidade.getText());
+        cliente.setEstado(cbUF.getSelectedItem().toString());
+        cliente.setId(Integer.parseInt(txtId.getText()));
+
+        ClientesDAO dao = new ClientesDAO();
+        dao.editar(cliente);
+        util.limparCampos(pnlDadosPessoais);
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        Clientes cliente = new Clientes();
+        cliente.setId(Integer.parseInt(txtId.getText()));
+        ClientesDAO dao = new ClientesDAO();
+        dao.excluir(cliente);
+        util.limparCampos(pnlDadosPessoais);
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -502,7 +661,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     private javax.swing.JTabbedPane painelGuias;
     private javax.swing.JPanel pnlConsulta;
     private javax.swing.JPanel pnlDadosPessoais;
-    private javax.swing.JTable tabelaClientes;
+    private javax.swing.JTable tabela;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtCEP;
     private javax.swing.JFormattedTextField txtCPF;
