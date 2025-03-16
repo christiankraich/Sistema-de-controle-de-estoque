@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS `cargos`;
 CREATE TABLE `cargos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL,
-  `salario` decimal(5,2) NOT NULL,
+  `salario` decimal(7,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
