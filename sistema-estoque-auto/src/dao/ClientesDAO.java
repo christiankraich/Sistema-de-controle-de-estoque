@@ -41,9 +41,9 @@ public class ClientesDAO {
             stmt.execute();
             //4º passo: fechar a conexão
             stmt.close();
-            JOptionPane.showMessageDialog(null, "Cliente salvo com sucesso!");
+            JOptionPane.showMessageDialog(null, "Cliente salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar o cliente!");
+            JOptionPane.showMessageDialog(null, "Erro ao salvar o cliente!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
