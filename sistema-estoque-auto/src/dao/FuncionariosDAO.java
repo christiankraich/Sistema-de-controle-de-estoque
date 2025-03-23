@@ -61,8 +61,13 @@ public class FuncionariosDAO {
 
             if (rs.next()) {
                 funcionario.setId(rs.getInt("id"));
-                funcionario.setCargos((Cargos) rs.getObject("id_cargo"));
-                funcionario.setNome(rs.getString(sql));
+                
+                int idCargo = rs.getInt("id_cargo");
+                CargosDAO cargosDao = new CargosDAO();
+                Cargos cargo = cargosDao.buscarCargo(idCargo);
+                funcionario.setCargos(cargo);
+                
+                funcionario.setNome(rs.getString("nome"));
                 funcionario.setDataNascimento(rs.getDate("data_nascimento"));
                 funcionario.setEmail(rs.getString("email"));
                 funcionario.setCpf(rs.getString("cpf"));
@@ -75,8 +80,8 @@ public class FuncionariosDAO {
                 funcionario.setCidade(rs.getString("cidade"));
                 funcionario.setEstado(rs.getString("estado"));
                 funcionario.setSenha(rs.getString("senha"));
-                String nivelAcesso = rs.getString("nivel_acesso");
 
+                String nivelAcesso = rs.getString("nivel_acesso");
                 try {
                     funcionario.setNivelAcesso(Funcionarios.nivelAcesso.valueOf(nivelAcesso));
                 } catch (IllegalArgumentException e) {
@@ -136,24 +141,29 @@ public class FuncionariosDAO {
         return null;
     }
     
-    public List<Funcionarios> filtrar() {
+    public List<Funcionarios> filtrar(String nome) {
         List<Funcionarios> lista = new ArrayList<>();
         String sql = "select * from funcionarios where nome like ?";
         
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, "nome");
+            stmt.setString(1, nome);
             ResultSet rs = stmt.executeQuery();
             
             while (rs.next()) {
                 Funcionarios funcionario = new Funcionarios();
                 funcionario.setId(rs.getInt("id"));
-                funcionario.setCargos((Cargos) rs.getObject("id_cargo"));
+                
+                int idCargo = rs.getInt("id_cargo");
+                CargosDAO cargosDao = new CargosDAO();
+                Cargos cargo = cargosDao.buscarCargo(idCargo);
+                funcionario.setCargos(cargo);
+                
                 funcionario.setNome(rs.getString("nome"));
                 funcionario.setDataNascimento(rs.getDate("data_nascimento"));
                 funcionario.setEmail(rs.getString("email"));
                 funcionario.setCpf(rs.getString("cpf"));
                 funcionario.setTelefone(rs.getString("telefone"));
-                funcionario.setCep(rs.getString("endereco"));
+                funcionario.setCep(rs.getString("cep"));
                 funcionario.setEndereco(rs.getString("endereco"));
                 funcionario.setNumero(rs.getShort("numero"));
                 funcionario.setComplemento(rs.getString("complemento"));

@@ -1,7 +1,6 @@
 package gui;
 
 import dao.CargosDAO;
-import dao.ClientesDAO;
 import dao.FuncionariosDAO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +9,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Cargos;
-import model.Clientes;
 import model.Funcionarios;
 import utilidades.Utilidades;
 
@@ -363,6 +361,12 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
 
         painelGuias.addTab("Dados do Funcionário", pnlDadosPessoais);
 
+        txtPesquisaNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaNomeKeyReleased(evt);
+            }
+        });
+
         jLabel4.setText("Nome:");
 
         btnPesquisaNome.setText("Pesquisar");
@@ -542,25 +546,37 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
 
     private void btnPesquisarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCPFActionPerformed
         String cpf = txtCPF.getText();
-        ClientesDAO clienteDao = new ClientesDAO();
-        Clientes cliente = clienteDao.buscarCliente(cpf);
+        FuncionariosDAO funcionarioDao = new FuncionariosDAO();
+        Funcionarios funcionario = funcionarioDao.buscarFuncionario(cpf);
 
-        if (cliente.getCpf() != null) {
-            txtId.setText(String.valueOf(cliente.getId()));
-            txtNome.setText(cliente.getNome());
-            txtCPF.setText(cliente.getCpf());
-            txtDataNasc.setText(sdf.format(cliente.getDataNascimento()));
-            txtEmail.setText(cliente.getEmail());
-            txtTelefone.setText(cliente.getTelefone());
-            txtCEP.setText(cliente.getCep());
-            txtEndereco.setText(cliente.getEndereco());
-            txtNumero.setText(String.valueOf(cliente.getNumero()));
-            txtComplemento.setText(cliente.getComplemento());
-            txtBairro.setText(cliente.getBairro());
-            txtCidade.setText(cliente.getCidade());
-            cbUF.setSelectedItem(cliente.getEstado());
-        } else {
-            JOptionPane.showMessageDialog(null, "Cliente não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+        if (funcionario.getCpf() != null) {
+            txtId.setText(String.valueOf(funcionario.getId()));
+            txtNome.setText(funcionario.getNome());
+            txtCPF.setText(funcionario.getCpf());
+            txtDataNasc.setText(sdf.format(funcionario.getDataNascimento()));
+            txtEmail.setText(funcionario.getEmail());
+            txtTelefone.setText(funcionario.getTelefone());
+            txtCEP.setText(funcionario.getCep());
+            txtEndereco.setText(funcionario.getEndereco());
+            txtNumero.setText(String.valueOf(funcionario.getNumero()));
+            txtComplemento.setText(funcionario.getComplemento());
+            txtBairro.setText(funcionario.getBairro());
+            txtCidade.setText(funcionario.getCidade());
+            cbUF.setSelectedItem(funcionario.getEstado());
+            txtSenha.setText(funcionario.getSenha());
+
+            Cargos cargoSelecionado = funcionario.getCargos();            
+            for (int i = 0; i < cbCargo.getItemCount(); i++) {
+                Cargos cargo = (Cargos) cbCargo.getItemAt(i);
+                if (cargo.getId() == cargoSelecionado.getId()) {
+                    cbCargo.setSelectedItem(cargo);
+                    break;
+                }
+            }
+
+            cbNivelAcesso.setSelectedItem(funcionario.getNivelAcesso());
+            }else {
+            JOptionPane.showMessageDialog(null, "Funcionário não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnPesquisarCPFActionPerformed
 
@@ -574,25 +590,28 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
 
     private void btnPesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaNomeActionPerformed
         String nome = txtPesquisaNome.getText() + "%";
-        ClientesDAO clientesDao = new ClientesDAO();
-        List<Clientes> lista = clientesDao.filtrar(nome);
+        FuncionariosDAO funcionariosDao = new FuncionariosDAO();
+        List<Funcionarios> lista = funcionariosDao.filtrar(nome);
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
-        for (Clientes c : lista) {
+        for (Funcionarios func : lista) {
             dados.addRow(new Object[]{
-                c.getId(),
-                c.getNome(),
-                c.getDataNascimento(),
-                c.getEmail(),
-                c.getCpf(),
-                c.getTelefone(),
-                c.getCep(),
-                c.getEndereco(),
-                c.getNumero(),
-                c.getComplemento(),
-                c.getBairro(),
-                c.getCidade(),
-                c.getEstado()
+                func.getId(),
+                func.getCargos().getNome(),
+                func.getNome(),
+                func.getDataNascimento(),
+                func.getEmail(),
+                func.getCpf(),
+                func.getTelefone(),
+                func.getCep(),
+                func.getEndereco(),
+                func.getNumero(),
+                func.getComplemento(),
+                func.getBairro(),
+                func.getCidade(),
+                func.getEstado(),
+                func.getSenha(),
+                func.getNivelAcesso()
             });
         }
     }//GEN-LAST:event_btnPesquisaNomeActionPerformed
@@ -689,8 +708,36 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
                 cbCargo.addItem(carg);
             }
             cargosCarregados = true;
-        }   
+        }
     }//GEN-LAST:event_cbCargoAncestorAdded
+
+    private void txtPesquisaNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaNomeKeyReleased
+        String nome = txtPesquisaNome.getText() + "%";
+        FuncionariosDAO funcionariosDao = new FuncionariosDAO();
+        List<Funcionarios> lista = funcionariosDao.filtrar(nome);
+        DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
+        dados.setNumRows(0);
+        for (Funcionarios func : lista) {
+            dados.addRow(new Object[]{
+                func.getId(),
+                func.getCargos().getNome(),
+                func.getNome(),
+                func.getDataNascimento(),
+                func.getEmail(),
+                func.getCpf(),
+                func.getTelefone(),
+                func.getCep(),
+                func.getEndereco(),
+                func.getNumero(),
+                func.getComplemento(),
+                func.getBairro(),
+                func.getCidade(),
+                func.getEstado(),
+                func.getSenha(),
+                func.getNivelAcesso()
+            });
+        }
+    }//GEN-LAST:event_txtPesquisaNomeKeyReleased
 
     /**
      * @param args the command line arguments

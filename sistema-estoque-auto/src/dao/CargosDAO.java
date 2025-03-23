@@ -51,7 +51,7 @@ public class CargosDAO {
         return lista;   
             
         } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(null, "Erro ao criar a lista de cargos.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro ao criar a lista de cargos.", "Erro", JOptionPane.ERROR_MESSAGE);
         }        
         return null;
     }
@@ -84,6 +84,25 @@ public class CargosDAO {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir o cargo. " + e);
         }
+    }
+    
+    public Cargos buscarCargo(int id) {
+        Cargos cargo = null;
+        String sql = "select * from cargos where id = ?";
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    cargo = new Cargos();
+                    cargo.setId(rs.getInt("id"));
+                    cargo.setNome(rs.getString("nome"));
+                }
+            }
+            
+        } catch (SQLException e) {
+        }
+        return cargo;
     }
     
 }
