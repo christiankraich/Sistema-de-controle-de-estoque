@@ -1,13 +1,17 @@
 package gui;
 
+import dao.CargosDAO;
 import dao.ClientesDAO;
+import dao.FuncionariosDAO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Cargos;
 import model.Clientes;
+import model.Funcionarios;
 import utilidades.Utilidades;
 
 public class TelaFormularioFuncionarios extends javax.swing.JFrame {
@@ -15,33 +19,49 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
     private final Utilidades util = new Utilidades();
+    private boolean cargosCarregados = false;
 
     public void listar() {
-        ClientesDAO clientesDao = new ClientesDAO();
-        List<Clientes> lista = clientesDao.listar();
+        FuncionariosDAO funcionariosDao = new FuncionariosDAO();
+        List<Funcionarios> lista = funcionariosDao.listar();
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
-        for (Clientes c : lista) {
+        for (Funcionarios func : lista) {
             dados.addRow(new Object[]{
-                c.getId(),
-                c.getNome(),
-                c.getDataNascimento(),
-                c.getEmail(),
-                c.getCpf(),
-                c.getTelefone(),
-                c.getCep(),
-                c.getEndereco(),
-                c.getNumero(),
-                c.getComplemento(),
-                c.getBairro(),
-                c.getCidade(),
-                c.getEstado()
+                func.getId(),
+                func.getCargos(),
+                func.getNome(),
+                func.getDataNascimento(),
+                func.getEmail(),
+                func.getCpf(),
+                func.getTelefone(),
+                func.getCep(),
+                func.getEndereco(),
+                func.getNumero(),
+                func.getComplemento(),
+                func.getBairro(),
+                func.getCidade(),
+                func.getEstado(),
+                func.getSenha(),
+                func.getNivelAcesso()
             });
+        }
+    }
+
+    private void listarDadosEnumComboBox() {
+        try {
+            cbNivelAcesso.removeAllItems();
+
+            cbNivelAcesso.addItem(Funcionarios.nivelAcesso.Administrador);
+            cbNivelAcesso.addItem(Funcionarios.nivelAcesso.Comum);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro:" + e);
         }
     }
 
     public TelaFormularioFuncionarios() {
         initComponents();
+        listarDadosEnumComboBox();
     }
 
     /**
@@ -88,8 +108,8 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         txtSenha = new javax.swing.JPasswordField();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        cbNivelAcesso = new javax.swing.JComboBox<>();
-        cbCargo = new javax.swing.JComboBox<>();
+        cbNivelAcesso = new javax.swing.JComboBox();
+        cbCargo = new javax.swing.JComboBox();
         pnlConsulta = new javax.swing.JPanel();
         txtPesquisaNome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -200,7 +220,15 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
 
         jLabel18.setText("Nível de Acesso:");
 
-        cbNivelAcesso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comum", "Administrador" }));
+        cbCargo.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                cbCargoAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         javax.swing.GroupLayout pnlDadosPessoaisLayout = new javax.swing.GroupLayout(pnlDadosPessoais);
         pnlDadosPessoais.setLayout(pnlDadosPessoaisLayout);
@@ -268,7 +296,6 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
                                 .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
                                 .addComponent(jLabel12)
@@ -350,11 +377,11 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "NOME", "DATA NASC", "E-MAIL", "CPF", "TELEFONE", "CEP", "ENDEREÇO", "NUMERO", "COMPLEMENTO", "BAIRRO", "CIDADE", "UF"
+                "ID", "CARGO", "NOME", "DATA NASC", "E-MAIL", "CPF", "TELEFONE", "CEP", "ENDEREÇO", "NUMERO", "COMPLEMENTO", "BAIRRO", "CIDADE", "UF", "SENHA", "NIVEL ACESSO"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, true, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -398,9 +425,9 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        painelGuias.addTab("Consulta de Funcionaários", pnlConsulta);
+        painelGuias.addTab("Consulta de Funcionários", pnlConsulta);
 
-        btnAdicionar.setText("Adicionar");
+        btnAdicionar.setText("Cadastrar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdicionarActionPerformed(evt);
@@ -473,9 +500,9 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        Clientes cliente = new Clientes();
-        cliente.setNome(txtNome.getText());
-        cliente.setCpf(txtCPF.getText());
+        Funcionarios funcionario = new Funcionarios();
+        funcionario.setNome(txtNome.getText());
+        funcionario.setCpf(txtCPF.getText());
         try {
             sdf.setLenient(false);
             Date dataNasc = sdf.parse(txtDataNasc.getText());
@@ -485,24 +512,31 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
                 return;
             }
 
-            cliente.setDataNascimento(dataNasc);
+            funcionario.setDataNascimento(dataNasc);
 
         } catch (ParseException erro) {
             JOptionPane.showMessageDialog(null, "Data inválida!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        cliente.setEmail(txtEmail.getText());
-        cliente.setTelefone(txtTelefone.getText());
-        cliente.setCep(txtCEP.getText());
-        cliente.setEndereco(txtEndereco.getText());
-        cliente.setNumero(Short.parseShort(txtNumero.getText()));
-        cliente.setComplemento(txtComplemento.getText());
-        cliente.setBairro(txtBairro.getText());
-        cliente.setCidade(txtCidade.getText());
-        cliente.setEstado(cbUF.getSelectedItem().toString());
+        funcionario.setEmail(txtEmail.getText());
+        funcionario.setTelefone(txtTelefone.getText());
+        funcionario.setCep(txtCEP.getText());
+        funcionario.setEndereco(txtEndereco.getText());
+        funcionario.setNumero(Short.parseShort(txtNumero.getText()));
+        funcionario.setComplemento(txtComplemento.getText());
+        funcionario.setBairro(txtBairro.getText());
+        funcionario.setCidade(txtCidade.getText());
+        funcionario.setEstado(cbUF.getSelectedItem().toString());
+        funcionario.setSenha(txtSenha.getText());
 
-        ClientesDAO dao = new ClientesDAO();
-        dao.salvar(cliente);
+        Cargos cargo = (Cargos) cbCargo.getSelectedItem();
+        funcionario.setCargos(cargo);
+
+        Funcionarios.nivelAcesso nivelAcessoSelecionado = (Funcionarios.nivelAcesso) cbNivelAcesso.getSelectedItem();
+        funcionario.setNivelAcesso(nivelAcessoSelecionado);
+
+        FuncionariosDAO dao = new FuncionariosDAO();
+        dao.salvar(funcionario);
         util.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
@@ -566,8 +600,18 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         painelGuias.setSelectedIndex(0);
         txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
-        txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 1).toString());
-        String dataNasc = tabela.getValueAt(tabela.getSelectedRow(), 2).toString();
+
+        String nomeCargo = tabela.getValueAt(tabela.getSelectedRow(), 1).toString();
+        for (int i = 0; i < cbCargo.getItemCount(); i++) {
+            Cargos cargo = (Cargos) cbCargo.getItemAt(i);
+            if (cargo.getNome().equals(nomeCargo)) {
+                cbCargo.setSelectedItem(cargo);
+                break;
+            }
+        }
+
+        txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 2).toString());
+        String dataNasc = tabela.getValueAt(tabela.getSelectedRow(), 3).toString();
         try {
             Date data = sdf2.parse(dataNasc);
             String dataNascFormatada = sdf.format(data);
@@ -576,23 +620,25 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         } catch (ParseException e) {
             System.out.println("Impossível formatar data" + e);
         }
-        txtEmail.setText(tabela.getValueAt(tabela.getSelectedRow(), 3).toString());
-        txtCPF.setText(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
-        txtTelefone.setText(tabela.getValueAt(tabela.getSelectedRow(), 5).toString());
-        txtCEP.setText(tabela.getValueAt(tabela.getSelectedRow(), 6).toString());
-        txtEndereco.setText(tabela.getValueAt(tabela.getSelectedRow(), 7).toString());
-        txtNumero.setText(tabela.getValueAt(tabela.getSelectedRow(), 8).toString());
-        txtComplemento.setText(tabela.getValueAt(tabela.getSelectedRow(), 9).toString());
-        txtBairro.setText(tabela.getValueAt(tabela.getSelectedRow(), 10).toString());
-        txtCidade.setText(tabela.getValueAt(tabela.getSelectedRow(), 11).toString());
-        cbUF.setSelectedItem(tabela.getValueAt(tabela.getSelectedRow(), 12).toString());
+        txtEmail.setText(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
+        txtCPF.setText(tabela.getValueAt(tabela.getSelectedRow(), 5).toString());
+        txtTelefone.setText(tabela.getValueAt(tabela.getSelectedRow(), 6).toString());
+        txtCEP.setText(tabela.getValueAt(tabela.getSelectedRow(), 7).toString());
+        txtEndereco.setText(tabela.getValueAt(tabela.getSelectedRow(), 8).toString());
+        txtNumero.setText(tabela.getValueAt(tabela.getSelectedRow(), 9).toString());
+        txtComplemento.setText(tabela.getValueAt(tabela.getSelectedRow(), 10).toString());
+        txtBairro.setText(tabela.getValueAt(tabela.getSelectedRow(), 11).toString());
+        txtCidade.setText(tabela.getValueAt(tabela.getSelectedRow(), 12).toString());
+        cbUF.setSelectedItem(tabela.getValueAt(tabela.getSelectedRow(), 13).toString());
+        txtSenha.setText(tabela.getValueAt(tabela.getSelectedRow(), 14).toString());
+        cbNivelAcesso.setSelectedItem(tabela.getValueAt(tabela.getSelectedRow(), 15));
         txtNome.requestFocus();
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        Clientes cliente = new Clientes();
-        cliente.setNome(txtNome.getText());
-        cliente.setCpf(txtCPF.getText());
+        Funcionarios funcionario = new Funcionarios();
+        funcionario.setNome(txtNome.getText());
+        funcionario.setCpf(txtCPF.getText());
         try {
             sdf.setLenient(false);
             Date dataNasc = sdf.parse(txtDataNasc.getText());
@@ -602,34 +648,49 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
                 return;
             }
 
-            cliente.setDataNascimento(sdf.parse(txtDataNasc.getText()));
+            funcionario.setDataNascimento(sdf.parse(txtDataNasc.getText()));
         } catch (ParseException erro) {
             JOptionPane.showMessageDialog(null, "Data inválida!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        cliente.setEmail(txtEmail.getText());
-        cliente.setTelefone(txtTelefone.getText());
-        cliente.setCep(txtCEP.getText());
-        cliente.setEndereco(txtEndereco.getText());
-        cliente.setNumero(Short.parseShort(txtNumero.getText()));
-        cliente.setComplemento(txtComplemento.getText());
-        cliente.setBairro(txtBairro.getText());
-        cliente.setCidade(txtCidade.getText());
-        cliente.setEstado(cbUF.getSelectedItem().toString());
-        cliente.setId(Integer.parseInt(txtId.getText()));
+        funcionario.setEmail(txtEmail.getText());
+        funcionario.setTelefone(txtTelefone.getText());
+        funcionario.setCep(txtCEP.getText());
+        funcionario.setEndereco(txtEndereco.getText());
+        funcionario.setNumero(Short.parseShort(txtNumero.getText()));
+        funcionario.setComplemento(txtComplemento.getText());
+        funcionario.setBairro(txtBairro.getText());
+        funcionario.setCidade(txtCidade.getText());
+        funcionario.setEstado(cbUF.getSelectedItem().toString());
+        funcionario.setCargos((Cargos) cbCargo.getSelectedItem());
+        funcionario.setSenha(txtSenha.getText());
+        funcionario.setNivelAcesso((Funcionarios.nivelAcesso) cbNivelAcesso.getSelectedItem());
+        funcionario.setId(Integer.parseInt(txtId.getText()));
 
-        ClientesDAO dao = new ClientesDAO();
-        dao.editar(cliente);
+        FuncionariosDAO dao = new FuncionariosDAO();
+        dao.editar(funcionario);
         util.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        Clientes cliente = new Clientes();
-        cliente.setId(Integer.parseInt(txtId.getText()));
-        ClientesDAO dao = new ClientesDAO();
-        dao.excluir(cliente);
+        Funcionarios funcionario = new Funcionarios();
+        funcionario.setId(Integer.parseInt(txtId.getText()));
+        FuncionariosDAO dao = new FuncionariosDAO();
+        dao.excluir(funcionario);
         util.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void cbCargoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbCargoAncestorAdded
+        if (!cargosCarregados) {
+            CargosDAO cargosDao = new CargosDAO();
+            List<Cargos> lista = cargosDao.listar();
+            cbCargo.removeAllItems();
+            for (Cargos carg : lista) {
+                cbCargo.addItem(carg);
+            }
+            cargosCarregados = true;
+        }   
+    }//GEN-LAST:event_cbCargoAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -681,8 +742,8 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     private javax.swing.JButton btnPesquisaNome;
     private javax.swing.JButton btnPesquisarCPF;
     private javax.swing.JButton btnVoltar;
-    private javax.swing.JComboBox<String> cbCargo;
-    private javax.swing.JComboBox<String> cbNivelAcesso;
+    private javax.swing.JComboBox cbCargo;
+    private javax.swing.JComboBox cbNivelAcesso;
     private javax.swing.JComboBox<String> cbUF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

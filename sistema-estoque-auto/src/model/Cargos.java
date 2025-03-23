@@ -5,7 +5,6 @@ public class Cargos {
     //atributos
     private int id;
     private String nome;
-    private double salario;
     
     //metodos especiais
     public int getId() {
@@ -23,14 +22,10 @@ public class Cargos {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public double getSalario() {
-        return salario;
-    }
-
-    public void setSalario(double salario) {
-        this.salario = salario;
-    }
     
+    @Override
+    public String toString() {
+        return this.nome;
+    }
     
 }

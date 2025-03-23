@@ -78,7 +78,7 @@ public class ClientesDAO {
     }
 
     public List<Clientes> listar() {
-        List<Clientes> lista = new ArrayList<>();
+        List<Clientes> lista = new ArrayList<>();        
         String sql = "select * from clientes";
         try (PreparedStatement stmt = conn.prepareStatement(sql);) {
             ResultSet rs = stmt.executeQuery();
@@ -103,7 +103,7 @@ public class ClientesDAO {
             return lista;
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao criar a lista de clientes.");
+            JOptionPane.showMessageDialog(null, "Erro ao criar a lista de clientes.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
@@ -173,7 +173,7 @@ public class ClientesDAO {
 
     public void excluir(Clientes cliente) {
         String sql = "delete from clientes where id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql);) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, cliente.getId());
             stmt.execute();
             stmt.close();

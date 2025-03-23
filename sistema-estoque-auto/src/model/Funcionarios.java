@@ -3,17 +3,17 @@ package model;
 public class Funcionarios extends Clientes {
     
     //atributos
-    private Cargos cargo;    
+    private Cargos cargos;    
     private String senha;
     private nivelAcesso nivelAcesso;
 
     //metodos especiais       
-    public Cargos getCargo() {
-        return cargo;
+    public Cargos getCargos() {
+        return cargos;
     }
     
-    public void setCargo(Cargos cargo) {
-        this.cargo = cargo;
+    public void setCargos(Cargos cargos) {
+        this.cargos = cargos;
     }
 
     public String getSenha() {
@@ -33,7 +33,7 @@ public class Funcionarios extends Clientes {
     }
     
     public enum nivelAcesso {
-        Administrativo,
+        Administrador,
         Comum
     }
     

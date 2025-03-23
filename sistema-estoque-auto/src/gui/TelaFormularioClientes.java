@@ -124,9 +124,12 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
         );
 
+        pnlDadosPessoais.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         jLabel2.setText("Id:");
 
         txtId.setEditable(false);
+        txtId.setEnabled(false);
 
         jLabel3.setText("Nome:");
 
@@ -364,7 +367,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
 
         painelGuias.addTab("Consulta de Clientes", pnlConsulta);
 
-        btnAdicionar.setText("Adicionar");
+        btnAdicionar.setText("Cadastrar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdicionarActionPerformed(evt);
