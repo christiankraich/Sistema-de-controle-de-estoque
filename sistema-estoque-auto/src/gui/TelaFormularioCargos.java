@@ -51,7 +51,8 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Formulário de Cargos");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {

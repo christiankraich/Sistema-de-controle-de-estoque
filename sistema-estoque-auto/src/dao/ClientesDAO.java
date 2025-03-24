@@ -179,7 +179,7 @@ public class ClientesDAO {
             stmt.close();
             JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir o cliente!" + e);
+            JOptionPane.showMessageDialog(null, "Erro ao excluir o cliente!");
         }
     }
 

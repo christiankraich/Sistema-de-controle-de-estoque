@@ -121,7 +121,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Formulário de Clientes");
+        setTitle("Formulário de Funcionários");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
