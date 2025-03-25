@@ -233,8 +233,23 @@ public class FuncionariosDAO {
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir o fuincionário!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }        
+    }
+    
+    public boolean login(String email, String senha) {
+        String sql = "select * from funcionarios where email = ? and senha = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql);) {            
+            stmt.setString(1, email);
+            stmt.setString(2, senha);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return true;
+           } 
+            
+        } catch (SQLException e) {
         }
-        
+        return false;
     }
     
 }

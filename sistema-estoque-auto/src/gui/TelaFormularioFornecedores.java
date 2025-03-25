@@ -1,6 +1,7 @@
 package gui;
 
 import dao.FornecedoresDAO;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -252,15 +253,16 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
-                .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
                         .addComponent(txtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnPesquisarCNPJ)))
+                        .addComponent(btnPesquisarCNPJ))
+                    .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9)
+                        .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(34, 34, 34)
                 .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -281,6 +283,12 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
         );
 
         painelGuias.addTab("Dados do Cliente", pnlDadosPessoais);
+
+        txtPesquisaNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPesquisaNomeKeyPressed(evt);
+            }
+        });
 
         jLabel4.setText("Nome:");
 
@@ -421,7 +429,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         Fornecedores fornecedores = new Fornecedores();
         fornecedores.setNome(txtNome.getText());
-        fornecedores.setCnpj(txtCNPJ.getText());        
+        fornecedores.setCnpj(txtCNPJ.getText());
         fornecedores.setEmail(txtEmail.getText());
         fornecedores.setTelefone(txtTelefone.getText());
         fornecedores.setCep(txtCEP.getText());
@@ -442,7 +450,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
         Fornecedores fornecedores = fornecedoresDao.buscarFornecedor(cnpj);
 
-        if (fornecedores.getCnpj()!= null) {
+        if (fornecedores.getCnpj() != null) {
             txtId.setText(String.valueOf(fornecedores.getId()));
             txtNome.setText(fornecedores.getNome());
             txtCNPJ.setText(fornecedores.getCnpj());
@@ -495,7 +503,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         painelGuias.setSelectedIndex(0);
         txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
-        txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 1).toString());      
+        txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 1).toString());
         txtEmail.setText(tabela.getValueAt(tabela.getSelectedRow(), 2).toString());
         txtCNPJ.setText(tabela.getValueAt(tabela.getSelectedRow(), 3).toString());
         txtTelefone.setText(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
@@ -512,7 +520,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         Fornecedores fornecedores = new Fornecedores();
         fornecedores.setNome(txtNome.getText());
-        fornecedores.setCnpj(txtCNPJ.getText());        
+        fornecedores.setCnpj(txtCNPJ.getText());
         fornecedores.setEmail(txtEmail.getText());
         fornecedores.setTelefone(txtTelefone.getText());
         fornecedores.setCep(txtCEP.getText());
@@ -537,9 +545,35 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
         util.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    private void txtPesquisaNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaNomeKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String nome = txtPesquisaNome.getText() + "%";
+            FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
+            List<Fornecedores> lista = fornecedoresDao.filtrar(nome);
+            DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
+            dados.setNumRows(0);
+            for (Fornecedores fornec : lista) {
+                dados.addRow(new Object[]{
+                    fornec.getId(),
+                    fornec.getNome(),
+                    fornec.getEmail(),
+                    fornec.getCnpj(),
+                    fornec.getTelefone(),
+                    fornec.getCep(),
+                    fornec.getEndereco(),
+                    fornec.getNumero(),
+                    fornec.getComplemento(),
+                    fornec.getBairro(),
+                    fornec.getCidade(),
+                    fornec.getEstado()
+                });
+            }
+        }
+    }//GEN-LAST:event_txtPesquisaNomeKeyPressed
+
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
