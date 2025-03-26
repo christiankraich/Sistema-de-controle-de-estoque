@@ -11,11 +11,11 @@ public class MySQLConnection {
     private static final String USER = "root";
     private static final String SENHA = "";
     
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() /*throws SQLException*/ {
         try {
             return DriverManager.getConnection(URL, USER, SENHA);            
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao se conectar com o Banco de Dados!\n" + e);
+            JOptionPane.showMessageDialog(null, "Erro ao se conectar com o Banco de Dados!");
         }
         return null;
     }
