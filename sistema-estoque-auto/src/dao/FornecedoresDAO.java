@@ -179,4 +179,23 @@ public class FornecedoresDAO {
         
     }
     
+    public Fornecedores buscarIdFornecedor(int id) {
+        Fornecedores fornecedor = null;
+        String sql = "select * from fornecedores where id = ?";
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery();) {
+                if (rs.next()) {
+                    fornecedor = new Fornecedores();
+                    fornecedor.setId(rs.getInt("id"));
+                    fornecedor.setNome(rs.getString("nome"));
+                }
+            }
+            
+        } catch (SQLException e) {
+        }        
+        return fornecedor;
+    }
+    
 }

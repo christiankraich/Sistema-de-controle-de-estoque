@@ -64,7 +64,7 @@ public class FuncionariosDAO {
                 
                 int idCargo = rs.getInt("id_cargo");
                 CargosDAO cargosDao = new CargosDAO();
-                Cargos cargo = cargosDao.buscarCargo(idCargo);
+                Cargos cargo = cargosDao.buscarIdCargo(idCargo);
                 funcionario.setCargos(cargo);
                 
                 funcionario.setNome(rs.getString("nome"));
@@ -155,7 +155,7 @@ public class FuncionariosDAO {
                 
                 int idCargo = rs.getInt("id_cargo");
                 CargosDAO cargosDao = new CargosDAO();
-                Cargos cargo = cargosDao.buscarCargo(idCargo);
+                Cargos cargo = cargosDao.buscarIdCargo(idCargo);
                 funcionario.setCargos(cargo);
                 
                 funcionario.setNome(rs.getString("nome"));

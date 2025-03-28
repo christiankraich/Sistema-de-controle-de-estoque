@@ -86,7 +86,7 @@ public class CargosDAO {
         }
     }
     
-    public Cargos buscarCargo(int id) {
+    public Cargos buscarIdCargo(int id) {
         Cargos cargo = null;
         String sql = "select * from cargos where id = ?";
         
