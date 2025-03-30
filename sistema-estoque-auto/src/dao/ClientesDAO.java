@@ -100,12 +100,11 @@ public class ClientesDAO {
                 cliente.setEstado(rs.getString("estado"));
                 lista.add(cliente);
             }
-            return lista;
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao criar a lista de clientes.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        return null;
+        return lista;
     }
 
     public List<Clientes> filtrar(String nome) {
@@ -132,12 +131,11 @@ public class ClientesDAO {
                 cliente.setEstado(rs.getString("estado"));
                 lista.add(cliente);
             }
-            return lista;
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao criar a lista de clientes.");
         }
-        return null;
+        return lista;
     }
 
     public void editar(Clientes cliente) {

@@ -2,6 +2,7 @@ package gui;
 
 import dao.FornecedoresDAO;
 import dao.PecasDAO;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -28,7 +29,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
                 p.getQuantidade(),
                 p.getValorUnidadeFornecedor(),
                 p.getValorUnidadeCliente()
-                
+
             });
         }
     }
@@ -61,8 +62,8 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         txtQuantidade = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtValorFornecedor = new javax.swing.JTextField();
-        txtValorCliente = new javax.swing.JTextField();
+        txtPrecoFornecedor = new javax.swing.JTextField();
+        txtPrecoCliente = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         cbFornecedor = new javax.swing.JComboBox();
         pnlConsulta = new javax.swing.JPanel();
@@ -78,7 +79,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Formulário de Clientes");
+        setTitle("Formulário de Peças");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -92,7 +93,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Formulário de Clientes");
+        jLabel1.setText("Formulário de Peças");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -127,9 +128,9 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
 
         txtQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        jLabel5.setText("Valor Cliente:");
+        jLabel5.setText("Preço Cliente:");
 
-        jLabel7.setText("Valor Fornecedor:");
+        jLabel7.setText("Preço Fornecedor:");
 
         jLabel8.setText("Fornecedor:");
 
@@ -154,7 +155,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
                         .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                         .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jLabel11)
@@ -162,9 +163,9 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtQuantidade, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                            .addComponent(txtValorFornecedor)
-                            .addComponent(txtValorCliente))
-                        .addContainerGap(98, Short.MAX_VALUE))
+                            .addComponent(txtPrecoFornecedor)
+                            .addComponent(txtPrecoCliente))
+                        .addContainerGap(96, Short.MAX_VALUE))
                     .addGroup(pnlDadosPecasLayout.createSequentialGroup()
                         .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlDadosPecasLayout.createSequentialGroup()
@@ -199,13 +200,11 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
                     .addComponent(cbFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlDadosPecasLayout.createSequentialGroup()
-                        .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtValorFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(2, 2, 2))
+                    .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)
+                        .addComponent(txtPrecoFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlDadosPecasLayout.createSequentialGroup()
                         .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
@@ -213,11 +212,17 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
                         .addGap(68, 68, 68)
                         .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(txtValorCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtPrecoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(132, 132, 132))
         );
 
         painelGuias.addTab("Dados da Peça", pnlDadosPecas);
+
+        txtPesquisaNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaNomeKeyReleased(evt);
+            }
+        });
 
         jLabel4.setText("Nome:");
 
@@ -357,15 +362,15 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         Pecas peca = new Pecas();
-        
+
         Fornecedores fornecedor = (Fornecedores) cbFornecedor.getSelectedItem();
         peca.setFornecedores(fornecedor);
-        
-        peca.setNome(txtNome.getText());        
+
+        peca.setNome(txtNome.getText());
         peca.setDescricao(txtDescricao.getText());
         peca.setQuantidade(Short.parseShort(txtQuantidade.getText()));
-        peca.setValorUnidadeFornecedor(Double.parseDouble(txtValorFornecedor.getText()));
-        peca.setValorUnidadeCliente(Double.parseDouble(txtValorCliente.getText()));
+        peca.setValorUnidadeFornecedor(Double.parseDouble(txtPrecoFornecedor.getText()));
+        peca.setValorUnidadeCliente(Double.parseDouble(txtPrecoCliente.getText()));
 
         PecasDAO pecasDao = new PecasDAO();
         pecasDao.salvar(peca);
@@ -377,13 +382,26 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         PecasDAO pecasDao = new PecasDAO();
         Pecas peca = pecasDao.buscarPeca(nome);
 
-        if (peca.getNome()!= null) {
+        if (peca.getNome() != null) {
             txtId.setText(String.valueOf(peca.getId()));
-            txtNome.setText(peca.getNome());            
+
+            Fornecedores fornecedorSelecionado = peca.getFornecedores();
+            for (int i = 0; i < cbFornecedor.getItemCount(); i++) {
+                Fornecedores fornecedor = (Fornecedores) cbFornecedor.getItemAt(i);
+                if (fornecedor.getId() == fornecedorSelecionado.getId()) {
+                    cbFornecedor.setSelectedItem(fornecedor);
+                    break;
+                }
+            }
+
+            txtNome.setText(peca.getNome());
+            txtDescricao.setText(peca.getDescricao());
             txtQuantidade.setText(String.valueOf(peca.getQuantidade()));
-            
+            txtPrecoFornecedor.setText(String.valueOf(peca.getValorUnidadeFornecedor()));
+            txtPrecoCliente.setText(String.valueOf(peca.getValorUnidadeCliente()));
+
         } else {
-            JOptionPane.showMessageDialog(null, "Peça não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Peça não encontrada.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnPesquisarNomeActionPerformed
 
@@ -398,34 +416,53 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     private void btnPesquisaNomeTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaNomeTabelaActionPerformed
         String nome = txtPesquisaNome.getText() + "%";
         PecasDAO pecasDao = new PecasDAO();
-        /*List<Pecas> lista = pecasDao.filtrar(nome);
+        List<Pecas> lista = pecasDao.filtrar(nome);
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
         for (Pecas p : lista) {
             dados.addRow(new Object[]{
                 p.getId(),
+                p.getFornecedores().getNome(),
                 p.getNome(),
-                
+                p.getDescricao(),
+                p.getQuantidade(),
+                p.getValorUnidadeFornecedor(),
+                p.getValorUnidadeCliente()
             });
-        }*/
+        }
     }//GEN-LAST:event_btnPesquisaNomeTabelaActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         painelGuias.setSelectedIndex(0);
         txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
-        txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 1).toString());
-        
-        txtQuantidade.setText(tabela.getValueAt(tabela.getSelectedRow(), 8).toString());
-        
+
+        String nomeFornecedor = tabela.getValueAt(tabela.getSelectedRow(), 1).toString();
+        for (int i = 0; i < cbFornecedor.getItemCount(); i++) {
+            Fornecedores fornecedor = (Fornecedores) cbFornecedor.getItemAt(i);
+            if (fornecedor.getNome().equals(nomeFornecedor)) {
+                cbFornecedor.setSelectedItem(fornecedor);
+                break;
+            }
+        }
+
+        txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 2).toString());
+        txtDescricao.setText(tabela.getValueAt(tabela.getSelectedRow(), 3).toString());
+        txtQuantidade.setText(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
+        txtPrecoFornecedor.setText(tabela.getValueAt(tabela.getSelectedRow(), 5).toString());
+        txtPrecoCliente.setText(tabela.getValueAt(tabela.getSelectedRow(), 6).toString());
+
         txtNome.requestFocus();
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         Pecas peca = new Pecas();
+        peca.setFornecedores((Fornecedores) cbFornecedor.getSelectedItem());
         peca.setNome(txtNome.getText());
-                
+        peca.setDescricao(txtDescricao.getText());
         peca.setQuantidade(Short.parseShort(txtQuantidade.getText()));
-        
+        peca.setValorUnidadeFornecedor(Double.parseDouble(txtPrecoFornecedor.getText()));
+        peca.setValorUnidadeCliente(Double.parseDouble(txtPrecoCliente.getText()));
+
         peca.setId(Integer.parseInt(txtId.getText()));
 
         PecasDAO dao = new PecasDAO();
@@ -452,6 +489,27 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
             fornecedoresCarregados = true;
         }
     }//GEN-LAST:event_cbFornecedorAncestorAdded
+
+    private void txtPesquisaNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaNomeKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            String nome = txtPesquisaNome.getText() + "%";
+            PecasDAO pecasDao = new PecasDAO();
+            List<Pecas> lista = pecasDao.filtrar(nome);
+            DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
+            dados.setNumRows(0);
+            for (Pecas p : lista) {
+                dados.addRow(new Object[]{
+                    p.getId(),
+                    p.getFornecedores().getNome(),
+                    p.getNome(),
+                    p.getDescricao(),
+                    p.getQuantidade(),
+                    p.getValorUnidadeFornecedor(),
+                    p.getValorUnidadeCliente()
+                });
+            }
+        }
+    }//GEN-LAST:event_txtPesquisaNomeKeyReleased
 
     /**
      * @param args the command line arguments
@@ -515,7 +573,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane painelGuias;
+    public javax.swing.JTabbedPane painelGuias;
     private javax.swing.JPanel pnlConsulta;
     private javax.swing.JPanel pnlDadosPecas;
     private javax.swing.JTable tabela;
@@ -523,8 +581,8 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPesquisaNome;
+    private javax.swing.JTextField txtPrecoCliente;
+    private javax.swing.JTextField txtPrecoFornecedor;
     private javax.swing.JFormattedTextField txtQuantidade;
-    private javax.swing.JTextField txtValorCliente;
-    private javax.swing.JTextField txtValorFornecedor;
     // End of variables declaration//GEN-END:variables
 }

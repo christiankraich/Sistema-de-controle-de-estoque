@@ -97,12 +97,11 @@ public class FornecedoresDAO {
                 fornecedor.setEstado(rs.getString("estado"));
                 lista.add(fornecedor);
             }
-            return lista;
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao criar a lista! " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        return null;
+        return lista;
     }
     
     public List<Fornecedores> filtrar(String nome) {
@@ -129,12 +128,11 @@ public class FornecedoresDAO {
                 fornecedor.setEstado(rs.getString("estado"));
                 lista.add(fornecedor);
             }
-            return lista;
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao criar a lista de fornecedores! " + e.getMessage());
         }        
-        return null;
+        return lista;
     }        
     
     public void editar(Fornecedores fornecedor) {

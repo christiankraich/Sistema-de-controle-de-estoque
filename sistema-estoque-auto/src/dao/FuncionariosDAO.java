@@ -133,12 +133,11 @@ public class FuncionariosDAO {
                 }
                 lista.add(funcionario);
             }
-            return lista;
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao criar a lista de funcionários.\n" + e, "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        return null;
+        return lista;
     }
     
     public List<Funcionarios> filtrar(String nome) {
@@ -180,12 +179,11 @@ public class FuncionariosDAO {
                 }
                 lista.add(funcionario);
             }
-            return lista;
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao encontrar o cliente.");
         }
-        return null;
+        return lista;
     }
     
     public void editar(Funcionarios funcionario) {

@@ -56,13 +56,14 @@ public class PecasDAO {
             stmt.setShort(4, peca.getQuantidade());
             stmt.setDouble(5, peca.getValorUnidadeFornecedor());
             stmt.setDouble(6, peca.getValorUnidadeCliente());
+            stmt.setInt(7, peca.getId());
             
             stmt.execute();
             stmt.close();
             JOptionPane.showMessageDialog(null, "Peça editada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao editar a peça!", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao editar a peça!" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
         
     }
@@ -104,13 +105,12 @@ public class PecasDAO {
                 peca.setValorUnidadeFornecedor(rs.getDouble("valor_unidade_fornecedor"));
                 
                 lista.add(peca);
-            }
-            return lista;
+            }            
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao criar a lista de peças.\n" + e, "Erro", JOptionPane.ERROR_MESSAGE);
         }                        
-        return null;
+        return lista;
     }
     
     public Pecas buscarPeca(String nome) {
@@ -120,7 +120,7 @@ public class PecasDAO {
             ResultSet rs = stmt.executeQuery();
             Pecas peca = new Pecas();
             
-            while (rs.next()) {                
+            if (rs.next()) {                
                 peca.setId(rs.getInt("id"));
                 
                 int idFornecedor = rs.getInt("id_fornecedor");
@@ -166,12 +166,25 @@ public class PecasDAO {
                 peca.setValorUnidadeCliente(rs.getDouble("valor_unidade_cliente"));
                 
                 lista.add(peca);
-            }
-            return lista;
+            }            
             
         } catch (SQLException e) {
         }        
-        return null;
+        return lista;
+    }
+    
+    public void alterarEstoque(int id, int qtdNova) {
+        String sql = "update pecas set quantidade = ? where id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, qtdNova);
+            stmt.setInt(2, id);
+            stmt.execute();
+            stmt.close();
+            JOptionPane.showMessageDialog(null, "Quantidade alterada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao alterar o estoque!\n" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 }

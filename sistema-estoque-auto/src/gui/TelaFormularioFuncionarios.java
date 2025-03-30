@@ -27,7 +27,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         for (Funcionarios func : lista) {
             dados.addRow(new Object[]{
                 func.getId(),
-                func.getCargos(),
+                func.getCargos().getNome(),
                 func.getNome(),
                 func.getDataNascimento(),
                 func.getEmail(),
@@ -705,8 +705,8 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
             CargosDAO cargosDao = new CargosDAO();
             List<Cargos> lista = cargosDao.listar();
             cbCargos.removeAllItems();
-            for (Cargos carg : lista) {
-                cbCargos.addItem(carg.getNome());
+            for (Cargos cargo : lista) {
+                cbCargos.addItem(cargo);
             }
             cargosCarregados = true;
         }
