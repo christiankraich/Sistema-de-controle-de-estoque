@@ -56,7 +56,6 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtDescricao = new javax.swing.JTextField();
         btnPesquisarNome = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         txtQuantidade = new javax.swing.JFormattedTextField();
@@ -66,6 +65,8 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         txtPrecoCliente = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         cbFornecedor = new javax.swing.JComboBox();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtDescricao = new javax.swing.JTextArea();
         pnlConsulta = new javax.swing.JPanel();
         txtPesquisaNome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -144,6 +145,10 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
             }
         });
 
+        txtDescricao.setColumns(20);
+        txtDescricao.setRows(5);
+        jScrollPane2.setViewportView(txtDescricao);
+
         javax.swing.GroupLayout pnlDadosPecasLayout = new javax.swing.GroupLayout(pnlDadosPecas);
         pnlDadosPecas.setLayout(pnlDadosPecasLayout);
         pnlDadosPecasLayout.setHorizontalGroup(
@@ -154,18 +159,19 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
                     .addGroup(pnlDadosPecasLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
                         .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel5))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtQuantidade, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                            .addComponent(txtPrecoFornecedor)
-                            .addComponent(txtPrecoCliente))
-                        .addContainerGap(96, Short.MAX_VALUE))
+                            .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtPrecoFornecedor, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                .addComponent(txtPrecoCliente)))
+                        .addGap(160, 160, 160))
                     .addGroup(pnlDadosPecasLayout.createSequentialGroup()
                         .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlDadosPecasLayout.createSequentialGroup()
@@ -182,7 +188,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
                                 .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnPesquisarNome)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(201, Short.MAX_VALUE))))
         );
         pnlDadosPecasLayout.setVerticalGroup(
             pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,17 +205,18 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(cbFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
-                .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7)
-                        .addComponent(txtPrecoFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDadosPecasLayout.createSequentialGroup()
+                        .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtPrecoFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
                         .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(68, 68, 68)
+                        .addGap(27, 27, 27)
                         .addGroup(pnlDadosPecasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(txtPrecoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -573,11 +580,12 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTabbedPane painelGuias;
     private javax.swing.JPanel pnlConsulta;
     private javax.swing.JPanel pnlDadosPecas;
     private javax.swing.JTable tabela;
-    private javax.swing.JTextField txtDescricao;
+    private javax.swing.JTextArea txtDescricao;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPesquisaNome;
