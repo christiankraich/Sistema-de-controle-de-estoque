@@ -9,15 +9,16 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import jdbc.MySQLConnection;
 import model.Fornecedores;
+import model.Pecas;
 
 public class FornecedoresDAO {
-    
+
     private final Connection conn;
 
     public FornecedoresDAO() {
         this.conn = new MySQLConnection().getConnection();
     }
-    
+
     public void salvar(Fornecedores fornecedor) {
         String sql = "insert into fornecedores (nome, email, cnpj, telefone, cep, "
                 + "endereco, numero, complemento, bairro, cidade, estado)"
@@ -34,24 +35,24 @@ public class FornecedoresDAO {
             stmt.setString(9, fornecedor.getBairro());
             stmt.setString(10, fornecedor.getCidade());
             stmt.setString(11, fornecedor.getEstado());
-            
+
             stmt.execute();
             stmt.close();
             JOptionPane.showMessageDialog(null, "Fornecedor salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar o fornecedor! " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }
-    
+
     public Fornecedores buscarFornecedor(String cnpj) {
         String sql = "select * from fornecedores where cnpj = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cnpj);
             ResultSet rs = stmt.executeQuery();
             Fornecedores fornecedor = new Fornecedores();
-            
+
             if (rs.next()) {
                 fornecedor.setId(rs.getInt("id"));
                 fornecedor.setNome(rs.getString("nome"));
@@ -67,20 +68,20 @@ public class FornecedoresDAO {
                 fornecedor.setCidade(rs.getString("cidade"));
             }
             return fornecedor;
-            
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao encontrar o fornecedor. " + e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
         return null;
-        
+
     }
-    
+
     public List<Fornecedores> listar() {
         List<Fornecedores> lista = new ArrayList<>();
         String sql = "select * from fornecedores";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
-            
+
             while (rs.next()) {
                 Fornecedores fornecedor = new Fornecedores();
                 fornecedor.setId(rs.getInt("id"));
@@ -97,21 +98,21 @@ public class FornecedoresDAO {
                 fornecedor.setEstado(rs.getString("estado"));
                 lista.add(fornecedor);
             }
-            
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao criar a lista! " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
         return lista;
     }
-    
+
     public List<Fornecedores> filtrar(String nome) {
         List<Fornecedores> lista = new ArrayList<>();
         String sql = "select * from fornecedores where nome like ?";
-        
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, nome);
             ResultSet rs = stmt.executeQuery();
-            
+
             while (rs.next()) {
                 Fornecedores fornecedor = new Fornecedores();
                 fornecedor.setId(rs.getInt("id"));
@@ -128,13 +129,13 @@ public class FornecedoresDAO {
                 fornecedor.setEstado(rs.getString("estado"));
                 lista.add(fornecedor);
             }
-            
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao criar a lista de fornecedores! " + e.getMessage());
-        }        
+        }
         return lista;
-    }        
-    
+    }
+
     public void editar(Fornecedores fornecedor) {
         String sql = "update fornecedores set nome = ?, email = ?, cnpj = ?, telefone = ?,"
                 + "cep = ?, endereco = ?, numero = ?, complemento = ?, bairro = ?,"
@@ -152,17 +153,17 @@ public class FornecedoresDAO {
             stmt.setString(10, fornecedor.getCidade());
             stmt.setString(11, fornecedor.getEstado());
             stmt.setInt(12, fornecedor.getId());
-            
+
             stmt.execute();
             stmt.close();
-            
+
             JOptionPane.showMessageDialog(null, "Fornecedor editado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao editar o fornecedor! " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     public void excluir(Fornecedores fornecedor) {
         String sql = "delete from fornecedores where id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -170,17 +171,17 @@ public class FornecedoresDAO {
             stmt.execute();
             stmt.close();
             JOptionPane.showMessageDialog(null, "Fornecedor excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir o fornecedor! " + e.getMessage());
         }
-        
+
     }
-    
+
     public Fornecedores buscarIdFornecedor(int id) {
         Fornecedores fornecedor = null;
         String sql = "select * from fornecedores where id = ?";
-        
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery();) {
@@ -190,10 +191,41 @@ public class FornecedoresDAO {
                     fornecedor.setNome(rs.getString("nome"));
                 }
             }
-            
+
         } catch (SQLException e) {
-        }        
+        }
         return fornecedor;
     }
-    
+
+    public List<Pecas> filtrarPecasFornecedor(String cnpj) {
+        List<Pecas> lista = new ArrayList<>();
+        String sql = "select p.*, f.nome as nome_fornecedor from pecas p inner join "
+                + "fornecedores f on (p.id_fornecedor = f.id) where f.cnpj like ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, cnpj);
+            ResultSet rs = stmt.executeQuery();
+            FornecedoresDAO fornecedorDao = new FornecedoresDAO();
+
+            while (rs.next()) {
+                Pecas peca = new Pecas();
+                peca.setId(rs.getInt("id"));
+
+                int idFornecedor = rs.getInt("id_fornecedor");
+                Fornecedores fornecedor = fornecedorDao.buscarIdFornecedor(idFornecedor);
+                peca.setFornecedores(fornecedor);
+
+                peca.setNome(rs.getString("nome"));
+                peca.setDescricao(rs.getString("descricao"));
+                peca.setQuantidade(rs.getShort("quantidade"));
+                peca.setValorUnidadeFornecedor(rs.getDouble("valor_unidade_fornecedor"));
+                peca.setValorUnidadeCliente(rs.getDouble("valor_unidade_cliente"));
+                lista.add(peca);
+            }
+
+        } catch (SQLException e) {
+        }
+        return lista;
+    }
+
 }

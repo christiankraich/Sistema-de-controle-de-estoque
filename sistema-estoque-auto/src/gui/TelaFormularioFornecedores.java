@@ -448,21 +448,21 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     private void btnPesquisarCNPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCNPJActionPerformed
         String cnpj = txtCNPJ.getText();
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
-        Fornecedores fornecedores = fornecedoresDao.buscarFornecedor(cnpj);
+        Fornecedores fornecedor = fornecedoresDao.buscarFornecedor(cnpj);
 
-        if (fornecedores.getCnpj() != null) {
-            txtId.setText(String.valueOf(fornecedores.getId()));
-            txtNome.setText(fornecedores.getNome());
-            txtCNPJ.setText(fornecedores.getCnpj());
-            txtEmail.setText(fornecedores.getEmail());
-            txtTelefone.setText(fornecedores.getTelefone());
-            txtCEP.setText(fornecedores.getCep());
-            txtEndereco.setText(fornecedores.getEndereco());
-            txtNumero.setText(String.valueOf(fornecedores.getNumero()));
-            txtComplemento.setText(fornecedores.getComplemento());
-            txtBairro.setText(fornecedores.getBairro());
-            txtCidade.setText(fornecedores.getCidade());
-            cbUF.setSelectedItem(fornecedores.getEstado());
+        if (fornecedor.getCnpj() != null) {
+            txtId.setText(String.valueOf(fornecedor.getId()));
+            txtNome.setText(fornecedor.getNome());
+            txtCNPJ.setText(fornecedor.getCnpj());
+            txtEmail.setText(fornecedor.getEmail());
+            txtTelefone.setText(fornecedor.getTelefone());
+            txtCEP.setText(fornecedor.getCep());
+            txtEndereco.setText(fornecedor.getEndereco());
+            txtNumero.setText(String.valueOf(fornecedor.getNumero()));
+            txtComplemento.setText(fornecedor.getComplemento());
+            txtBairro.setText(fornecedor.getBairro());
+            txtCidade.setText(fornecedor.getCidade());
+            cbUF.setSelectedItem(fornecedor.getEstado());
         } else {
             JOptionPane.showMessageDialog(null, "Cliente não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
