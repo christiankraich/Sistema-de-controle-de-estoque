@@ -195,37 +195,6 @@ public class FornecedoresDAO {
         } catch (SQLException e) {
         }
         return fornecedor;
-    }
-
-    public List<Pecas> filtrarPecasFornecedor(String cnpj) {
-        List<Pecas> lista = new ArrayList<>();
-        String sql = "select p.*, f.nome as nome_fornecedor from pecas p inner join "
-                + "fornecedores f on (p.id_fornecedor = f.id) where f.cnpj like ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, cnpj);
-            ResultSet rs = stmt.executeQuery();
-            FornecedoresDAO fornecedorDao = new FornecedoresDAO();
-
-            while (rs.next()) {
-                Pecas peca = new Pecas();
-                peca.setId(rs.getInt("id"));
-
-                int idFornecedor = rs.getInt("id_fornecedor");
-                Fornecedores fornecedor = fornecedorDao.buscarIdFornecedor(idFornecedor);
-                peca.setFornecedores(fornecedor);
-
-                peca.setNome(rs.getString("nome"));
-                peca.setDescricao(rs.getString("descricao"));
-                peca.setQuantidade(rs.getShort("quantidade"));
-                peca.setValorUnidadeFornecedor(rs.getDouble("valor_unidade_fornecedor"));
-                peca.setValorUnidadeCliente(rs.getDouble("valor_unidade_cliente"));
-                lista.add(peca);
-            }
-
-        } catch (SQLException e) {
-        }
-        return lista;
-    }
+    }    
 
 }
