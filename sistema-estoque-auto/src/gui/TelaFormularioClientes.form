@@ -244,8 +244,8 @@
                           <Component id="txtEndereco" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtComplemento" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -421,12 +421,10 @@
                 <Property name="text" type="java.lang.String" value="N&#xba;:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="txtNumero">
-              <Properties>
-                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                  <Format format="#0" subtype="-1" type="0"/>
-                </Property>
-              </Properties>
+            <Component class="javax.swing.JTextField" name="txtNumero">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {&#xa;@Override&#xa;public void keyTyped(java.awt.event.KeyEvent e) {&#xa;char c = e.getKeyChar();&#xa;if (!Character.isDigit(c)) {&#xa;e.consume();&#xa;}&#xa;if (txtNumero.getText().length() &gt;= 5) {&#xa;e.consume();&#xa;}&#xa;}&#xa;});"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
