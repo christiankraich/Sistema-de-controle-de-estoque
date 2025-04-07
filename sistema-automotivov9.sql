@@ -6,7 +6,7 @@ CREATE TABLE `cargos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 LOCK TABLES `cargos` WRITE;
 UNLOCK TABLES;
@@ -29,7 +29,7 @@ CREATE TABLE `clientes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `cpf` (`cpf`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 LOCK TABLES `clientes` WRITE;
 UNLOCK TABLES;
@@ -41,7 +41,7 @@ CREATE TABLE `faturamento` (
   `data` date NOT NULL,
   `valor_servico` decimal(8,2) NOT NULL,
   `valor_pecas` decimal(8,2) NOT NULL,
-  `valor_liquido` decimal(9,2) GENERATED ALWAYS AS (`valor_servico` + `valor_pecas`) STORED,
+  `valor_liquido` decimal(10,2) GENERATED ALWAYS AS (`valor_servico` + `valor_pecas`) STORED,
   PRIMARY KEY (`id`),
   KEY `id_os` (`id_os`),
   CONSTRAINT `faturamento_ibfk_1` FOREIGN KEY (`id_os`) REFERENCES `ordem_de_servico` (`id`)
@@ -157,7 +157,8 @@ CREATE TABLE `pecas_pedidos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_peca` int(10) unsigned NOT NULL,
   `id_pedido` int(10) unsigned NOT NULL,
-  `quantidade` int(10) unsigned NOT NULL,
+  `quantidade` int(10) DEFAULT NULL,
+  `subtotal` decimal(9,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_pedido` (`id_pedido`),
   KEY `id_peca` (`id_peca`),
@@ -173,7 +174,7 @@ CREATE TABLE `pedidos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_fornecedor` int(10) unsigned NOT NULL,
   `data` date DEFAULT NULL,
-  `valor_total` decimal(9,2) DEFAULT NULL,
+  `valor_total` decimal(10,2) DEFAULT NULL,
   `status` enum('Concluído','Pendente') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_fornecedor` (`id_fornecedor`),
