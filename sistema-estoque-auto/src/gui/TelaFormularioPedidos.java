@@ -2,9 +2,12 @@ package gui;
 
 import dao.FornecedoresDAO;
 import dao.PecasDAO;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Fornecedores;
@@ -47,9 +50,13 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             double valorFornecedor = Double.parseDouble(txtPrecoUnidadeFornecedor.getText());
             int qtdPedido = Integer.parseInt(txtQtdPedido.getText());
             double valorTotalPeca = valorFornecedor * qtdPedido;
-            txtValorTotalPeca.setText(String.valueOf(valorTotalPeca));
+
+            DecimalFormatSymbols dataBase = new DecimalFormatSymbols(Locale.US);
+            DecimalFormat df = new DecimalFormat("#.##", dataBase);
+            String valorFormatado = df.format(valorTotalPeca);
+            txtValorTotalPeca.setText(valorFormatado);
         } catch (NumberFormatException e) {
-            txtValorTotalPeca.setText("0.0");
+            txtValorTotalPeca.setText("0.00");
         }
     }
 
@@ -72,7 +79,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        PanelDadosFornecedor = new javax.swing.JPanel();
+        panelDadosFornecedor = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtCnpj = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -108,6 +115,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         txtTotalPedido = new javax.swing.JTextField();
         btnFazerPedido = new javax.swing.JButton();
         btnCancelarPedido = new javax.swing.JButton();
+        btnLimparTabelaPedido = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Formulário de Pedidos");
@@ -135,7 +143,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
 
-        PanelDadosFornecedor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados do Fornecedor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        panelDadosFornecedor.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados do Fornecedor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
         jLabel2.setText("CNPJ:");
 
@@ -218,33 +226,33 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout PanelDadosFornecedorLayout = new javax.swing.GroupLayout(PanelDadosFornecedor);
-        PanelDadosFornecedor.setLayout(PanelDadosFornecedorLayout);
-        PanelDadosFornecedorLayout.setHorizontalGroup(
-            PanelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDadosFornecedorLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelDadosFornecedorLayout = new javax.swing.GroupLayout(panelDadosFornecedor);
+        panelDadosFornecedor.setLayout(panelDadosFornecedorLayout);
+        panelDadosFornecedorLayout.setHorizontalGroup(
+            panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(PanelDadosFornecedorLayout.createSequentialGroup()
+                    .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(PanelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(PanelDadosFornecedorLayout.createSequentialGroup()
+                        .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(26, 26, 26)
                                 .addComponent(btnPesquisarCnpj))
                             .addComponent(txtNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(PanelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanelDadosFornecedorLayout.createSequentialGroup()
+                        .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
                                 .addGap(47, 47, 47)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtEmailFornecedor, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                                 .addGap(97, 97, 97))
-                            .addGroup(PanelDadosFornecedorLayout.createSequentialGroup()
+                            .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(btnLimparCnpj)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -254,25 +262,25 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                                 .addGap(78, 78, 78)))))
                 .addContainerGap())
         );
-        PanelDadosFornecedorLayout.setVerticalGroup(
-            PanelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDadosFornecedorLayout.createSequentialGroup()
+        panelDadosFornecedorLayout.setVerticalGroup(
+            panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnPesquisarCnpj)
                         .addComponent(btnLimparCnpj))
-                    .addGroup(PanelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(txtDataAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(PanelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(txtNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel5)
                         .addComponent(txtEmailFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -431,11 +439,20 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
 
         jLabel12.setText("Total do Pedido:");
 
+        txtTotalPedido.setEditable(false);
         txtTotalPedido.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txtTotalPedido.setEnabled(false);
 
         btnFazerPedido.setText("Fazer Pedido");
 
         btnCancelarPedido.setText("Cancelar Pedido");
+
+        btnLimparTabelaPedido.setText("Limpar");
+        btnLimparTabelaPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparTabelaPedidoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelPedidoLayout = new javax.swing.GroupLayout(panelPedido);
         panelPedido.setLayout(panelPedidoLayout);
@@ -455,16 +472,22 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                             .addComponent(btnFazerPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 25, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(panelPedidoLayout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(btnLimparTabelaPedido)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPedidoLayout.setVerticalGroup(
             panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPedidoLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimparTabelaPedido)
+                .addGap(11, 11, 11)
                 .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPedidoLayout.createSequentialGroup()
                         .addComponent(btnFazerPedido)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                         .addComponent(btnCancelarPedido))
                     .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtTotalPedido, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -479,7 +502,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PanelDadosFornecedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelDadosFornecedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelDadosPeca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -491,7 +514,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PanelDadosFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelDadosFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelDadosPeca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -537,7 +560,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimparPecaActionPerformed
 
     private void btnLimparCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparCnpjActionPerformed
-        util.limparCampos(PanelDadosFornecedor);
+        util.limparCampos(panelDadosFornecedor);
         util.limparCampos(panelDadosPeca);
         txtDataAtual.setText(dataFormatada);
         txtCnpj.setEnabled(true);
@@ -552,25 +575,31 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
 
         if (peca != null) {
             idFornecedor = peca.getFornecedores().getId();
-            int idFornecedorPeca = peca.getFornecedores().getId();            
+            int idFornecedorPeca = peca.getFornecedores().getId();
             subtotal = Double.parseDouble(txtValorTotalPeca.getText());
             total += subtotal;
+            String qtd = txtQtdPedido.getText();
 
-            if (idFornecedorCarrinho == 0) {
-                idFornecedorCarrinho = idFornecedor;
-            }
-            if (idFornecedorPeca == idFornecedorCarrinho) {
-                txtTotalPedido.setText(String.valueOf(total));
-                meuPedido = (DefaultTableModel) tabelaPecasPedido.getModel();
-                meuPedido.addRow(new Object[]{
-                    txtIdPeca.getText(),
-                    txtNomePeca.getText(),
-                    txtQtdPedido.getText(),
-                    txtPrecoUnidadeFornecedor.getText(),
-                    subtotal
-                });
+            if (qtd.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Adicione a quantidade de peças no pedido!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                return;
             } else {
-                JOptionPane.showMessageDialog(null, "A peça não pode ser adicionada ao carrinho pois o fornecedor é diferente das outras!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                if (idFornecedorCarrinho == 0) {
+                    idFornecedorCarrinho = idFornecedor;
+                }
+                if (idFornecedorPeca == idFornecedorCarrinho) {
+                    txtTotalPedido.setText(String.valueOf(total));
+                    meuPedido = (DefaultTableModel) tabelaPecasPedido.getModel();
+                    meuPedido.addRow(new Object[]{
+                        txtIdPeca.getText(),
+                        txtNomePeca.getText(),
+                        txtQtdPedido.getText(),
+                        txtPrecoUnidadeFornecedor.getText(),
+                        subtotal
+                    });
+                } else {
+                    JOptionPane.showMessageDialog(null, "A peça não pode ser adicionada ao carrinho pois o fornecedor é diferente das outras!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possível adicionar ao carrinho.\n Faltam informações.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -582,6 +611,16 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private void txtQtdPedidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQtdPedidoKeyReleased
         calcularValorTotalPeca();
     }//GEN-LAST:event_txtQtdPedidoKeyReleased
+
+    private void btnLimparTabelaPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparTabelaPedidoActionPerformed
+        int opcao = JOptionPane.showConfirmDialog(null, "Você tem certeza que quer deletar os itens da tabela?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (opcao == 0) {
+            util.LimparTabela(tabelaPecasPedido);
+            util.limparCampos(panelPedido);
+            total = 0;
+            idFornecedorCarrinho = 0;
+        }
+    }//GEN-LAST:event_btnLimparTabelaPedidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -620,12 +659,12 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PanelDadosFornecedor;
     private javax.swing.JButton btnAdicionarPeca;
     private javax.swing.JButton btnCancelarPedido;
     private javax.swing.JButton btnFazerPedido;
     private javax.swing.JButton btnLimparCnpj;
     private javax.swing.JButton btnLimparPeca;
+    private javax.swing.JButton btnLimparTabelaPedido;
     private javax.swing.JButton btnPesquisarCnpj;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -643,6 +682,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JPanel panelDadosFornecedor;
     private javax.swing.JPanel panelDadosPeca;
     private javax.swing.JPanel panelPedido;
     private javax.swing.JTable tabelaPecasFornecedor;

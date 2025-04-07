@@ -127,11 +127,95 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
 
         jLabel11.setText("Quantidade:");
 
+        txtQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+                if (txtQuantidade.getText().length() >= 5) {
+                    e.consume();
+                }
+            }
+        });
         txtQuantidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         jLabel5.setText("Preço Cliente:");
 
         jLabel7.setText("Preço Fornecedor:");
+
+        txtPrecoFornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                char c = e.getKeyChar();
+
+                // Permite apenas números e o ponto
+                if (!(Character.isDigit(c) || c == '.')) {
+                    e.consume();
+                }
+
+                // Impede que o número ultrapasse 10 caracteres no total
+                if (txtPrecoFornecedor.getText().length() >= 10) {
+                    e.consume();
+                }
+
+                // Impede mais de um ponto decimal
+                if (c == '.' && txtPrecoFornecedor.getText().contains(".")) {
+                    e.consume();
+                }
+
+                // Impede mais de 2 casas decimais após o ponto
+                if (txtPrecoFornecedor.getText().contains(".")) {
+                    // Se já houver ponto, verifica as casas decimais
+                    int decimalIndex = txtPrecoFornecedor.getText().indexOf('.');
+                    if (txtPrecoFornecedor.getText().substring(decimalIndex + 1).length() >= 2) {
+                        e.consume();  // Bloqueia o evento se já houver 2 casas decimais
+                    }
+                }
+
+                // Impede que o ponto seja o primeiro caractere
+                if (c == '.' && txtPrecoFornecedor.getText().isEmpty()) {
+                    e.consume(); // Bloqueia o ponto se o campo estiver vazio
+                }
+            }
+        });
+
+        txtPrecoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                char c = e.getKeyChar();
+
+                // Permite apenas números e o ponto
+                if (!(Character.isDigit(c) || c == '.')) {
+                    e.consume();
+                }
+
+                // Impede que o número ultrapasse 10 caracteres no total
+                if (txtPrecoCliente.getText().length() >= 10) {
+                    e.consume();
+                }
+
+                // Impede mais de um ponto decimal
+                if (c == '.' && txtPrecoCliente.getText().contains(".")) {
+                    e.consume();
+                }
+
+                // Impede mais de 2 casas decimais após o ponto
+                if (txtPrecoCliente.getText().contains(".")) {
+                    // Se já houver ponto, verifica as casas decimais
+                    int decimalIndex = txtPrecoCliente.getText().indexOf('.');
+                    if (txtPrecoCliente.getText().substring(decimalIndex + 1).length() >= 2) {
+                        e.consume();  // Bloqueia o evento se já houver 2 casas decimais
+                    }
+                }
+
+                // Impede que o ponto seja o primeiro caractere
+                if (c == '.' && txtPrecoCliente.getText().isEmpty()) {
+                    e.consume(); // Bloqueia o ponto se o campo estiver vazio
+                }
+            }
+        });
 
         jLabel8.setText("Fornecedor:");
 

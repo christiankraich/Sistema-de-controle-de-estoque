@@ -4,40 +4,50 @@ public class PecasPedidos {
     
     //atributos
     private int id;
-    private Pecas peca;
-    private Pedidos pedido;
+    private Pecas pecas;
+    private Pedidos pedidos;
     private int quantidade;
+    private double subtotal;
     
     //metodos especiais
     public int getId() {
         return id;
     }
-    
+
     public void setId(int id) {
         this.id = id;
     }
-    
-    public Pecas getPeca() {
-        return peca;
+
+    public Pecas getPecas() {
+        return pecas;
     }
-    
-    public void setPeca(Pecas peca) {
-        this.peca = peca;
+
+    public void setPecas(Pecas pecas) {
+        this.pecas = pecas;
     }
-    
-    public Pedidos getPedido() {
-        return pedido;
+
+    public Pedidos getPedidos() {
+        return pedidos;
     }
-    
-    public void setPedido(Pedidos pedido) {
-        this.pedido = pedido;
+
+    public void setPedidos(Pedidos pedidos) {
+        this.pedidos = pedidos;
     }
-    
+
     public int getQuantidade() {
         return quantidade;
     }
-    
+
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
+    
 }

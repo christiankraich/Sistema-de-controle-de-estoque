@@ -3,7 +3,9 @@ package utilidades;
 import java.awt.Component;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class Utilidades {
     
@@ -17,6 +19,11 @@ public class Utilidades {
                 jComboBox.setSelectedItem("---");
             }
         }
-    }   
+    } 
+    
+    public void LimparTabela(JTable tabela) {
+        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        modelo.setRowCount(0);
+    }
     
 }

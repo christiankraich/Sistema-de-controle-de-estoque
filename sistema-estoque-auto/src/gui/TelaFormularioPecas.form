@@ -261,6 +261,9 @@
                   <Format format="#0" subtype="-1" type="0"/>
                 </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {&#xa;@Override&#xa;    public void keyTyped(java.awt.event.KeyEvent e) {&#xa;        char c = e.getKeyChar();&#xa;        if (!Character.isDigit(c)) {&#xa;            e.consume();&#xa;        }&#xa;        if (txtQuantidade.getText().length() &gt;= 5) {&#xa;            e.consume();&#xa;        }&#xa;    }&#xa;});"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
@@ -273,8 +276,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtPrecoFornecedor">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtPrecoFornecedor.addKeyListener(new java.awt.event.KeyAdapter() {&#xa;    @Override&#xa;    public void keyTyped(java.awt.event.KeyEvent e) {&#xa;        char c = e.getKeyChar();&#xa;        &#xa;        // Permite apenas n&#xfa;meros e o ponto&#xa;        if (!(Character.isDigit(c) || c == &apos;.&apos;)) {&#xa;            e.consume();&#xa;        }&#xa;&#xa;        // Impede que o n&#xfa;mero ultrapasse 10 caracteres no total&#xa;        if (txtPrecoFornecedor.getText().length() &gt;= 10) {&#xa;            e.consume();&#xa;        }&#xa;&#xa;        // Impede mais de um ponto decimal&#xa;        if (c == &apos;.&apos; &amp;&amp; txtPrecoFornecedor.getText().contains(&quot;.&quot;)) {&#xa;            e.consume();&#xa;        }&#xa;&#xa;        // Impede mais de 2 casas decimais ap&#xf3;s o ponto&#xa;        if (txtPrecoFornecedor.getText().contains(&quot;.&quot;)) {&#xa;            // Se j&#xe1; houver ponto, verifica as casas decimais&#xa;            int decimalIndex = txtPrecoFornecedor.getText().indexOf(&apos;.&apos;);&#xa;            if (txtPrecoFornecedor.getText().substring(decimalIndex + 1).length() &gt;= 2) {&#xa;                e.consume();  // Bloqueia o evento se j&#xe1; houver 2 casas decimais&#xa;            }&#xa;        }&#xa;&#xa;        // Impede que o ponto seja o primeiro caractere&#xa;        if (c == &apos;.&apos; &amp;&amp; txtPrecoFornecedor.getText().isEmpty()) {&#xa;            e.consume(); // Bloqueia o ponto se o campo estiver vazio&#xa;        }&#xa;    }&#xa;});"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="txtPrecoCliente">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtPrecoCliente.addKeyListener(new java.awt.event.KeyAdapter() {&#xa;    @Override&#xa;    public void keyTyped(java.awt.event.KeyEvent e) {&#xa;        char c = e.getKeyChar();&#xa;        &#xa;        // Permite apenas n&#xfa;meros e o ponto&#xa;        if (!(Character.isDigit(c) || c == &apos;.&apos;)) {&#xa;            e.consume();&#xa;        }&#xa;&#xa;        // Impede que o n&#xfa;mero ultrapasse 10 caracteres no total&#xa;        if (txtPrecoCliente.getText().length() &gt;= 10) {&#xa;            e.consume();&#xa;        }&#xa;&#xa;        // Impede mais de um ponto decimal&#xa;        if (c == &apos;.&apos; &amp;&amp; txtPrecoCliente.getText().contains(&quot;.&quot;)) {&#xa;            e.consume();&#xa;        }&#xa;&#xa;        // Impede mais de 2 casas decimais ap&#xf3;s o ponto&#xa;        if (txtPrecoCliente.getText().contains(&quot;.&quot;)) {&#xa;            // Se j&#xe1; houver ponto, verifica as casas decimais&#xa;            int decimalIndex = txtPrecoCliente.getText().indexOf(&apos;.&apos;);&#xa;            if (txtPrecoCliente.getText().substring(decimalIndex + 1).length() &gt;= 2) {&#xa;                e.consume();  // Bloqueia o evento se j&#xe1; houver 2 casas decimais&#xa;            }&#xa;        }&#xa;&#xa;        // Impede que o ponto seja o primeiro caractere&#xa;        if (c == &apos;.&apos; &amp;&amp; txtPrecoCliente.getText().isEmpty()) {&#xa;            e.consume(); // Bloqueia o ponto se o campo estiver vazio&#xa;        }&#xa;    }&#xa;});"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
               <Properties>
