@@ -249,7 +249,7 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+  private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         TelaFormularioPecas tfp = new TelaFormularioPecas();
         tfp.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
@@ -294,7 +294,7 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -316,5 +316,5 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JDesktopPane painelDesktop;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                  
 }

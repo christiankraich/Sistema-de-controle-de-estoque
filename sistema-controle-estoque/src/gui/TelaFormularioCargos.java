@@ -235,7 +235,7 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        limpar.limparCampos(panelDados);
+        limpar.limparCampos(panelDados);       
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
