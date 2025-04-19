@@ -8,11 +8,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Fornecedores;
 import model.Pecas;
-import utilidades.Utilidades;
+import utilidades.LimpaComponente;
 
 public class TelaFormularioPecas extends javax.swing.JFrame {
 
-    private final Utilidades util = new Utilidades();
+    private final LimpaComponente limpar = new LimpaComponente();
     private boolean fornecedoresCarregados = false;
 
     public void listar() {
@@ -464,7 +464,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
 
         PecasDAO pecasDao = new PecasDAO();
         pecasDao.salvar(peca);
-        util.limparCampos(pnlDadosPecas);
+        limpar.limparCampos(pnlDadosPecas);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarNomeActionPerformed
@@ -496,7 +496,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarNomeActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        util.limparCampos(pnlDadosPecas);
+        limpar.limparCampos(pnlDadosPecas);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -557,7 +557,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
 
         PecasDAO dao = new PecasDAO();
         dao.editar(peca);
-        util.limparCampos(pnlDadosPecas);
+        limpar.limparCampos(pnlDadosPecas);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -565,7 +565,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         peca.setId(Integer.parseInt(txtId.getText()));
         PecasDAO dao = new PecasDAO();
         dao.excluir(peca);
-        util.limparCampos(pnlDadosPecas);
+        limpar.limparCampos(pnlDadosPecas);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void cbFornecedorAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbFornecedorAncestorAdded

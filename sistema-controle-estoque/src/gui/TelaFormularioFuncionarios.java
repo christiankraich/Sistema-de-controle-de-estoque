@@ -10,13 +10,13 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Cargos;
 import model.Funcionarios;
-import utilidades.Utilidades;
+import utilidades.LimpaComponente;
 
 public class TelaFormularioFuncionarios extends javax.swing.JFrame {
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-    private final Utilidades util = new Utilidades();
+    private final LimpaComponente limpar = new LimpaComponente();
     private boolean cargosCarregados = false;
 
     public void listar() {
@@ -50,8 +50,8 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         try {
             cbNivelAcesso.removeAllItems();
 
-            cbNivelAcesso.addItem(Funcionarios.nivelAcesso.Administrador);
-            cbNivelAcesso.addItem(Funcionarios.nivelAcesso.Comum);
+            cbNivelAcesso.addItem(Funcionarios.NivelAcesso.ADMINISTRADOR);
+            cbNivelAcesso.addItem(Funcionarios.NivelAcesso.COMUM);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro:" + e);
         }
@@ -548,12 +548,12 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         Cargos cargo = (Cargos) cbCargos.getSelectedItem();
         funcionario.setCargos(cargo);
 
-        Funcionarios.nivelAcesso nivelAcessoSelecionado = (Funcionarios.nivelAcesso) cbNivelAcesso.getSelectedItem();
+        Funcionarios.NivelAcesso nivelAcessoSelecionado = (Funcionarios.NivelAcesso) cbNivelAcesso.getSelectedItem();
         funcionario.setNivelAcesso(nivelAcessoSelecionado);
 
         FuncionariosDAO dao = new FuncionariosDAO();
         dao.salvar(funcionario);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCPFActionPerformed
@@ -593,7 +593,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarCPFActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -695,12 +695,12 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         funcionario.setEstado(cbUF.getSelectedItem().toString());
         funcionario.setCargos((Cargos) cbCargos.getSelectedItem());
         funcionario.setSenha(txtSenha.getText());
-        funcionario.setNivelAcesso((Funcionarios.nivelAcesso) cbNivelAcesso.getSelectedItem());
+        funcionario.setNivelAcesso((Funcionarios.NivelAcesso) cbNivelAcesso.getSelectedItem());
         funcionario.setId(Integer.parseInt(txtId.getText()));
 
         FuncionariosDAO dao = new FuncionariosDAO();
         dao.editar(funcionario);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -708,7 +708,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         funcionario.setId(Integer.parseInt(txtId.getText()));
         FuncionariosDAO dao = new FuncionariosDAO();
         dao.excluir(funcionario);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void cbCargosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbCargosAncestorAdded

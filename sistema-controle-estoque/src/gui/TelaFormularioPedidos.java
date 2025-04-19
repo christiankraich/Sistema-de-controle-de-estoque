@@ -12,12 +12,13 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Fornecedores;
 import model.Pecas;
-import utilidades.Utilidades;
+import utilidades.LimpaComponente;
 
 public class TelaFormularioPedidos extends javax.swing.JFrame {
 
-    private final Utilidades util = new Utilidades();
+    private final LimpaComponente limpar = new LimpaComponente();
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private boolean fornecedoresCarregados = false;
 
     Date dataAtual = new Date();
     String dataFormatada = sdf.format(dataAtual);
@@ -88,11 +89,12 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         txtNomeFornecedor = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtEmailFornecedor = new javax.swing.JTextField();
-        btnPesquisarCnpj = new javax.swing.JButton();
+        btnPesquisarNomeFornecedor = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaPecasFornecedor = new javax.swing.JTable();
-        btnLimparCnpj = new javax.swing.JButton();
+        btnLimparNomeFornecedor = new javax.swing.JButton();
+        cbNomeFornecedor = new javax.swing.JComboBox();
         panelDadosPeca = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtIdPeca = new javax.swing.JTextField();
@@ -147,6 +149,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
 
         jLabel2.setText("CNPJ:");
 
+        txtCnpj.setEditable(false);
         try {
             txtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
         } catch (java.text.ParseException ex) {
@@ -172,10 +175,10 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         txtEmailFornecedor.setEditable(false);
         txtEmailFornecedor.setEnabled(false);
 
-        btnPesquisarCnpj.setText("Pesquisar");
-        btnPesquisarCnpj.addActionListener(new java.awt.event.ActionListener() {
+        btnPesquisarNomeFornecedor.setText("Pesquisar");
+        btnPesquisarNomeFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPesquisarCnpjActionPerformed(evt);
+                btnPesquisarNomeFornecedorActionPerformed(evt);
             }
         });
 
@@ -219,10 +222,20 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnLimparCnpj.setText("Limpar");
-        btnLimparCnpj.addActionListener(new java.awt.event.ActionListener() {
+        btnLimparNomeFornecedor.setText("Limpar");
+        btnLimparNomeFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparCnpjActionPerformed(evt);
+                btnLimparNomeFornecedorActionPerformed(evt);
+            }
+        });
+
+        cbNomeFornecedor.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                cbNomeFornecedorAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
 
@@ -243,7 +256,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(26, 26, 26)
-                                .addComponent(btnPesquisarCnpj))
+                                .addComponent(btnPesquisarNomeFornecedor))
                             .addComponent(txtNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
@@ -254,7 +267,9 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                                 .addGap(97, 97, 97))
                             .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(btnLimparCnpj)
+                                .addComponent(btnLimparNomeFornecedor)
+                                .addGap(40, 40, 40)
+                                .addComponent(cbNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -270,8 +285,9 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                     .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnPesquisarCnpj)
-                        .addComponent(btnLimparCnpj))
+                        .addComponent(btnPesquisarNomeFornecedor)
+                        .addComponent(btnLimparNomeFornecedor)
+                        .addComponent(cbNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(txtDataAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -526,20 +542,20 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPesquisarCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCnpjActionPerformed
-        String cnpj = txtCnpj.getText();
+    private void btnPesquisarNomeFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarNomeFornecedorActionPerformed
+        String nome = cbNomeFornecedor.getSelectedItem().toString();
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
-        Fornecedores fornecedor = fornecedoresDao.buscarFornecedor(cnpj);
+        Fornecedores fornecedor = fornecedoresDao.buscarNomeFornecedor(nome);
 
-        if (fornecedor.getCnpj() != null) {
-            txtNomeFornecedor.setText(fornecedor.getNome());
+        if (fornecedor.getNome() != null) {
+            txtCnpj.setText(fornecedor.getCnpj());
             txtEmailFornecedor.setText(fornecedor.getEmail());
-            txtCnpj.setEnabled(false);
+            cbNomeFornecedor.setEnabled(false);
         } else {
-            JOptionPane.showMessageDialog(null, "Fornecedor não encontrado para o CNPJ fornecido!", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Fornecedor não encontrado para o nome concedido!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         filtrar();
-    }//GEN-LAST:event_btnPesquisarCnpjActionPerformed
+    }//GEN-LAST:event_btnPesquisarNomeFornecedorActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         filtrar();
@@ -556,17 +572,17 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaPecasFornecedorMouseClicked
 
     private void btnLimparPecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparPecaActionPerformed
-        util.limparCampos(panelDadosPeca);
+        limpar.limparCampos(panelDadosPeca);
     }//GEN-LAST:event_btnLimparPecaActionPerformed
 
-    private void btnLimparCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparCnpjActionPerformed
-        util.limparCampos(panelDadosFornecedor);
-        util.limparCampos(panelDadosPeca);
+    private void btnLimparNomeFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparNomeFornecedorActionPerformed
+        limpar.limparCampos(panelDadosFornecedor);
+        limpar.limparCampos(panelDadosPeca);
         txtDataAtual.setText(dataFormatada);
-        txtCnpj.setEnabled(true);
-        txtCnpj.requestFocus();
+        cbNomeFornecedor.setEnabled(true);
+        fornecedoresCarregados = false;
 
-    }//GEN-LAST:event_btnLimparCnpjActionPerformed
+    }//GEN-LAST:event_btnLimparNomeFornecedorActionPerformed
 
     private void btnAdicionarPecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarPecaActionPerformed
         String nome = txtNomePeca.getText();
@@ -604,7 +620,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possível adicionar ao carrinho.\n Faltam informações.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        util.limparCampos(panelDadosPeca);
+        limpar.limparCampos(panelDadosPeca);
 
     }//GEN-LAST:event_btnAdicionarPecaActionPerformed
 
@@ -615,12 +631,25 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private void btnLimparTabelaPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparTabelaPedidoActionPerformed
         int opcao = JOptionPane.showConfirmDialog(null, "Você tem certeza que quer deletar os itens da tabela?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (opcao == 0) {
-            util.LimparTabela(tabelaPecasPedido);
-            util.limparCampos(panelPedido);
+            limpar.limparTabela(tabelaPecasPedido);
+            limpar.limparCampos(panelPedido);
             total = 0;
             idFornecedorCarrinho = 0;
         }
     }//GEN-LAST:event_btnLimparTabelaPedidoActionPerformed
+
+    private void cbNomeFornecedorAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbNomeFornecedorAncestorAdded
+        if(!fornecedoresCarregados) {
+            FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
+            List<Fornecedores> lista = fornecedoresDao.listar();
+            cbNomeFornecedor.removeAllItems();
+            cbNomeFornecedor.addItem("Selecione o fornecedor");
+            for (Fornecedores f: lista) {
+                cbNomeFornecedor.addItem(f);
+            }
+            fornecedoresCarregados = true;
+        }
+    }//GEN-LAST:event_cbNomeFornecedorAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -662,10 +691,11 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private javax.swing.JButton btnAdicionarPeca;
     private javax.swing.JButton btnCancelarPedido;
     private javax.swing.JButton btnFazerPedido;
-    private javax.swing.JButton btnLimparCnpj;
+    private javax.swing.JButton btnLimparNomeFornecedor;
     private javax.swing.JButton btnLimparPeca;
     private javax.swing.JButton btnLimparTabelaPedido;
-    private javax.swing.JButton btnPesquisarCnpj;
+    private javax.swing.JButton btnPesquisarNomeFornecedor;
+    private javax.swing.JComboBox cbNomeFornecedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -8,13 +8,13 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Clientes;
-import utilidades.Utilidades;
+import utilidades.LimpaComponente;
 
 public class TelaFormularioClientes extends javax.swing.JFrame {
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-    private final Utilidades util = new Utilidades();
+    private final LimpaComponente limpar = new LimpaComponente();
 
     public void listar() {
         ClientesDAO clientesDao = new ClientesDAO();
@@ -486,7 +486,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
 
         ClientesDAO dao = new ClientesDAO();
         dao.salvar(cliente);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCPFActionPerformed
@@ -514,7 +514,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarCPFActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -603,7 +603,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
 
         ClientesDAO dao = new ClientesDAO();
         dao.editar(cliente);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -611,7 +611,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         cliente.setId(Integer.parseInt(txtId.getText()));
         ClientesDAO dao = new ClientesDAO();
         dao.excluir(cliente);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**

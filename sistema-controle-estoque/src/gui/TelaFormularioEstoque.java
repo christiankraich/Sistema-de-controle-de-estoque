@@ -1,16 +1,15 @@
 package gui;
 
 import dao.PecasDAO;
-import java.awt.HeadlessException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Pecas;
-import utilidades.Utilidades;
+import utilidades.LimpaComponente;
 
 public class TelaFormularioEstoque extends javax.swing.JFrame {
 
-    private final Utilidades util = new Utilidades();
+    private final LimpaComponente util = new LimpaComponente();
     int idPeca, qtdAtualizada;
 
     public void listar() {

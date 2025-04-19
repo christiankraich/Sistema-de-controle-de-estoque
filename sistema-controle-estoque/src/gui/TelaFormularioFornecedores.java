@@ -6,11 +6,11 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Fornecedores;
-import utilidades.Utilidades;
+import utilidades.LimpaComponente;
 
 public class TelaFormularioFornecedores extends javax.swing.JFrame {
 
-    private final Utilidades util = new Utilidades();
+    private final LimpaComponente limpar = new LimpaComponente();
 
     public void listar() {
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
@@ -452,13 +452,13 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
 
         FornecedoresDAO dao = new FornecedoresDAO();
         dao.salvar(fornecedores);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarCNPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCNPJActionPerformed
         String cnpj = txtCNPJ.getText();
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
-        Fornecedores fornecedor = fornecedoresDao.buscarFornecedor(cnpj);
+        Fornecedores fornecedor = fornecedoresDao.buscarCnpjFornecedor(cnpj);
 
         if (fornecedor.getCnpj() != null) {
             txtId.setText(String.valueOf(fornecedor.getId()));
@@ -479,7 +479,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarCNPJActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -544,7 +544,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
 
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
         fornecedoresDao.editar(fornecedores);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -552,7 +552,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
         fornecedores.setId(Integer.parseInt(txtId.getText()));
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
         fornecedoresDao.excluir(fornecedores);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void txtPesquisaNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaNomeKeyPressed

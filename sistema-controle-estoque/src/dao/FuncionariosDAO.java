@@ -83,9 +83,9 @@ public class FuncionariosDAO {
 
                 String nivelAcesso = rs.getString("nivel_acesso");
                 try {
-                    funcionario.setNivelAcesso(Funcionarios.nivelAcesso.valueOf(nivelAcesso));
+                    funcionario.setNivelAcesso(Funcionarios.NivelAcesso.valueOf(nivelAcesso));
                 } catch (IllegalArgumentException e) {
-                    funcionario.setNivelAcesso(Funcionarios.nivelAcesso.Comum);
+                    funcionario.setNivelAcesso(Funcionarios.NivelAcesso.COMUM);
                 }
             }
             return funcionario;
@@ -127,9 +127,9 @@ public class FuncionariosDAO {
                 String nivelAcesso = rs.getString("nivel_acesso");
 
                 try {
-                    funcionario.setNivelAcesso(Funcionarios.nivelAcesso.valueOf(nivelAcesso));
+                    funcionario.setNivelAcesso(Funcionarios.NivelAcesso.valueOf(nivelAcesso));
                 } catch (IllegalArgumentException e) {
-                    funcionario.setNivelAcesso(Funcionarios.nivelAcesso.Comum);
+                    funcionario.setNivelAcesso(Funcionarios.NivelAcesso.COMUM);
                 }
                 lista.add(funcionario);
             }
@@ -173,9 +173,9 @@ public class FuncionariosDAO {
                 String nivelAcesso = rs.getString("nivel_acesso");
                 
                 try {
-                    funcionario.setNivelAcesso(Funcionarios.nivelAcesso.valueOf(nivelAcesso));
+                    funcionario.setNivelAcesso(Funcionarios.NivelAcesso.valueOf(nivelAcesso));
                 } catch (IllegalArgumentException e) {
-                    funcionario.setNivelAcesso(Funcionarios.nivelAcesso.Comum);
+                    funcionario.setNivelAcesso(Funcionarios.NivelAcesso.COMUM);
                 }
                 lista.add(funcionario);
             }

@@ -46,7 +46,7 @@ public class FornecedoresDAO {
 
     }
 
-    public Fornecedores buscarFornecedor(String cnpj) {
+    public Fornecedores buscarCnpjFornecedor(String cnpj) {
         String sql = "select * from fornecedores where cnpj = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cnpj);
@@ -195,6 +195,36 @@ public class FornecedoresDAO {
         } catch (SQLException e) {
         }
         return fornecedor;
-    }    
+    }   
+    
+    public Fornecedores buscarNomeFornecedor(String nome) {
+        String sql = "select * from fornecedores where nome = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            ResultSet rs = stmt.executeQuery();
+            Fornecedores fornecedor = new Fornecedores();
+
+            if (rs.next()) {
+                fornecedor.setId(rs.getInt("id"));
+                fornecedor.setNome(rs.getString("nome"));
+                fornecedor.setEmail(rs.getString("email"));
+                fornecedor.setCnpj(rs.getString("cnpj"));
+                fornecedor.setTelefone(rs.getString("telefone"));
+                fornecedor.setCep(rs.getString("cep"));
+                fornecedor.setEndereco(rs.getString("endereco"));
+                fornecedor.setNumero(rs.getShort("numero"));
+                fornecedor.setComplemento(rs.getString("complemento"));
+                fornecedor.setBairro(rs.getString("bairro"));
+                fornecedor.setEstado(rs.getString("estado"));
+                fornecedor.setCidade(rs.getString("cidade"));
+            }
+            return fornecedor;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao encontrar o fornecedor. " + e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+        return null;
+
+    }
 
 }
