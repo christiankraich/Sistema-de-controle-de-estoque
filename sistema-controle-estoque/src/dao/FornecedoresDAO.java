@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import jdbc.MySQLConnection;
 import model.Fornecedores;
-import model.Pecas;
 
 public class FornecedoresDAO {
 
