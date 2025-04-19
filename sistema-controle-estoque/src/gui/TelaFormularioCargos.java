@@ -4,11 +4,11 @@ import dao.CargosDAO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.Cargos;
-import utilidades.Utilidades;
+import utilidades.LimpaComponente;
 
 public class TelaFormularioCargos extends javax.swing.JFrame {
     
-    private final Utilidades util = new Utilidades();
+    private final LimpaComponente limpar = new LimpaComponente();
 
     public void listar() {
         CargosDAO cargosDao = new CargosDAO();
@@ -231,11 +231,11 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
         
         CargosDAO dao = new CargosDAO();
         dao.salvar(cargo);
-        util.limparCampos(panelDados);
+        limpar.limparCampos(panelDados);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        util.limparCampos(panelDados);
+        limpar.limparCampos(panelDados);       
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
@@ -249,7 +249,7 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
         cargo.setId(Integer.parseInt(txtId.getText()));
         CargosDAO cargosDao = new CargosDAO();
         cargosDao.excluir(cargo);
-        util.limparCampos(panelDados);
+        limpar.limparCampos(panelDados);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -259,7 +259,7 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
         
         CargosDAO dao = new CargosDAO();
         dao.editar(cargo);
-        util.limparCampos(panelDados);
+        limpar.limparCampos(panelDados);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**

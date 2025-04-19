@@ -4,7 +4,7 @@ public class Pecas {
     
     //atributos
     private int id;
-    private Fornecedores fornecedor;
+    private Fornecedores fornecedores;
     private String nome;
     private String descricao;
     private short quantidade;
@@ -20,12 +20,12 @@ public class Pecas {
         this.id = id;
     }
 
-    public Fornecedores getFornecedor() {
-        return fornecedor;
+    public Fornecedores getFornecedores() {
+        return fornecedores;
     }
 
-    public void setFornecedor(Fornecedores fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setFornecedores(Fornecedores fornecedores) {
+        this.fornecedores = fornecedores;
     }
 
     public String getNome() {

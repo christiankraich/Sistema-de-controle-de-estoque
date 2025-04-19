@@ -38,8 +38,10 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -120,13 +122,36 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
         jMenu4.setText("Peças");
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem5.setText("Consulta de Peças");
-        jMenu4.add(jMenuItem5);
+        jMenu8.setText("Minhas Peças");
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem4.setText("Controle de Estoque");
-        jMenu4.add(jMenuItem4);
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem4);
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem5.setText("Consulta de Peças");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem5);
+
+        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem11.setText("Formulário de Peças");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem11);
+
+        jMenu4.add(jMenu8);
 
         jMenuBar1.add(jMenu4);
 
@@ -224,6 +249,22 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+  private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        TelaFormularioPecas tfp = new TelaFormularioPecas();
+        tfp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        TelaFormularioPecas tfpConsulta = new TelaFormularioPecas();
+        tfpConsulta.painelGuias.setSelectedIndex(1);
+        tfpConsulta.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        TelaFormularioEstoque tle = new TelaFormularioEstoque();
+        tle.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -253,7 +294,7 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -261,9 +302,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -273,5 +316,5 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JDesktopPane painelDesktop;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                  
 }

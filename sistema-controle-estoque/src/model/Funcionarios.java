@@ -5,7 +5,7 @@ public class Funcionarios extends Clientes {
     //atributos
     private Cargos cargos;    
     private String senha;
-    private nivelAcesso nivelAcesso;
+    private NivelAcesso nivelAcesso;
 
     //metodos especiais       
     public Cargos getCargos() {
@@ -24,17 +24,17 @@ public class Funcionarios extends Clientes {
         this.senha = senha;
     }
     
-    public nivelAcesso getNivelAcesso() {
+    public NivelAcesso getNivelAcesso() {
         return nivelAcesso;
     }
 
-    public void setNivelAcesso(nivelAcesso nivelAcesso) {
+    public void setNivelAcesso(NivelAcesso nivelAcesso) {
         this.nivelAcesso = nivelAcesso;
     }
     
-    public enum nivelAcesso {
-        Administrador,
-        Comum
+    public enum NivelAcesso {
+        ADMINISTRADOR,
+        COMUM
     }
     
 }

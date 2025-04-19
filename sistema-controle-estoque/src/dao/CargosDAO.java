@@ -47,13 +47,12 @@ public class CargosDAO {
                 cargo.setId(rs.getInt("id"));
                 cargo.setNome(rs.getString("nome"));
                 lista.add(cargo);
-            }
-        return lista;   
+            }   
             
         } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao criar a lista de cargos.", "Erro", JOptionPane.ERROR_MESSAGE);
         }        
-        return null;
+        return lista;
     }
     
     public void editar(Cargos cargo) {
@@ -86,7 +85,7 @@ public class CargosDAO {
         }
     }
     
-    public Cargos buscarCargo(int id) {
+    public Cargos buscarIdCargo(int id) {
         Cargos cargo = null;
         String sql = "select * from cargos where id = ?";
         

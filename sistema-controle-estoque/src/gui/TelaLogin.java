@@ -30,7 +30,7 @@ public class TelaLogin extends javax.swing.JFrame {
         pnlIncorreto = new javax.swing.JPanel();
         lblIncorreto = new javax.swing.JLabel();
         btnEntrar = new javax.swing.JButton();
-        btnTest = new javax.swing.JToggleButton();
+        btnOlharSenha = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tela de Login");
@@ -91,10 +91,10 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
-        btnTest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eye_icon.png"))); // NOI18N
-        btnTest.addActionListener(new java.awt.event.ActionListener() {
+        btnOlharSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eye_icon.png"))); // NOI18N
+        btnOlharSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTestActionPerformed(evt);
+                btnOlharSenhaActionPerformed(evt);
             }
         });
 
@@ -117,7 +117,7 @@ public class TelaLogin extends javax.swing.JFrame {
                                     .addComponent(txtSenhaLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                                     .addComponent(txtEmailLogin))
                                 .addGap(18, 18, 18)
-                                .addComponent(btnTest))
+                                .addComponent(btnOlharSenha))
                             .addComponent(pnlIncorreto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 52, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
@@ -138,7 +138,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtSenhaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnOlharSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlIncorreto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
@@ -168,13 +168,13 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
-    private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        if (btnTest.isSelected()) {
+    private void btnOlharSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOlharSenhaActionPerformed
+        if (btnOlharSenha.isSelected()) {
             txtSenhaLogin.setEchoChar((char) 0);
         } else {
             txtSenhaLogin.setEchoChar('*');
         }
-    }//GEN-LAST:event_btnTestActionPerformed
+    }//GEN-LAST:event_btnOlharSenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,7 +213,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar;
-    private javax.swing.JToggleButton btnTest;
+    private javax.swing.JToggleButton btnOlharSenha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

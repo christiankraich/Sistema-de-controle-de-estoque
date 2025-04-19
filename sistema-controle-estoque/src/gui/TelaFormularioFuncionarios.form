@@ -189,7 +189,7 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="txtCidade" min="-2" pref="176" max="-2" attributes="0"/>
-                                          <Component id="cbCargo" min="-2" pref="122" max="-2" attributes="0"/>
+                                          <Component id="cbCargos" min="-2" pref="122" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -247,8 +247,8 @@
                           <Component id="txtEndereco" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtComplemento" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -266,7 +266,7 @@
                           <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbNivelAcesso" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbCargo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbCargos" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -432,13 +432,6 @@
                 <Property name="text" type="java.lang.String" value="N&#xba;:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="txtNumero">
-              <Properties>
-                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                  <Format format="#0" subtype="-1" type="0"/>
-                </Property>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabel16">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Senha:"/>
@@ -466,17 +459,22 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cbCargo">
+            <Component class="javax.swing.JComboBox" name="cbCargos">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="cbCargoAncestorAdded"/>
+                <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="cbCargosAncestorAdded"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtNumero">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {&#xa;@Override&#xa;public void keyTyped(java.awt.event.KeyEvent e) {&#xa;char c = e.getKeyChar();&#xa;if (!Character.isDigit(c)) {&#xa;e.consume();&#xa;}&#xa;if (txtNumero.getText().length() &gt;= 5) {&#xa;e.consume();&#xa;}&#xa;}&#xa;});"/>
               </AuxValues>
             </Component>
           </SubComponents>

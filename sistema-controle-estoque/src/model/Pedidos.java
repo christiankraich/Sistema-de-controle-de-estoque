@@ -1,13 +1,15 @@
 package model;
 
+import java.util.Date;
+
 public class Pedidos {
     
     //atributos
     private int id;
     private Fornecedores fornecedor;
-    private String data;
+    private Date data;
     private double valorTotal;
-    private Status status;
+    private status status;
     
     //metodos especiais
     public int getId() {
@@ -26,11 +28,11 @@ public class Pedidos {
         this.fornecedor = fornecedor;
     }
 
-    public String getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
@@ -42,15 +44,15 @@ public class Pedidos {
         this.valorTotal = valorTotal;
     }
 
-    public Status getStatus() {
+    public status getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(status status) {
         this.status = status;
     }
     
-    public enum Status {
+    public enum status {
         Concluído,
         Pendente
     }

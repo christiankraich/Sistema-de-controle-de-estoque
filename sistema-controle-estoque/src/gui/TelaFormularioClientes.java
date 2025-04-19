@@ -8,13 +8,13 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Clientes;
-import utilidades.Utilidades;
+import utilidades.LimpaComponente;
 
 public class TelaFormularioClientes extends javax.swing.JFrame {
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-    private final Utilidades util = new Utilidades();
+    private final LimpaComponente limpar = new LimpaComponente();
 
     public void listar() {
         ClientesDAO clientesDao = new ClientesDAO();
@@ -83,7 +83,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         btnPesquisarCPF = new javax.swing.JButton();
         txtTelefone = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
-        txtNumero = new javax.swing.JFormattedTextField();
+        txtNumero = new javax.swing.JTextField();
         pnlConsulta = new javax.swing.JPanel();
         txtPesquisaNome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -189,7 +189,18 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
 
         jLabel11.setText("Nº:");
 
-        txtNumero.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        txtNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+                if (txtNumero.getText().length() >= 5) {
+                    e.consume();
+                }
+            }
+        });
 
         javax.swing.GroupLayout pnlDadosPessoaisLayout = new javax.swing.GroupLayout(pnlDadosPessoais);
         pnlDadosPessoais.setLayout(pnlDadosPessoaisLayout);
@@ -198,36 +209,6 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
             .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPesquisarCPF))
                     .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
                         .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
@@ -257,7 +238,42 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
                                 .addGap(67, 67, 67)
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbUF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(cbUF, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
+                        .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDadosPessoaisLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtDataNasc))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlDadosPessoaisLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)
+                                .addComponent(jLabel3)))
+                        .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnPesquisarCPF))
+                            .addGroup(pnlDadosPessoaisLayout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         pnlDadosPessoaisLayout.setVerticalGroup(
@@ -288,8 +304,8 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
                     .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
                     .addComponent(txtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
+                    .addComponent(jLabel11)
+                    .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(pnlDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
@@ -321,7 +337,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, true, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -470,7 +486,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
 
         ClientesDAO dao = new ClientesDAO();
         dao.salvar(cliente);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCPFActionPerformed
@@ -498,7 +514,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarCPFActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -587,7 +603,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
 
         ClientesDAO dao = new ClientesDAO();
         dao.editar(cliente);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -595,7 +611,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         cliente.setId(Integer.parseInt(txtId.getText()));
         ClientesDAO dao = new ClientesDAO();
         dao.excluir(cliente);
-        util.limparCampos(pnlDadosPessoais);
+        limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
@@ -676,7 +692,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JFormattedTextField txtNumero;
+    private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtPesquisaNome;
     private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
