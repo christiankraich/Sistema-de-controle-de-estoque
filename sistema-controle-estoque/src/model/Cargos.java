@@ -2,11 +2,11 @@ package model;
 
 public class Cargos {
     
-    //atributos
+    // atributos encapsulados da entidade Cargos
     private int id;
     private String nome;
     
-    //metodos especiais
+    // metodos especiais (getters e setters)
     public int getId() {
         return id;
     }
@@ -23,6 +23,7 @@ public class Cargos {
         this.nome = nome;
     }
     
+    // sobrescreve o método toString para exibir o nome do cargo
     @Override
     public String toString() {
         return this.nome;

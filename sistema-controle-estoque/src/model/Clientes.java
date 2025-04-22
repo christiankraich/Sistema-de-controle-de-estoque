@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Clientes {
     
-    //atributos
+    // atributos encapsulados da entidade Clientes
     private int id;
     private String nome;
     private Date dataNascimento;
@@ -19,7 +19,7 @@ public class Clientes {
     private String cidade;
     private String estado;
     
-    //metodos especiais
+    // metodos especiais (getters e setters)
     public int getId() {
         return id;
     }

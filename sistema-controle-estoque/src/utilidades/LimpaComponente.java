@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class LimpaComponente {
 
+    // limpa todos os campos de texto e combo boxes de um painel específico
     public void limparCampos(JPanel painel) {
         Component componentes[] = painel.getComponents();
         for (Component componente : componentes) {
@@ -16,11 +17,12 @@ public class LimpaComponente {
                 jTextField.setText("");
             }
             if (componente instanceof JComboBox jComboBox) {
-                jComboBox.setSelectedItem("---");
+                jComboBox.setSelectedIndex(0);
             }
         }
     }
 
+    // remove todas as linhas de uma tabela, mantendo apenas as colunas
     public void limparTabela(JTable tabela) {
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         modelo.setRowCount(0);

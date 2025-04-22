@@ -1,13 +1,14 @@
 package model;
 
+// essa classe herda os atributos e métodos da classe Clientes
 public class Funcionarios extends Clientes {
     
-    //atributos
+    // atributos encapsulados da entidade Funcionarios
     private Cargos cargos;    
     private String senha;
     private NivelAcesso nivelAcesso;
 
-    //metodos especiais       
+    // metodos especiais (getters e setters    
     public Cargos getCargos() {
         return cargos;
     }
@@ -32,6 +33,7 @@ public class Funcionarios extends Clientes {
         this.nivelAcesso = nivelAcesso;
     }
     
+    // enum que representa o nivel de acesso do usuário
     public enum NivelAcesso {
         ADMINISTRADOR,
         COMUM

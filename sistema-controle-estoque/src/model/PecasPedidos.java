@@ -2,14 +2,14 @@ package model;
 
 public class PecasPedidos {
     
-    //atributos
+    //  atributos encapsulados da entidade PecasPedidos
     private int id;
     private Pecas pecas;
     private Pedidos pedidos;
     private int quantidade;
     private double subtotal;
     
-    //metodos especiais
+    // metodos especiais (getters e setters)
     public int getId() {
         return id;
     }

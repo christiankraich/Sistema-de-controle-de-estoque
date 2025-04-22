@@ -2,7 +2,7 @@ package model;
 
 public class Pecas {
     
-    //atributos
+    // atributos encapsulados da entidade Pecas
     private int id;
     private Fornecedores fornecedores;
     private String nome;
@@ -11,7 +11,7 @@ public class Pecas {
     private double valorUnidadeFornecedor;
     private double valorUnidadeCliente;
 
-    //metodos especiais
+    // metodos especiais (getters e setters)
     public int getId() {
         return id;
     }

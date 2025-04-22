@@ -2,7 +2,7 @@ package model;
 
 public class OrdemDeServico {
     
-    //atributos
+    // atributos encapsulados da entidade OrdemDeServico
     private int id;
     private Clientes cliente;
     private Funcionarios funcionario;
@@ -11,7 +11,7 @@ public class OrdemDeServico {
     private String descricao;
     private Status status;
 
-    //metodos especiais
+    // metodos especiais (getters e setters)
     public int getId() {
         return id;
     }
@@ -68,9 +68,10 @@ public class OrdemDeServico {
         this.status = status;
     }
     
+    // enum que representa o status do pedido
     public enum Status {
-        Concluída,
-        Pendente
+        CONCLUÍDA,
+        PENDENTE
     }
     
 }

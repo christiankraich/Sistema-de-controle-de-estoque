@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class Pedidos {
     
-    //atributos
+    // atributos encapsulados da entidade pedido
     private int id;
     private Fornecedores fornecedor;
     private Date data;
     private double valorTotal;
-    private status status;
+    private Status status;
     
-    //metodos especiais
+    // metodos especiais (getters e setters)
     public int getId() {
         return id;
     }
@@ -44,16 +44,17 @@ public class Pedidos {
         this.valorTotal = valorTotal;
     }
 
-    public status getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(status status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
     
-    public enum status {
-        Concluído,
-        Pendente
+    // enum que representa o status do pedido
+    public enum Status {
+        CONCLUÍDO,
+        PENDENTE
     }
 }

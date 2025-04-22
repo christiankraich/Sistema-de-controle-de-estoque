@@ -112,11 +112,12 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         btnLimparPeca = new javax.swing.JButton();
         panelPedido = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tabelaPecasPedido = new javax.swing.JTable();
+        tabelaCarrinho = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         txtTotalPedido = new javax.swing.JTextField();
         btnFazerPedido = new javax.swing.JButton();
         btnCancelarPedido = new javax.swing.JButton();
+        btnRemoverPecaCarrinho = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Formulário de Pedidos");
@@ -281,21 +282,22 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4))
+                    .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnPesquisarNomeFornecedor)
-                        .addComponent(btnLimparTudo)
-                        .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)))
+                        .addComponent(btnLimparTudo))
                     .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(txtDataAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtEmailFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(txtEmailFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -436,9 +438,9 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                 .addGap(32, 32, 32))
         );
 
-        panelPedido.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Peças Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        panelPedido.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Carrinho", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
-        tabelaPecasPedido.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaCarrinho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -454,7 +456,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tabelaPecasPedido);
+        jScrollPane2.setViewportView(tabelaCarrinho);
 
         jLabel12.setText("Total do Pedido:");
 
@@ -476,6 +478,8 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             }
         });
 
+        btnRemoverPecaCarrinho.setText("Remover");
+
         javax.swing.GroupLayout panelPedidoLayout = new javax.swing.GroupLayout(panelPedido);
         panelPedido.setLayout(panelPedidoLayout);
         panelPedidoLayout.setHorizontalGroup(
@@ -494,12 +498,18 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                             .addComponent(btnFazerPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 25, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(panelPedidoLayout.createSequentialGroup()
+                .addGap(154, 154, 154)
+                .addComponent(btnRemoverPecaCarrinho)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPedidoLayout.setVerticalGroup(
             panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPedidoLayout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRemoverPecaCarrinho)
+                .addGap(11, 11, 11)
                 .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPedidoLayout.createSequentialGroup()
                         .addComponent(btnFazerPedido)
@@ -589,11 +599,10 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             limpar.limparTabela(tabelaPecasFornecedor);
             limpar.limparCampos(panelDadosPeca);
             limpar.limparCampos(panelPedido);
-            limpar.limparTabela(tabelaPecasPedido);
+            limpar.limparTabela(tabelaCarrinho);
             txtDataAtual.setText(dataFormatada);
             total = 0;
             idFornecedorCarrinho = 0;
-            cbNomeFornecedor.setSelectedIndex(0);
             cbNomeFornecedor.setEnabled(true);
         }
     }//GEN-LAST:event_btnLimparTudoActionPerformed
@@ -603,26 +612,30 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         PecasDAO pecasDao = new PecasDAO();
         Pecas peca = pecasDao.buscarPeca(nome);
 
+        //verifica se a peça foi encontrada no banco de dados antes de continuar
         if (peca != null) {
             idFornecedor = peca.getFornecedores().getId();
             int idFornecedorPeca = peca.getFornecedores().getId();
             int idPeca = peca.getId();
             boolean temNoCarrinho = idPecaTabela.contains(idPeca);
-            subtotal = Double.parseDouble(txtValorTotalPeca.getText());            
+            subtotal = Double.parseDouble(txtValorTotalPeca.getText());
             String qtd = txtQtdPedido.getText();
-            
+
+            // impede que uma peça sem quantidade definida seja adicionada ao pedido
             if (qtd.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Adicione a quantidade de peças no pedido!", "Atenção", JOptionPane.WARNING_MESSAGE);
                 return;
             } else {
+                // define o fornecedor da tabela com base na primeira peça adicionada
                 if (idFornecedorCarrinho == 0) {
                     idFornecedorCarrinho = idFornecedor;
-                }                
+                }
+                // adiciona a nova peça no carrinho e atualiza o valor total do pedido
                 if (idFornecedorPeca == idFornecedorCarrinho && !temNoCarrinho) {
                     total += subtotal;
                     txtTotalPedido.setText(String.valueOf(total));
                     idPecaTabela.add(idPeca);
-                    meuPedido = (DefaultTableModel) tabelaPecasPedido.getModel();
+                    meuPedido = (DefaultTableModel) tabelaCarrinho.getModel();
                     meuPedido.addRow(new Object[]{
                         txtIdPeca.getText(),
                         txtNomePeca.getText(),
@@ -630,26 +643,27 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                         txtPrecoUnidadeFornecedor.getText(),
                         subtotal
                     });
+                    // se a peça já estiver no carrinho, atualiza a quantidade e subtotal
                 } else if (temNoCarrinho) {
                     total += subtotal;
                     txtTotalPedido.setText(String.valueOf(total));
-                    meuPedido = (DefaultTableModel) tabelaPecasPedido.getModel();                    
+                    meuPedido = (DefaultTableModel) tabelaCarrinho.getModel();
                     for (int i = 0; i < meuPedido.getRowCount(); i++) {
                         int idNaTabela = Integer.parseInt(meuPedido.getValueAt(i, 0).toString());
-                        
+                                                
                         if (idNaTabela == idPeca) {
                             int qtdAtual = Integer.parseInt(meuPedido.getValueAt(i, 2).toString());
                             int qtdNova = qtdAtual + Integer.parseInt(txtQtdPedido.getText());
                             meuPedido.setValueAt(qtdNova, i, 2);
-                            
+
                             double subtotalNaLista = Double.parseDouble(meuPedido.getValueAt(i, 4).toString());
                             subtotal += subtotalNaLista;
                             meuPedido.setValueAt(subtotal, i, 4);
-                            
+
                             break;
                         }
                     }
-                    
+
                 } else {
                     JOptionPane.showMessageDialog(null, "A peça não pode ser adicionada ao carrinho pois o fornecedor é diferente das outras!", "Atenção", JOptionPane.WARNING_MESSAGE);
                 }
@@ -683,7 +697,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private void btnCancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedidoActionPerformed
         int opcao = JOptionPane.showConfirmDialog(null, "Você tem certeza que quer limpar o carrinho do pedido?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
-            limpar.limparTabela(tabelaPecasPedido);
+            limpar.limparTabela(tabelaCarrinho);
             limpar.limparCampos(panelPedido);
             total = 0;
             idFornecedorCarrinho = 0;
@@ -733,6 +747,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private javax.swing.JButton btnLimparPeca;
     private javax.swing.JButton btnLimparTudo;
     private javax.swing.JButton btnPesquisarNomeFornecedor;
+    private javax.swing.JButton btnRemoverPecaCarrinho;
     private javax.swing.JComboBox cbNomeFornecedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -753,8 +768,8 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private javax.swing.JPanel panelDadosFornecedor;
     private javax.swing.JPanel panelDadosPeca;
     private javax.swing.JPanel panelPedido;
+    private javax.swing.JTable tabelaCarrinho;
     private javax.swing.JTable tabelaPecasFornecedor;
-    private javax.swing.JTable tabelaPecasPedido;
     private javax.swing.JFormattedTextField txtCnpj;
     private javax.swing.JFormattedTextField txtDataAtual;
     private javax.swing.JTextField txtEmailFornecedor;

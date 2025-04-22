@@ -2,7 +2,7 @@ package model;
 
 public class Faturamento {
     
-    //atributos
+    // atributos encapsulados da entidade Faturamento
     private int id;
     private OrdemDeServico ordemDeServico;
     private String data;
@@ -10,7 +10,7 @@ public class Faturamento {
     private double valorPecas;
     private double valorLiquido;
 
-    //metodos especiais
+    // metodos especiais (getters e setters)
     public int getId() {
         return id;
     }

@@ -577,7 +577,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
             cbUF.setSelectedItem(funcionario.getEstado());
             txtSenha.setText(funcionario.getSenha());
 
-            Cargos cargoSelecionado = funcionario.getCargos();            
+            Cargos cargoSelecionado = funcionario.getCargos();
             for (int i = 0; i < cbCargos.getItemCount(); i++) {
                 Cargos cargo = (Cargos) cbCargos.getItemAt(i);
                 if (cargo.getId() == cargoSelecionado.getId()) {

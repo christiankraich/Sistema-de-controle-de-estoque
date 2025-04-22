@@ -2,13 +2,13 @@ package model;
 
 public class PecasOS {
     
-    //atributos
+    // atributos encapsulados da entidade PecasOS
     private int id;
     private Pecas peca;
     private OrdemDeServico ordemDeServico;
     private short quantidade;
     
-    //metodos especiais
+    // metodos especiais (getters e setters)
     public int getId() {
         return id;
     }
