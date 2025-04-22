@@ -516,7 +516,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         Funcionarios funcionario = new Funcionarios();
-
+        
         funcionario.setNome(txtNome.getText());
         funcionario.setCpf(txtCPF.getText());
         try {
@@ -577,7 +577,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
             cbUF.setSelectedItem(funcionario.getEstado());
             txtSenha.setText(funcionario.getSenha());
 
-            Cargos cargoSelecionado = funcionario.getCargos(); 
+            Cargos cargoSelecionado = funcionario.getCargos();            
             for (int i = 0; i < cbCargos.getItemCount(); i++) {
                 Cargos cargo = (Cargos) cbCargos.getItemAt(i);
                 if (cargo.getId() == cargoSelecionado.getId()) {

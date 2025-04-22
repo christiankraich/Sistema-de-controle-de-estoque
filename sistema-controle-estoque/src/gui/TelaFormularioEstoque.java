@@ -313,7 +313,7 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
     private void btnAumentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAumentarActionPerformed
         int opcao = JOptionPane.showConfirmDialog(null, "Tem certeza que quer aumentar a quantidade no estoque?",
                 "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (opcao == 0) {
+        if (opcao == JOptionPane.YES_OPTION) {
             try {
                 int qtdAtual = Integer.parseInt(txtQtdAtual.getText());
                 int qtdNova = Integer.parseInt(txtAlterarQtd.getText());
@@ -334,7 +334,7 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
         int opcao = JOptionPane.showConfirmDialog(null, "Tem certeza que quer diminuir a quantidade no estoque?",
                 "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-        if (opcao == 0) {
+        if (opcao == JOptionPane.YES_OPTION) {
             try {
                 int qtdAtual = Integer.parseInt(txtQtdAtual.getText());
                 int qtdNova = Integer.parseInt(txtAlterarQtd.getText());

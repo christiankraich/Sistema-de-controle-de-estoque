@@ -5,6 +5,7 @@ import dao.PecasDAO;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -18,13 +19,13 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
 
     private final LimpaComponente limpar = new LimpaComponente();
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    private boolean fornecedoresCarregados = false;
 
     Date dataAtual = new Date();
     String dataFormatada = sdf.format(dataAtual);
     double subtotal, total;
     int idFornecedor, idFornecedorCarrinho;
     DefaultTableModel meuPedido;
+    List<Integer> idPecaTabela = new ArrayList<>();
 
     public void filtrar() {
         String cnpj = txtCnpj.getText();
@@ -86,14 +87,13 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtDataAtual = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtNomeFornecedor = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtEmailFornecedor = new javax.swing.JTextField();
         btnPesquisarNomeFornecedor = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaPecasFornecedor = new javax.swing.JTable();
-        btnLimparNomeFornecedor = new javax.swing.JButton();
+        btnLimparTudo = new javax.swing.JButton();
         cbNomeFornecedor = new javax.swing.JComboBox();
         panelDadosPeca = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -117,7 +117,6 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         txtTotalPedido = new javax.swing.JTextField();
         btnFazerPedido = new javax.swing.JButton();
         btnCancelarPedido = new javax.swing.JButton();
-        btnLimparTabelaPedido = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Formulário de Pedidos");
@@ -155,20 +154,18 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtCnpj.setEnabled(false);
 
         jLabel3.setText("Data:");
 
         txtDataAtual.setEditable(false);
         try {
-            txtDataAtual.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter(" ##/##/#### ")));
+            txtDataAtual.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
         jLabel4.setText("Nome:");
-
-        txtNomeFornecedor.setEditable(false);
-        txtNomeFornecedor.setEnabled(false);
 
         jLabel5.setText("E-mail:");
 
@@ -222,10 +219,10 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnLimparNomeFornecedor.setText("Limpar");
-        btnLimparNomeFornecedor.addActionListener(new java.awt.event.ActionListener() {
+        btnLimparTudo.setText("Limpar");
+        btnLimparTudo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparNomeFornecedorActionPerformed(evt);
+                btnLimparTudoActionPerformed(evt);
             }
         });
 
@@ -248,28 +245,29 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                 .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(btnPesquisarNomeFornecedor))
-                            .addComponent(txtNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
-                                .addGap(47, 47, 47)
+                                .addGap(17, 17, 17)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
+                                .addGap(69, 69, 69)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
+                                .addGap(102, 102, 102)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtEmailFornecedor, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                                 .addGap(97, 97, 97))
                             .addGroup(panelDadosFornecedorLayout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(btnPesquisarNomeFornecedor)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnLimparNomeFornecedor)
-                                .addGap(40, 40, 40)
-                                .addComponent(cbNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnLimparTudo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -283,22 +281,21 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnPesquisarNomeFornecedor)
-                        .addComponent(btnLimparNomeFornecedor)
-                        .addComponent(cbNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnLimparTudo)
+                        .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)))
                     .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(txtDataAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtEmailFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(txtNomeFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelDadosFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(txtEmailFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel2)
+                        .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -309,14 +306,17 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         jLabel6.setText("Id:");
 
         txtIdPeca.setEditable(false);
+        txtIdPeca.setEnabled(false);
 
         jLabel7.setText("Nome:");
 
         jLabel8.setText("Quantidade Estoque:");
 
         txtNomePeca.setEditable(false);
+        txtNomePeca.setEnabled(false);
 
         txtQtdEstoque.setEditable(false);
+        txtQtdEstoque.setEnabled(false);
 
         jLabel9.setText("Quantidade Pedido:");
 
@@ -332,6 +332,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                 }
             }
         });
+        txtQtdPedido.setEnabled(false);
         txtQtdPedido.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtQtdPedidoKeyReleased(evt);
@@ -341,10 +342,12 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         jLabel10.setText("Preço Unidade:");
 
         txtPrecoUnidadeFornecedor.setEditable(false);
+        txtPrecoUnidadeFornecedor.setEnabled(false);
 
         jLabel11.setText("Valor Total:");
 
         txtValorTotalPeca.setEditable(false);
+        txtValorTotalPeca.setEnabled(false);
 
         btnAdicionarPeca.setText("Adicionar");
         btnAdicionarPeca.addActionListener(new java.awt.event.ActionListener() {
@@ -460,13 +463,16 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         txtTotalPedido.setEnabled(false);
 
         btnFazerPedido.setText("Fazer Pedido");
+        btnFazerPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFazerPedidoActionPerformed(evt);
+            }
+        });
 
         btnCancelarPedido.setText("Cancelar Pedido");
-
-        btnLimparTabelaPedido.setText("Limpar");
-        btnLimparTabelaPedido.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparTabelaPedidoActionPerformed(evt);
+                btnCancelarPedidoActionPerformed(evt);
             }
         });
 
@@ -488,18 +494,12 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                             .addComponent(btnFazerPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 25, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(panelPedidoLayout.createSequentialGroup()
-                .addGap(171, 171, 171)
-                .addComponent(btnLimparTabelaPedido)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPedidoLayout.setVerticalGroup(
             panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPedidoLayout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLimparTabelaPedido)
-                .addGap(11, 11, 11)
+                .addGap(40, 40, 40)
                 .addGroup(panelPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPedidoLayout.createSequentialGroup()
                         .addComponent(btnFazerPedido)
@@ -568,21 +568,35 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         txtNomePeca.setText(tabelaPecasFornecedor.getValueAt(tabelaPecasFornecedor.getSelectedRow(), 2).toString());
         txtQtdEstoque.setText(tabelaPecasFornecedor.getValueAt(tabelaPecasFornecedor.getSelectedRow(), 4).toString());
         txtPrecoUnidadeFornecedor.setText(tabelaPecasFornecedor.getValueAt(tabelaPecasFornecedor.getSelectedRow(), 5).toString());
+        txtQtdPedido.setEnabled(true);
         txtValorTotalPeca.setText("0.0");
     }//GEN-LAST:event_tabelaPecasFornecedorMouseClicked
 
     private void btnLimparPecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparPecaActionPerformed
         limpar.limparCampos(panelDadosPeca);
+        txtQtdPedido.setEnabled(false);
     }//GEN-LAST:event_btnLimparPecaActionPerformed
 
-    private void btnLimparNomeFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparNomeFornecedorActionPerformed
-        limpar.limparCampos(panelDadosFornecedor);
-        limpar.limparCampos(panelDadosPeca);
-        txtDataAtual.setText(dataFormatada);
-        cbNomeFornecedor.setEnabled(true);
-        fornecedoresCarregados = false;
-
-    }//GEN-LAST:event_btnLimparNomeFornecedorActionPerformed
+    private void btnLimparTudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparTudoActionPerformed
+        int opcao = JOptionPane.showConfirmDialog(null, """
+                Ao limpar o fornecedor selecionado, 
+                todos os dados já salvos serão limpos.
+                Você tem certeza que quer prosseguir?
+                """,
+                "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (opcao == JOptionPane.YES_OPTION) {
+            limpar.limparCampos(panelDadosFornecedor);
+            limpar.limparTabela(tabelaPecasFornecedor);
+            limpar.limparCampos(panelDadosPeca);
+            limpar.limparCampos(panelPedido);
+            limpar.limparTabela(tabelaPecasPedido);
+            txtDataAtual.setText(dataFormatada);
+            total = 0;
+            idFornecedorCarrinho = 0;
+            cbNomeFornecedor.setSelectedIndex(0);
+            cbNomeFornecedor.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnLimparTudoActionPerformed
 
     private void btnAdicionarPecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarPecaActionPerformed
         String nome = txtNomePeca.getText();
@@ -592,19 +606,22 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         if (peca != null) {
             idFornecedor = peca.getFornecedores().getId();
             int idFornecedorPeca = peca.getFornecedores().getId();
-            subtotal = Double.parseDouble(txtValorTotalPeca.getText());
-            total += subtotal;
+            int idPeca = peca.getId();
+            boolean temNoCarrinho = idPecaTabela.contains(idPeca);
+            subtotal = Double.parseDouble(txtValorTotalPeca.getText());            
             String qtd = txtQtdPedido.getText();
-
+            
             if (qtd.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Adicione a quantidade de peças no pedido!", "Atenção", JOptionPane.WARNING_MESSAGE);
                 return;
             } else {
                 if (idFornecedorCarrinho == 0) {
                     idFornecedorCarrinho = idFornecedor;
-                }
-                if (idFornecedorPeca == idFornecedorCarrinho) {
+                }                
+                if (idFornecedorPeca == idFornecedorCarrinho && !temNoCarrinho) {
+                    total += subtotal;
                     txtTotalPedido.setText(String.valueOf(total));
+                    idPecaTabela.add(idPeca);
                     meuPedido = (DefaultTableModel) tabelaPecasPedido.getModel();
                     meuPedido.addRow(new Object[]{
                         txtIdPeca.getText(),
@@ -613,6 +630,26 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                         txtPrecoUnidadeFornecedor.getText(),
                         subtotal
                     });
+                } else if (temNoCarrinho) {
+                    total += subtotal;
+                    txtTotalPedido.setText(String.valueOf(total));
+                    meuPedido = (DefaultTableModel) tabelaPecasPedido.getModel();                    
+                    for (int i = 0; i < meuPedido.getRowCount(); i++) {
+                        int idNaTabela = Integer.parseInt(meuPedido.getValueAt(i, 0).toString());
+                        
+                        if (idNaTabela == idPeca) {
+                            int qtdAtual = Integer.parseInt(meuPedido.getValueAt(i, 2).toString());
+                            int qtdNova = qtdAtual + Integer.parseInt(txtQtdPedido.getText());
+                            meuPedido.setValueAt(qtdNova, i, 2);
+                            
+                            double subtotalNaLista = Double.parseDouble(meuPedido.getValueAt(i, 4).toString());
+                            subtotal += subtotalNaLista;
+                            meuPedido.setValueAt(subtotal, i, 4);
+                            
+                            break;
+                        }
+                    }
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "A peça não pode ser adicionada ao carrinho pois o fornecedor é diferente das outras!", "Atenção", JOptionPane.WARNING_MESSAGE);
                 }
@@ -621,6 +658,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível adicionar ao carrinho.\n Faltam informações.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         limpar.limparCampos(panelDadosPeca);
+        txtQtdPedido.setEnabled(false);
 
     }//GEN-LAST:event_btnAdicionarPecaActionPerformed
 
@@ -628,28 +666,29 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         calcularValorTotalPeca();
     }//GEN-LAST:event_txtQtdPedidoKeyReleased
 
-    private void btnLimparTabelaPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparTabelaPedidoActionPerformed
-        int opcao = JOptionPane.showConfirmDialog(null, "Você tem certeza que quer deletar os itens da tabela?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (opcao == 0) {
+    private void cbNomeFornecedorAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbNomeFornecedorAncestorAdded
+        FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
+        List<Fornecedores> lista = fornecedoresDao.listar();
+        cbNomeFornecedor.removeAllItems();
+        cbNomeFornecedor.addItem("Selecione o fornecedor");
+        for (Fornecedores f : lista) {
+            cbNomeFornecedor.addItem(f);
+        }
+    }//GEN-LAST:event_cbNomeFornecedorAncestorAdded
+
+    private void btnFazerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFazerPedidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFazerPedidoActionPerformed
+
+    private void btnCancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedidoActionPerformed
+        int opcao = JOptionPane.showConfirmDialog(null, "Você tem certeza que quer limpar o carrinho do pedido?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (opcao == JOptionPane.YES_OPTION) {
             limpar.limparTabela(tabelaPecasPedido);
             limpar.limparCampos(panelPedido);
             total = 0;
             idFornecedorCarrinho = 0;
         }
-    }//GEN-LAST:event_btnLimparTabelaPedidoActionPerformed
-
-    private void cbNomeFornecedorAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbNomeFornecedorAncestorAdded
-        if(!fornecedoresCarregados) {
-            FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
-            List<Fornecedores> lista = fornecedoresDao.listar();
-            cbNomeFornecedor.removeAllItems();
-            cbNomeFornecedor.addItem("Selecione o fornecedor");
-            for (Fornecedores f: lista) {
-                cbNomeFornecedor.addItem(f);
-            }
-            fornecedoresCarregados = true;
-        }
-    }//GEN-LAST:event_cbNomeFornecedorAncestorAdded
+    }//GEN-LAST:event_btnCancelarPedidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -691,9 +730,8 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private javax.swing.JButton btnAdicionarPeca;
     private javax.swing.JButton btnCancelarPedido;
     private javax.swing.JButton btnFazerPedido;
-    private javax.swing.JButton btnLimparNomeFornecedor;
     private javax.swing.JButton btnLimparPeca;
-    private javax.swing.JButton btnLimparTabelaPedido;
+    private javax.swing.JButton btnLimparTudo;
     private javax.swing.JButton btnPesquisarNomeFornecedor;
     private javax.swing.JComboBox cbNomeFornecedor;
     private javax.swing.JLabel jLabel1;
@@ -721,7 +759,6 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtDataAtual;
     private javax.swing.JTextField txtEmailFornecedor;
     private javax.swing.JTextField txtIdPeca;
-    private javax.swing.JTextField txtNomeFornecedor;
     private javax.swing.JTextField txtNomePeca;
     private javax.swing.JTextField txtPrecoUnidadeFornecedor;
     private javax.swing.JTextField txtQtdEstoque;
