@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class LimpaComponente {
 
-    // limpa todos os campos de texto e combo boxes de um painel específico
+    // limpa todos os campos de texto e combo boxes de um painel
     public void limparCampos(JPanel painel) {
         Component componentes[] = painel.getComponents();
         for (Component componente : componentes) {

@@ -28,9 +28,9 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     List<Integer> idPecaTabela = new ArrayList<>();
 
     public void filtrar() {
-        String cnpj = txtCnpj.getText();
+        String nome = cbNomeFornecedor.getSelectedItem().toString();
         PecasDAO pecasDao = new PecasDAO();
-        List<Pecas> lista = pecasDao.filtrarPecasFornecedor(cnpj);
+        List<Pecas> lista = pecasDao.filtrarPecasFornecedor(nome);
         DefaultTableModel dados = (DefaultTableModel) tabelaPecasFornecedor.getModel();
         dados.setNumRows(0);
         for (Pecas p : lista) {
@@ -590,7 +590,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private void btnLimparTudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparTudoActionPerformed
         int opcao = JOptionPane.showConfirmDialog(null, """
                 Ao limpar o fornecedor selecionado, 
-                todos os dados já salvos serão limpos.
+                todos os itens salvos no carrinho serão limpos.
                 Você tem certeza que quer prosseguir?
                 """,
                 "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
