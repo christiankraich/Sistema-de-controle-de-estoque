@@ -46,7 +46,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
             });
         }
     }
-    
+
     // adiciona os items no comboBox com base no enum nivelAcesso
     private void listarDadosEnumComboBox() {
         try {
@@ -517,7 +517,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // cadastra o funcionário no banco de dados e limpa os campos de texto
-        Funcionarios funcionario = new Funcionarios();        
+        Funcionarios funcionario = new Funcionarios();
         funcionario.setNome(txtNome.getText());
         funcionario.setCpf(txtCPF.getText());
         // verifica e valida a data de nascimento
@@ -545,9 +545,25 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         funcionario.setComplemento(txtComplemento.getText());
         funcionario.setBairro(txtBairro.getText());
         funcionario.setCidade(txtCidade.getText());
-        funcionario.setEstado(cbUF.getSelectedItem().toString());
-        funcionario.setSenha(txtSenha.getText());
-        
+        String estado = cbUF.getSelectedItem().toString();
+        if (estado.equals("---")) {
+            JOptionPane.showMessageDialog(null, "Selecione uma Unidade Federal", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        funcionario.setEstado(estado);
+
+        String senha = txtSenha.getText();
+        if (senha.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Insira uma senha ao cadastrar o funcionário", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        funcionario.setSenha(senha);
+
+        String nomeCargo = cbCargos.getSelectedItem().toString();
+        if (nomeCargo.equals("Selecione o cargo")) {
+            JOptionPane.showMessageDialog(null, "Selecione o cargo do funcionário", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         Cargos cargo = (Cargos) cbCargos.getSelectedItem();
         funcionario.setCargos(cargo);
 
@@ -591,7 +607,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
             }
 
             cbNivelAcesso.setSelectedItem(funcionario.getNivelAcesso());
-            }else {
+        } else {
             JOptionPane.showMessageDialog(null, "Funcionário não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnPesquisarCPFActionPerformed
@@ -642,10 +658,12 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         // percorre os itens no comboBox para selecionar o cargo com nome correspondente ao da tabela
         String nomeCargo = tabela.getValueAt(tabela.getSelectedRow(), 1).toString();
         for (int i = 0, numeroCargos = cbCargos.getItemCount(); i < numeroCargos; i++) {
-            Cargos cargo = (Cargos) cbCargos.getItemAt(i);
-            if (cargo.getNome().equals(nomeCargo)) {
-                cbCargos.setSelectedItem(cargo);
-                break;
+            Object item = cbCargos.getItemAt(i);
+            if (item instanceof Cargos cargo) {
+                if (cargo.getNome().equals(nomeCargo)) {
+                    cbCargos.setSelectedItem(cargo);
+                    break;
+                }
             }
         }
         txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 2).toString());
@@ -703,9 +721,28 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         funcionario.setComplemento(txtComplemento.getText());
         funcionario.setBairro(txtBairro.getText());
         funcionario.setCidade(txtCidade.getText());
-        funcionario.setEstado(cbUF.getSelectedItem().toString());
-        funcionario.setCargos((Cargos) cbCargos.getSelectedItem());
-        funcionario.setSenha(txtSenha.getText());
+        String estado = cbUF.getSelectedItem().toString();
+        if (estado.equals("---")) {
+            JOptionPane.showMessageDialog(null, "Selecione uma Unidade Federal", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        funcionario.setEstado(estado);
+        
+        String senha = txtSenha.getText();
+        if (senha.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Não é possível editar o funcionário pois não há uma senha", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        funcionario.setSenha(senha);
+        
+        String nomeCargo = cbCargos.getSelectedItem().toString();
+        if (nomeCargo.equals("Selecione o cargo")) {
+            JOptionPane.showMessageDialog(null, "Selecione o cargo do funcionário", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Cargos cargo = (Cargos) cbCargos.getSelectedItem();
+        funcionario.setCargos(cargo);
+        
         funcionario.setNivelAcesso((Funcionarios.NivelAcesso) cbNivelAcesso.getSelectedItem());
         funcionario.setId(Integer.parseInt(txtId.getText()));
 
@@ -730,6 +767,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
             CargosDAO cargosDao = new CargosDAO();
             List<Cargos> lista = cargosDao.listar();
             cbCargos.removeAllItems();
+            cbCargos.addItem("Selecione o cargo");
             for (Cargos cargo : lista) {
                 cbCargos.addItem(cargo);
             }

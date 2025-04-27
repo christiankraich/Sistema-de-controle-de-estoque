@@ -14,7 +14,8 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
 
     private final LimpaComponente limpar = new LimpaComponente();
     private boolean fornecedoresCarregados = false;
-
+    
+    // carrega e exibe as peças na tabela
     public void listar() {
         PecasDAO pecasDao = new PecasDAO();
         List<Pecas> lista = pecasDao.listar();
@@ -451,6 +452,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // cadastra a peça no banco de dados e limpa os campos de texto
         Pecas peca = new Pecas();
 
         Fornecedores fornecedor = (Fornecedores) cbFornecedor.getSelectedItem();
@@ -468,13 +470,14 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarNomeActionPerformed
+        // pesquisa a peça no banco de dados com base no nome
         String nome = txtNome.getText();
         PecasDAO pecasDao = new PecasDAO();
         Pecas peca = pecasDao.buscarPeca(nome);
-
+        // verifica se a peça está cadastrada no banco de dados e preenche os campos com as informações
         if (peca.getNome() != null) {
             txtId.setText(String.valueOf(peca.getId()));
-
+            // percorre os itens do comboBox para selecionar o fornecedor com id correspondente ao da peça
             Fornecedores fornecedorSelecionado = peca.getFornecedores();
             for (int i = 0; i < cbFornecedor.getItemCount(); i++) {
                 Fornecedores fornecedor = (Fornecedores) cbFornecedor.getItemAt(i);
@@ -496,14 +499,17 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarNomeActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // limpa os campos do painel
         limpar.limparCampos(pnlDadosPecas);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // atualiza com os dados ao abrir a janela
         listar();
     }//GEN-LAST:event_formWindowActivated
 
     private void btnPesquisaNomeTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaNomeTabelaActionPerformed
+        // pesquisa e filtra as peças na tabela com base no nome
         String nome = txtPesquisaNome.getText() + "%";
         PecasDAO pecasDao = new PecasDAO();
         List<Pecas> lista = pecasDao.filtrar(nome);
@@ -523,9 +529,10 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisaNomeTabelaActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        // transfere os dados da linha selecionada na tabela para os campos na aba de dados
         painelGuias.setSelectedIndex(0);
         txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
-
+        // percorre os itens no comboBox para selecionar o fornecedor com nome correspondente ao da tabela
         String nomeFornecedor = tabela.getValueAt(tabela.getSelectedRow(), 1).toString();
         for (int i = 0; i < cbFornecedor.getItemCount(); i++) {
             Fornecedores fornecedor = (Fornecedores) cbFornecedor.getItemAt(i);
@@ -545,6 +552,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // atualiza os dados da peça no banco de dados e limpa os campos
         Pecas peca = new Pecas();
         peca.setFornecedores((Fornecedores) cbFornecedor.getSelectedItem());
         peca.setNome(txtNome.getText());
@@ -561,6 +569,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // exclui os dados da peça no banco de dados e limpa os campos
         Pecas peca = new Pecas();
         peca.setId(Integer.parseInt(txtId.getText()));
         PecasDAO dao = new PecasDAO();
@@ -569,6 +578,8 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void cbFornecedorAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbFornecedorAncestorAdded
+        // verifica se os fornecedores já foram carregados no comboBox,
+        // se não estiverem, carrega todos os os fornecedores existentes no banco de dados no comboBox
         if (!fornecedoresCarregados) {
             FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
             List<Fornecedores> lista = fornecedoresDao.listar();
@@ -581,6 +592,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     }//GEN-LAST:event_cbFornecedorAncestorAdded
 
     private void txtPesquisaNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaNomeKeyReleased
+        // ao pressionar ENTER ou BACK SPACE no campo de texto, pesquisa e filtra as peças na tabela
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
             String nome = txtPesquisaNome.getText() + "%";
             PecasDAO pecasDao = new PecasDAO();

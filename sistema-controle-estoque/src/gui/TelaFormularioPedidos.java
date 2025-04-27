@@ -20,13 +20,13 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private final LimpaComponente limpar = new LimpaComponente();
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    Date dataAtual = new Date();
-    String dataFormatada = sdf.format(dataAtual);
+    String dataFormatada = sdf.format(new Date());
     double subtotal, total;
     int idFornecedor, idFornecedorCarrinho;
     DefaultTableModel meuPedido;
     List<Integer> idPecaTabela = new ArrayList<>();
 
+    // filtra as peças na tabela pelo fornecedor selecionado
     public void filtrar() {
         String nome = cbNomeFornecedor.getSelectedItem().toString();
         PecasDAO pecasDao = new PecasDAO();
@@ -47,6 +47,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         }
     }
 
+    // calcula o valor total da peça no pedido
     private void calcularValorTotalPeca() {
         try {
             double valorFornecedor = Double.parseDouble(txtPrecoUnidadeFornecedor.getText());
@@ -54,12 +55,20 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             double valorTotalPeca = valorFornecedor * qtdPedido;
 
             DecimalFormatSymbols dataBase = new DecimalFormatSymbols(Locale.US);
-            DecimalFormat df = new DecimalFormat("#.##", dataBase);
+            DecimalFormat df = new DecimalFormat("0.00", dataBase);
             String valorFormatado = df.format(valorTotalPeca);
             txtValorTotalPeca.setText(valorFormatado);
         } catch (NumberFormatException e) {
-            txtValorTotalPeca.setText("0.00");
+            txtValorTotalPeca.setText("");
         }
+    }
+
+    // calcula o valor total do pedido
+    private void calcularValorTotalPedido(double total) {
+        DecimalFormatSymbols dataBase = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("0.00", dataBase);
+        String valorTotalFormatado = df.format(total);
+        txtTotalPedido.setText(valorTotalFormatado);
     }
 
     public void listarPecasFornecedor() {
@@ -479,6 +488,11 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         });
 
         btnRemoverPecaCarrinho.setText("Remover");
+        btnRemoverPecaCarrinho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverPecaCarrinhoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelPedidoLayout = new javax.swing.GroupLayout(panelPedido);
         panelPedido.setLayout(panelPedidoLayout);
@@ -553,41 +567,49 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPesquisarNomeFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarNomeFornecedorActionPerformed
+        // pesquisa o fornecedor no banco de dados com base no item selecionado no comboBox
         String nome = cbNomeFornecedor.getSelectedItem().toString();
+        // verifica se o nome é diferente do valor padrão
+        if (nome.equals("Selecione o fornecedor")) {
+            return;
+        }
+
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
         Fornecedores fornecedor = fornecedoresDao.buscarNomeFornecedor(nome);
-
+        // verifica se o fornecedor foi encontrado no banco de dados e filtra as peças na tabela
         if (fornecedor.getNome() != null) {
             txtCnpj.setText(fornecedor.getCnpj());
             txtEmailFornecedor.setText(fornecedor.getEmail());
             cbNomeFornecedor.setEnabled(false);
+            filtrar();
         } else {
             JOptionPane.showMessageDialog(null, "Fornecedor não encontrado para o nome concedido!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        filtrar();
     }//GEN-LAST:event_btnPesquisarNomeFornecedorActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        filtrar();
+        // atualiza a data ao abrir a janela
         txtDataAtual.setText(dataFormatada);
-
     }//GEN-LAST:event_formWindowActivated
 
     private void tabelaPecasFornecedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPecasFornecedorMouseClicked
+        // transfere os dados da linha selecionada na tabela para os campos
         txtIdPeca.setText(tabelaPecasFornecedor.getValueAt(tabelaPecasFornecedor.getSelectedRow(), 0).toString());
         txtNomePeca.setText(tabelaPecasFornecedor.getValueAt(tabelaPecasFornecedor.getSelectedRow(), 2).toString());
         txtQtdEstoque.setText(tabelaPecasFornecedor.getValueAt(tabelaPecasFornecedor.getSelectedRow(), 4).toString());
         txtPrecoUnidadeFornecedor.setText(tabelaPecasFornecedor.getValueAt(tabelaPecasFornecedor.getSelectedRow(), 5).toString());
         txtQtdPedido.setEnabled(true);
-        txtValorTotalPeca.setText("0.0");
+        txtQtdPedido.requestFocus();
     }//GEN-LAST:event_tabelaPecasFornecedorMouseClicked
 
     private void btnLimparPecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparPecaActionPerformed
+        // limpa os campos do painel
         limpar.limparCampos(panelDadosPeca);
         txtQtdPedido.setEnabled(false);
     }//GEN-LAST:event_btnLimparPecaActionPerformed
 
     private void btnLimparTudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparTudoActionPerformed
+        // após confirmação, reseta todos os dados menos a data
         int opcao = JOptionPane.showConfirmDialog(null, """
                 Ao limpar o fornecedor selecionado, 
                 todos os itens salvos no carrinho serão limpos.
@@ -600,7 +622,6 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             limpar.limparCampos(panelDadosPeca);
             limpar.limparCampos(panelPedido);
             limpar.limparTabela(tabelaCarrinho);
-            txtDataAtual.setText(dataFormatada);
             total = 0;
             idFornecedorCarrinho = 0;
             cbNomeFornecedor.setEnabled(true);
@@ -608,6 +629,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimparTudoActionPerformed
 
     private void btnAdicionarPecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarPecaActionPerformed
+        // adiciona ou atualiza peça na tabela
         String nome = txtNomePeca.getText();
         PecasDAO pecasDao = new PecasDAO();
         Pecas peca = pecasDao.buscarPeca(nome);
@@ -618,69 +640,68 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             int idFornecedorPeca = peca.getFornecedores().getId();
             int idPeca = peca.getId();
             boolean temNoCarrinho = idPecaTabela.contains(idPeca);
-            subtotal = Double.parseDouble(txtValorTotalPeca.getText());
             String qtd = txtQtdPedido.getText();
 
             // impede que uma peça sem quantidade definida seja adicionada ao pedido
             if (qtd.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Adicione a quantidade de peças no pedido!", "Atenção", JOptionPane.WARNING_MESSAGE);
                 return;
-            } else {
-                // define o fornecedor da tabela com base na primeira peça adicionada
-                if (idFornecedorCarrinho == 0) {
-                    idFornecedorCarrinho = idFornecedor;
-                }
-                // adiciona a nova peça no carrinho e atualiza o valor total do pedido
-                if (idFornecedorPeca == idFornecedorCarrinho && !temNoCarrinho) {
-                    total += subtotal;
-                    txtTotalPedido.setText(String.valueOf(total));
-                    idPecaTabela.add(idPeca);
-                    meuPedido = (DefaultTableModel) tabelaCarrinho.getModel();
-                    meuPedido.addRow(new Object[]{
-                        txtIdPeca.getText(),
-                        txtNomePeca.getText(),
-                        txtQtdPedido.getText(),
-                        txtPrecoUnidadeFornecedor.getText(),
-                        subtotal
-                    });
-                    // se a peça já estiver no carrinho, atualiza a quantidade e subtotal
-                } else if (temNoCarrinho) {
-                    total += subtotal;
-                    txtTotalPedido.setText(String.valueOf(total));
-                    meuPedido = (DefaultTableModel) tabelaCarrinho.getModel();
-                    for (int i = 0; i < meuPedido.getRowCount(); i++) {
-                        int idNaTabela = Integer.parseInt(meuPedido.getValueAt(i, 0).toString());
-                                                
-                        if (idNaTabela == idPeca) {
-                            int qtdAtual = Integer.parseInt(meuPedido.getValueAt(i, 2).toString());
-                            int qtdNova = qtdAtual + Integer.parseInt(txtQtdPedido.getText());
-                            meuPedido.setValueAt(qtdNova, i, 2);
+            }
+            // define o fornecedor da tabela com base na primeira peça adicionada
+            if (idFornecedorCarrinho == 0) {
+                idFornecedorCarrinho = idFornecedor;
+            }
+            // pega o valor total da peça e soma ao total
+            subtotal = Double.parseDouble(txtValorTotalPeca.getText());
+            total += subtotal;
+            calcularValorTotalPedido(total);
+            // adiciona a nova peça no carrinho e atualiza o valor total do pedido
+            if (idFornecedorPeca == idFornecedorCarrinho && !temNoCarrinho) {
+                txtTotalPedido.setText(String.valueOf(total));
+                idPecaTabela.add(idPeca);
+                meuPedido = (DefaultTableModel) tabelaCarrinho.getModel();
+                meuPedido.addRow(new Object[]{
+                    txtIdPeca.getText(),
+                    txtNomePeca.getText(),
+                    txtQtdPedido.getText(),
+                    txtPrecoUnidadeFornecedor.getText(),
+                    subtotal
+                });
+            // se a peça já estiver no carrinho, atualiza a quantidade e subtotal
+            } else if (temNoCarrinho) {
+                meuPedido = (DefaultTableModel) tabelaCarrinho.getModel();
+                // percorre as linhas na tabela
+                for (int i = 0, linhasNaTabela = meuPedido.getRowCount(); i < linhasNaTabela; i++) {
+                    int idNaTabela = Integer.parseInt(meuPedido.getValueAt(i, 0).toString());
+                    // verifica se o id da peça corresponde ao id da peça no carrinho e atualiza os dados
+                    if (idNaTabela == idPeca) {
+                        int qtdAtual = Integer.parseInt(meuPedido.getValueAt(i, 2).toString());
+                        int qtdNova = qtdAtual + Integer.parseInt(txtQtdPedido.getText());
+                        meuPedido.setValueAt(qtdNova, i, 2);
 
-                            double subtotalNaLista = Double.parseDouble(meuPedido.getValueAt(i, 4).toString());
-                            subtotal += subtotalNaLista;
-                            meuPedido.setValueAt(subtotal, i, 4);
-
-                            break;
-                        }
+                        double subtotalNaLista = Double.parseDouble(meuPedido.getValueAt(i, 4).toString());
+                        subtotal += subtotalNaLista;
+                        meuPedido.setValueAt(subtotal, i, 4);
+                        break;
                     }
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "A peça não pode ser adicionada ao carrinho pois o fornecedor é diferente das outras!", "Atenção", JOptionPane.WARNING_MESSAGE);
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "A peça não pode ser adicionada ao carrinho pois o fornecedor é diferente das outras!", "Atenção", JOptionPane.WARNING_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possível adicionar ao carrinho.\n Faltam informações.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         limpar.limparCampos(panelDadosPeca);
         txtQtdPedido.setEnabled(false);
-
     }//GEN-LAST:event_btnAdicionarPecaActionPerformed
 
     private void txtQtdPedidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQtdPedidoKeyReleased
+        // faz o calculo ao adicionar digitos
         calcularValorTotalPeca();
     }//GEN-LAST:event_txtQtdPedidoKeyReleased
 
     private void cbNomeFornecedorAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbNomeFornecedorAncestorAdded
+        // carrega todos os fornecedores existentes no banco de dados no comboBox
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
         List<Fornecedores> lista = fornecedoresDao.listar();
         cbNomeFornecedor.removeAllItems();
@@ -695,6 +716,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFazerPedidoActionPerformed
 
     private void btnCancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedidoActionPerformed
+        // após confirmação limpa os dados
         int opcao = JOptionPane.showConfirmDialog(null, "Você tem certeza que quer limpar o carrinho do pedido?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
             limpar.limparTabela(tabelaCarrinho);
@@ -703,6 +725,33 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             idFornecedorCarrinho = 0;
         }
     }//GEN-LAST:event_btnCancelarPedidoActionPerformed
+
+    private void btnRemoverPecaCarrinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverPecaCarrinhoActionPerformed
+        // verifica se uma linha da tabela está pressionada
+        int linhaSelecionada = tabelaCarrinho.getSelectedRow();
+        if (linhaSelecionada < 0) {
+            JOptionPane.showMessageDialog(null, "Selecione um item da tabela.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int idPeca = Integer.parseInt(tabelaCarrinho.getValueAt(linhaSelecionada, 0).toString());
+        int opcao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover esta peça?", "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.YES_NO_OPTION);
+        // se sim, deleta a linha da tabela e diminui os valores
+        if (opcao == JOptionPane.YES_OPTION) {
+            meuPedido = (DefaultTableModel) tabelaCarrinho.getModel();
+            // percorre as linhas na tabela e remove o id da peça da lista de controle
+            for (int i = 0, linhasNaTabela = meuPedido.getRowCount(); i < linhasNaTabela; i++) {
+                int idNaTabela = Integer.parseInt(meuPedido.getValueAt(i, 0).toString());
+                if (idPeca == idNaTabela) {
+                    idPecaTabela.remove(Integer.valueOf(idPeca));
+                    break;
+                }
+            }
+            double subtotalRemovido = Double.parseDouble(tabelaCarrinho.getValueAt(linhaSelecionada, 4).toString());
+            total -= subtotalRemovido;
+            calcularValorTotalPedido(total);
+            meuPedido.removeRow(linhaSelecionada);
+        }
+    }//GEN-LAST:event_btnRemoverPecaCarrinhoActionPerformed
 
     /**
      * @param args the command line arguments

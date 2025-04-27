@@ -564,7 +564,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void txtPesquisaNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaNomeKeyPressed
-        // ao pressionar ENTER no campo de texto, pesquisa e filtra os fornecedores na tabela com base no nome
+        // ao pressionar ENTER no campo de texto, pesquisa e filtra os fornecedores na tabela
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String nome = txtPesquisaNome.getText() + "%";
             FornecedoresDAO fornecedoresDao = new FornecedoresDAO();

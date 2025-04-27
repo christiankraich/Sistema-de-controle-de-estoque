@@ -9,7 +9,7 @@ public class TelaLogin extends javax.swing.JFrame {
      */
     public TelaLogin() {
         initComponents();
-        pnlIncorreto.setVisible(false);
+        lblIncorreto.setVisible(false);
     }
 
     /**
@@ -62,16 +62,13 @@ public class TelaLogin extends javax.swing.JFrame {
 
         lblIncorreto.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         lblIncorreto.setForeground(new java.awt.Color(255, 51, 51));
-        lblIncorreto.setText("E-mail ou senha incorreto!");
+        lblIncorreto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout pnlIncorretoLayout = new javax.swing.GroupLayout(pnlIncorreto);
         pnlIncorreto.setLayout(pnlIncorretoLayout);
         pnlIncorretoLayout.setHorizontalGroup(
             pnlIncorretoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlIncorretoLayout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addComponent(lblIncorreto)
-                .addGap(39, 39, 39))
+            .addComponent(lblIncorreto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
         );
         pnlIncorretoLayout.setVerticalGroup(
             pnlIncorretoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,24 +148,32 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        // tenta fazer o login
         try {
-            String email, senha;
-            email = txtEmailLogin.getText();
-            senha = txtSenhaLogin.getText();
+            String email = txtEmailLogin.getText();
+            String senha = txtSenhaLogin.getText();
+            // verifica se os campos foram preenchidos
+            if (email.isEmpty() || senha.isEmpty()) {
+                lblIncorreto.setVisible(true);
+                lblIncorreto.setText("Campos sem informações.");
+                return;
+            }
             FuncionariosDAO dao = new FuncionariosDAO();
+            // verifica se o email e senha são validos e acessa a area de trabalho
             if (dao.login(email, senha)) {
                 this.dispose();
                 TelaAreaDeTrabalho tat = new TelaAreaDeTrabalho();
                 tat.setVisible(true);
             } else {
-                pnlIncorreto.setVisible(true);
-                txtSenhaLogin.setText("");
+                lblIncorreto.setVisible(true);
+                lblIncorreto.setText("E-mail ou senha incorreto!");
             }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnOlharSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOlharSenhaActionPerformed
+        // mostra ou oculta a senha digitada
         if (btnOlharSenha.isSelected()) {
             txtSenhaLogin.setEchoChar((char) 0);
         } else {
