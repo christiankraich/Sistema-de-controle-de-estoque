@@ -11,7 +11,7 @@ import utilidades.LimpaComponente;
 public class TelaFormularioFornecedores extends javax.swing.JFrame {
 
     private final LimpaComponente limpar = new LimpaComponente();
-
+    // carrega e exibe os fornecedores na tabela
     public void listar() {
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
         List<Fornecedores> lista = fornecedoresDao.listar();
@@ -437,6 +437,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // cadastra o fornecedor no banco de dados e limpa os campos de texto
         Fornecedores fornecedores = new Fornecedores();
         fornecedores.setNome(txtNome.getText());
         fornecedores.setCnpj(txtCNPJ.getText());
@@ -456,10 +457,11 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarCNPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCNPJActionPerformed
+        // pesquisa o fornecedor no banco de dados com base no cnpj
         String cnpj = txtCNPJ.getText();
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
         Fornecedores fornecedor = fornecedoresDao.buscarCnpjFornecedor(cnpj);
-
+        // verifica se o fornecedor já está cadastrado no banco de dados e preenche os campos com as informações
         if (fornecedor.getCnpj() != null) {
             txtId.setText(String.valueOf(fornecedor.getId()));
             txtNome.setText(fornecedor.getNome());
@@ -479,14 +481,17 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarCNPJActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // limpa os campos no painel
         limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // atualiza com os dados ao abrir a janela
         listar();
     }//GEN-LAST:event_formWindowActivated
 
     private void btnPesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaNomeActionPerformed
+        // pesquisa e filtra os fornecedores na tabela com base no nome
         String nome = txtPesquisaNome.getText() + "%";
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
         List<Fornecedores> lista = fornecedoresDao.filtrar(nome);
@@ -511,6 +516,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisaNomeActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        // transfere os dados da linha selecionada na tabela para os campos na aba de dados
         painelGuias.setSelectedIndex(0);
         txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
         txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 1).toString());
@@ -528,6 +534,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // atualiza os dados do fornecedor no banco de dados e limpa os campos
         Fornecedores fornecedores = new Fornecedores();
         fornecedores.setNome(txtNome.getText());
         fornecedores.setCnpj(txtCNPJ.getText());
@@ -548,6 +555,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // exclui os dados do fornecedor no banco de dados e limpa os campos
         Fornecedores fornecedores = new Fornecedores();
         fornecedores.setId(Integer.parseInt(txtId.getText()));
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
@@ -556,6 +564,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void txtPesquisaNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaNomeKeyPressed
+        // ao pressionar ENTER no campo de texto, pesquisa e filtra os fornecedores na tabela com base no nome
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String nome = txtPesquisaNome.getText() + "%";
             FornecedoresDAO fornecedoresDao = new FornecedoresDAO();

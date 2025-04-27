@@ -11,7 +11,7 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
 
     private final LimpaComponente util = new LimpaComponente();
     int idPeca, qtdAtualizada;
-
+    // carrega e exibe as peças na tabela
     public void listar() {
         PecasDAO pecasDao = new PecasDAO();
         List<Pecas> lista = pecasDao.listar();
@@ -33,7 +33,6 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
 
     public TelaFormularioEstoque() {
         initComponents();
-        txtAlterarQtd.requestFocus();
     }
 
     /**
@@ -131,10 +130,12 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
         jLabel3.setText("Nome:");
 
         txtNome.setEditable(false);
+        txtNome.setEnabled(false);
 
         jLabel4.setText("Quantidade Atual:");
 
         txtQtdAtual.setEditable(false);
+        txtQtdAtual.setEnabled(false);
 
         jLabel5.setText("Alterar Quantidade:");
 
@@ -168,6 +169,7 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
         jLabel6.setText("Fornecedor:");
 
         txtFornecedor.setEditable(false);
+        txtFornecedor.setEnabled(false);
 
         javax.swing.GroupLayout panelDadosLayout = new javax.swing.GroupLayout(panelDados);
         panelDados.setLayout(panelDadosLayout);
@@ -293,24 +295,27 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // atualiza com os dados ao abrir a janela
         listar();
     }//GEN-LAST:event_formWindowActivated
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // limpa os campos do painel
         util.limparCampos(panelDados);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        // preenche os campos de texto com os valores na tabela
         idPeca = Integer.parseInt(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
         txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
         txtFornecedor.setText(tabela.getValueAt(tabela.getSelectedRow(), 1).toString());
         txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 2).toString());
         txtQtdAtual.setText(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
-        txtAlterarQtd.setText("");
         txtAlterarQtd.requestFocus();
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void btnAumentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAumentarActionPerformed
+        // aumenta a quantidade de peças no estoque após confirmação e limpa os campos de texto
         int opcao = JOptionPane.showConfirmDialog(null, "Tem certeza que quer aumentar a quantidade no estoque?",
                 "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
@@ -331,14 +336,14 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAumentarActionPerformed
 
     private void btnDiminuirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDiminuirActionPerformed
+        // diminui a quantidade de peças no estoque após confirmação, verificando se a quantidade no estoque ficará negativa e limpa os campos de texto
         int opcao = JOptionPane.showConfirmDialog(null, "Tem certeza que quer diminuir a quantidade no estoque?",
                 "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-
         if (opcao == JOptionPane.YES_OPTION) {
             try {
                 int qtdAtual = Integer.parseInt(txtQtdAtual.getText());
                 int qtdNova = Integer.parseInt(txtAlterarQtd.getText());
-
+                // verifica se o montante a ser diminuido não deixará o estoque com saldo negativo
                 if (qtdAtual - qtdNova < 0) {
                     JOptionPane.showMessageDialog(null, "A quantidade no estoque será negativa!", "Erro", JOptionPane.ERROR_MESSAGE);
                     return;

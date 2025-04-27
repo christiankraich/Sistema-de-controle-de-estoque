@@ -9,7 +9,7 @@
             <Property name="text" type="java.lang.String" value="Clientes"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemFormClientes">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Shift+Ctrl+C"/>
@@ -17,7 +17,7 @@
                 <Property name="text" type="java.lang.String" value="Formul&#xe1;rio de Clientes"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemFormClientesActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -27,7 +27,7 @@
             <Property name="text" type="java.lang.String" value="Funcion&#xe1;rios"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemFormFuncionarios">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Shift+Ctrl+F"/>
@@ -35,15 +35,15 @@
                 <Property name="text" type="java.lang.String" value="Formul&#xe1;rio de Funcion&#xe1;rios"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemFormFuncionariosActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemFormCargos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Formul&#xe1;rio de Cargos"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem10ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemFormCargosActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -53,7 +53,7 @@
             <Property name="text" type="java.lang.String" value="Fornecedores"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemFormFornecedores">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Shift+Ctrl+S"/>
@@ -61,7 +61,7 @@
                 <Property name="text" type="java.lang.String" value="Formul&#xe1;rio de Fornecedores"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemFormFornecedoresActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -76,7 +76,7 @@
                 <Property name="text" type="java.lang.String" value="Minhas Pe&#xe7;as"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemFormEstoque">
                   <Properties>
                     <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                       <KeyStroke key="Shift+Ctrl+N"/>
@@ -84,10 +84,10 @@
                     <Property name="text" type="java.lang.String" value="Controle de Estoque"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemFormEstoqueActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemFormPecas2">
                   <Properties>
                     <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                       <KeyStroke key="Ctrl+Alt+M"/>
@@ -95,10 +95,10 @@
                     <Property name="text" type="java.lang.String" value="Consulta de Pe&#xe7;as"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem5ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemFormPecas2ActionPerformed"/>
                   </Events>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem11">
+                <MenuItem class="javax.swing.JMenuItem" name="menuItemFormPecas">
                   <Properties>
                     <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                       <KeyStroke key="Shift+Ctrl+M"/>
@@ -106,7 +106,7 @@
                     <Property name="text" type="java.lang.String" value="Formul&#xe1;rio de Pe&#xe7;as"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem11ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemFormPecasActionPerformed"/>
                   </Events>
                 </MenuItem>
               </SubComponents>
@@ -118,7 +118,7 @@
             <Property name="text" type="java.lang.String" value="Pedidos"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem8">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemFormPedidos">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Shift+Ctrl+O"/>
@@ -133,7 +133,7 @@
             <Property name="text" type="java.lang.String" value="Ordem de Servi&#xe7;o"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemFormOrdemServico">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Formul&#xe1;rio de OS"/>
               </Properties>
@@ -145,7 +145,7 @@
             <Property name="text" type="java.lang.String" value="Sair"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemTrocarUsuario">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Shift+Ctrl+T"/>
@@ -153,10 +153,10 @@
                 <Property name="text" type="java.lang.String" value="Trocar de Usu&#xe1;rio"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemTrocarUsuarioActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemSairSistema">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Shift+Ctrl+Q"/>
@@ -164,7 +164,7 @@
                 <Property name="text" type="java.lang.String" value="Sair do Sistema"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem7ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemSairSistemaActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

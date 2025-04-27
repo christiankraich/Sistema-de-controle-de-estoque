@@ -19,6 +19,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     private final LimpaComponente limpar = new LimpaComponente();
     private boolean cargosCarregados = false;
 
+    // carrega e exibe os funcionários na tabela
     public void listar() {
         FuncionariosDAO funcionariosDao = new FuncionariosDAO();
         List<Funcionarios> lista = funcionariosDao.listar();
@@ -45,11 +46,11 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
             });
         }
     }
-
+    
+    // adiciona os items no comboBox com base no enum nivelAcesso
     private void listarDadosEnumComboBox() {
         try {
             cbNivelAcesso.removeAllItems();
-
             cbNivelAcesso.addItem(Funcionarios.NivelAcesso.ADMINISTRADOR);
             cbNivelAcesso.addItem(Funcionarios.NivelAcesso.COMUM);
         } catch (Exception e) {
@@ -515,14 +516,16 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        Funcionarios funcionario = new Funcionarios();
-        
+        // cadastra o funcionário no banco de dados e limpa os campos de texto
+        Funcionarios funcionario = new Funcionarios();        
         funcionario.setNome(txtNome.getText());
         funcionario.setCpf(txtCPF.getText());
+        // verifica e valida a data de nascimento
         try {
+            // configura o SimpleDateFormat para não aceitar datas inválidas ex: 35/13
             sdf.setLenient(false);
             Date dataNasc = sdf.parse(txtDataNasc.getText());
-
+            // verifica se a data fornecida está no futuro
             if (dataNasc.after(new Date())) {
                 JOptionPane.showMessageDialog(null, "Data de nascimento fornecida está no futuro.\nForneça uma data válida.", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -544,7 +547,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         funcionario.setCidade(txtCidade.getText());
         funcionario.setEstado(cbUF.getSelectedItem().toString());
         funcionario.setSenha(txtSenha.getText());
-
+        
         Cargos cargo = (Cargos) cbCargos.getSelectedItem();
         funcionario.setCargos(cargo);
 
@@ -557,10 +560,11 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCPFActionPerformed
+        // pesquisa o funcionário no banco de dados com base no cpf
         String cpf = txtCPF.getText();
         FuncionariosDAO funcionarioDao = new FuncionariosDAO();
         Funcionarios funcionario = funcionarioDao.buscarFuncionario(cpf);
-
+        // verifica se o funcionário já está cadastrado no banco de dados e preenche os campos com as informações
         if (funcionario.getCpf() != null) {
             txtId.setText(String.valueOf(funcionario.getId()));
             txtNome.setText(funcionario.getNome());
@@ -576,9 +580,9 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
             txtCidade.setText(funcionario.getCidade());
             cbUF.setSelectedItem(funcionario.getEstado());
             txtSenha.setText(funcionario.getSenha());
-
+            // percorre os itens do comboBox para selecionar o cargo com id correspondente ao do funcionário
             Cargos cargoSelecionado = funcionario.getCargos();
-            for (int i = 0; i < cbCargos.getItemCount(); i++) {
+            for (int i = 0, numeroCargos = cbCargos.getItemCount(); i < numeroCargos; i++) {
                 Cargos cargo = (Cargos) cbCargos.getItemAt(i);
                 if (cargo.getId() == cargoSelecionado.getId()) {
                     cbCargos.setSelectedItem(cargo);
@@ -593,14 +597,17 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarCPFActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // limpa os campos no painel
         limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // atualiza com os dados ao abrir a janela
         listar();
     }//GEN-LAST:event_formWindowActivated
 
     private void btnPesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaNomeActionPerformed
+        // pesquisa e filtra os funcionários com base no nome
         String nome = txtPesquisaNome.getText() + "%";
         FuncionariosDAO funcionariosDao = new FuncionariosDAO();
         List<Funcionarios> lista = funcionariosDao.filtrar(nome);
@@ -629,20 +636,21 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisaNomeActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        // transfere os dados da linha selecionada na tabela para os campos na aba de dados
         painelGuias.setSelectedIndex(0);
         txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
-
+        // percorre os itens no comboBox para selecionar o cargo com nome correspondente ao da tabela
         String nomeCargo = tabela.getValueAt(tabela.getSelectedRow(), 1).toString();
-        for (int i = 0; i < cbCargos.getItemCount(); i++) {
+        for (int i = 0, numeroCargos = cbCargos.getItemCount(); i < numeroCargos; i++) {
             Cargos cargo = (Cargos) cbCargos.getItemAt(i);
             if (cargo.getNome().equals(nomeCargo)) {
                 cbCargos.setSelectedItem(cargo);
                 break;
             }
         }
-
         txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 2).toString());
         String dataNasc = tabela.getValueAt(tabela.getSelectedRow(), 3).toString();
+        // formata a data de nascimento para o formato correspondente ao do campo de texto
         try {
             Date data = sdf2.parse(dataNasc);
             String dataNascFormatada = sdf.format(data);
@@ -667,13 +675,16 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // atualiza os dados do funcionário no banco de dados e limpa os campos
         Funcionarios funcionario = new Funcionarios();
         funcionario.setNome(txtNome.getText());
         funcionario.setCpf(txtCPF.getText());
+        // verifica e valida a data de nascimento
         try {
+            // configura o SimpleDateFormat para não aceitar datas inválidas ex: 35/13
             sdf.setLenient(false);
             Date dataNasc = sdf.parse(txtDataNasc.getText());
-
+            // verifica se a data fornecida está no futuro 
             if (dataNasc.after(new Date())) {
                 JOptionPane.showMessageDialog(null, "Data fornecida está no futuro.\nForneça uma data válida.", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -704,6 +715,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // exclui os dados do funcionário no banco de dados e limpa os campos
         Funcionarios funcionario = new Funcionarios();
         funcionario.setId(Integer.parseInt(txtId.getText()));
         FuncionariosDAO dao = new FuncionariosDAO();
@@ -712,6 +724,8 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void cbCargosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbCargosAncestorAdded
+        // verifica se os cargos já foram carregados no comboBox,
+        // se não estiverem, carrega todos os cargos existentes no banco de dados no comboBox
         if (!cargosCarregados) {
             CargosDAO cargosDao = new CargosDAO();
             List<Cargos> lista = cargosDao.listar();
@@ -724,6 +738,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_cbCargosAncestorAdded
 
     private void txtPesquisaNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaNomeKeyReleased
+        // filtra a tabela ao ir digitando o nome no campo de texto
         String nome = txtPesquisaNome.getText() + "%";
         FuncionariosDAO funcionariosDao = new FuncionariosDAO();
         List<Funcionarios> lista = funcionariosDao.filtrar(nome);

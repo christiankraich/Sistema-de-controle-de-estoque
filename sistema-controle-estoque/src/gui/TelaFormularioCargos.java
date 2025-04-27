@@ -10,6 +10,7 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
     
     private final LimpaComponente limpar = new LimpaComponente();
 
+    // carrega e exibe os cargos na tabela
     public void listar() {
         CargosDAO cargosDao = new CargosDAO();
         List<Cargos> lista = cargosDao.listar();
@@ -222,10 +223,12 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // atualiza a tabela com os dados ao abrir a janela
         listar();
     }//GEN-LAST:event_formWindowActivated
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        // cadastra o cargo no banco de dados e limpa os campos de texto
         Cargos cargo = new Cargos();
         cargo.setNome(txtNome.getText());
         
@@ -235,16 +238,19 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // limpa os campos no painel
         limpar.limparCampos(panelDados);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        // preenche os campos de texto com os valores na tabela
         txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
         txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 1).toString());
         txtNome.requestFocus();
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // exclui o cargo do banco de dados e limpa os campos de texto
         Cargos cargo = new Cargos();
         cargo.setId(Integer.parseInt(txtId.getText()));
         CargosDAO cargosDao = new CargosDAO();
@@ -253,6 +259,7 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // atualiza o cargo no banco de dados e limpa os campos de texto
         Cargos cargo = new Cargos();
         cargo.setNome(txtNome.getText());
         cargo.setId(Integer.parseInt(txtId.getText()));

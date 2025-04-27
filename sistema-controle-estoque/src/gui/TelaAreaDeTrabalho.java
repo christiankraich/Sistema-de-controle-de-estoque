@@ -31,24 +31,24 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         };
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuItemFormClientes = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        menuItemFormFuncionarios = new javax.swing.JMenuItem();
+        menuItemFormCargos = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menuItemFormFornecedores = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu8 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        menuItemFormEstoque = new javax.swing.JMenuItem();
+        menuItemFormPecas2 = new javax.swing.JMenuItem();
+        menuItemFormPecas = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        menuItemFormPedidos = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        menuItemFormOrdemServico = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        menuItemTrocarUsuario = new javax.swing.JMenuItem();
+        menuItemSairSistema = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Area de Trabalho");
@@ -75,48 +75,48 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
         jMenu1.setText("Clientes");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem1.setText("Formulário de Clientes");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuItemFormClientes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuItemFormClientes.setText("Formulário de Clientes");
+        menuItemFormClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuItemFormClientesActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(menuItemFormClientes);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Funcionários");
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem2.setText("Formulário de Funcionários");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuItemFormFuncionarios.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuItemFormFuncionarios.setText("Formulário de Funcionários");
+        menuItemFormFuncionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuItemFormFuncionariosActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        jMenu2.add(menuItemFormFuncionarios);
 
-        jMenuItem10.setText("Formulário de Cargos");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        menuItemFormCargos.setText("Formulário de Cargos");
+        menuItemFormCargos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                menuItemFormCargosActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem10);
+        jMenu2.add(menuItemFormCargos);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Fornecedores");
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem3.setText("Formulário de Fornecedores");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuItemFormFornecedores.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuItemFormFornecedores.setText("Formulário de Fornecedores");
+        menuItemFormFornecedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuItemFormFornecedoresActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem3);
+        jMenu3.add(menuItemFormFornecedores);
 
         jMenuBar1.add(jMenu3);
 
@@ -124,32 +124,32 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
         jMenu8.setText("Minhas Peças");
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem4.setText("Controle de Estoque");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menuItemFormEstoque.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuItemFormEstoque.setText("Controle de Estoque");
+        menuItemFormEstoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                menuItemFormEstoqueActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem4);
+        jMenu8.add(menuItemFormEstoque);
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem5.setText("Consulta de Peças");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        menuItemFormPecas2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuItemFormPecas2.setText("Consulta de Peças");
+        menuItemFormPecas2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                menuItemFormPecas2ActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem5);
+        jMenu8.add(menuItemFormPecas2);
 
-        jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem11.setText("Formulário de Peças");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        menuItemFormPecas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuItemFormPecas.setText("Formulário de Peças");
+        menuItemFormPecas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                menuItemFormPecasActionPerformed(evt);
             }
         });
-        jMenu8.add(jMenuItem11);
+        jMenu8.add(menuItemFormPecas);
 
         jMenu4.add(jMenu8);
 
@@ -157,38 +157,38 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
         jMenu7.setText("Pedidos");
 
-        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem8.setText("Formulário de Pedidos");
-        jMenu7.add(jMenuItem8);
+        menuItemFormPedidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuItemFormPedidos.setText("Formulário de Pedidos");
+        jMenu7.add(menuItemFormPedidos);
 
         jMenuBar1.add(jMenu7);
 
         jMenu5.setText("Ordem de Serviço");
 
-        jMenuItem9.setText("Formulário de OS");
-        jMenu5.add(jMenuItem9);
+        menuItemFormOrdemServico.setText("Formulário de OS");
+        jMenu5.add(menuItemFormOrdemServico);
 
         jMenuBar1.add(jMenu5);
 
         jMenu6.setText("Sair");
 
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem6.setText("Trocar de Usuário");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        menuItemTrocarUsuario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuItemTrocarUsuario.setText("Trocar de Usuário");
+        menuItemTrocarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                menuItemTrocarUsuarioActionPerformed(evt);
             }
         });
-        jMenu6.add(jMenuItem6);
+        jMenu6.add(menuItemTrocarUsuario);
 
-        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem7.setText("Sair do Sistema");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        menuItemSairSistema.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        menuItemSairSistema.setText("Sair do Sistema");
+        menuItemSairSistema.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                menuItemSairSistemaActionPerformed(evt);
             }
         });
-        jMenu6.add(jMenuItem7);
+        jMenu6.add(menuItemSairSistema);
 
         jMenuBar1.add(jMenu6);
 
@@ -209,61 +209,71 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuItemFormClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormClientesActionPerformed
+        // abre o formulário de clientes na tela
         TelaFormularioClientes tfc = new TelaFormularioClientes();
         tfc.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuItemFormClientesActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void menuItemFormFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormFuncionariosActionPerformed
+        // abre o formulário de funcionários na tela
         TelaFormularioFuncionarios tff = new TelaFormularioFuncionarios();
         tff.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menuItemFormFuncionariosActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void menuItemFormFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormFornecedoresActionPerformed
+        // abre o formulário de fornecedores na tela
         TelaFormularioFornecedores tff = new TelaFormularioFornecedores();
         tff.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menuItemFormFornecedoresActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void menuItemFormCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormCargosActionPerformed
+        // abre o formulário de cargos na tela
         TelaFormularioCargos tfc = new TelaFormularioCargos();
         tfc.setVisible(true);
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    }//GEN-LAST:event_menuItemFormCargosActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // maximiza a janela
         this.setExtendedState(MAXIMIZED_BOTH);
     }//GEN-LAST:event_formWindowActivated
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        int opcao = JOptionPane.showConfirmDialog(null, "Você deseja trocar de usuário?", "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+    private void menuItemTrocarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTrocarUsuarioActionPerformed
+        // solicita confirmação para trocar de usuário        
+        int opcao = JOptionPane.showConfirmDialog(null, "Você deseja trocar de usuário?", "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);       
         if (opcao == JOptionPane.YES_OPTION) {
             TelaLogin tl = new TelaLogin();
             this.dispose();
             tl.setVisible(true);
         } 
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_menuItemTrocarUsuarioActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void menuItemSairSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSairSistemaActionPerformed
+        // solicita confirmação para sair do sistema
         int opcao = JOptionPane.showConfirmDialog(null, "Sair do sistema?", "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_menuItemSairSistemaActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+    private void menuItemFormPecasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormPecasActionPerformed
+        // abre o formulário de Peças na tela
         TelaFormularioPecas tfp = new TelaFormularioPecas();
         tfp.setVisible(true);
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    }//GEN-LAST:event_menuItemFormPecasActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void menuItemFormPecas2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormPecas2ActionPerformed
+        // abre o formulário de Peças na tela, na aba de consulta de Peças
         TelaFormularioPecas tfpConsulta = new TelaFormularioPecas();
         tfpConsulta.painelGuias.setSelectedIndex(1);
         tfpConsulta.setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_menuItemFormPecas2ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void menuItemFormEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormEstoqueActionPerformed
+        // abre o formulário de estoque na tela
         TelaFormularioEstoque tle = new TelaFormularioEstoque();
         tle.setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_menuItemFormEstoqueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,17 +314,17 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenuItem menuItemFormCargos;
+    private javax.swing.JMenuItem menuItemFormClientes;
+    private javax.swing.JMenuItem menuItemFormEstoque;
+    private javax.swing.JMenuItem menuItemFormFornecedores;
+    private javax.swing.JMenuItem menuItemFormFuncionarios;
+    private javax.swing.JMenuItem menuItemFormOrdemServico;
+    private javax.swing.JMenuItem menuItemFormPecas;
+    private javax.swing.JMenuItem menuItemFormPecas2;
+    private javax.swing.JMenuItem menuItemFormPedidos;
+    private javax.swing.JMenuItem menuItemSairSistema;
+    private javax.swing.JMenuItem menuItemTrocarUsuario;
     private javax.swing.JDesktopPane painelDesktop;
     // End of variables declaration//GEN-END:variables
 }

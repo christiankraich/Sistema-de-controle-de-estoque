@@ -269,6 +269,7 @@
         <Component class="javax.swing.JTextField" name="txtNome">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
@@ -279,6 +280,7 @@
         <Component class="javax.swing.JTextField" name="txtQtdAtual">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
@@ -315,6 +317,7 @@
         <Component class="javax.swing.JTextField" name="txtFornecedor">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
       </SubComponents>

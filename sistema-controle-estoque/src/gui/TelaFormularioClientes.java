@@ -16,6 +16,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
     private final LimpaComponente limpar = new LimpaComponente();
 
+    // carrega e exibe os clientes na tabela
     public void listar() {
         ClientesDAO clientesDao = new ClientesDAO();
         List<Clientes> lista = clientesDao.listar();
@@ -456,13 +457,16 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // cadastra o cliente no banco de dados e limpa os campos de texto
         Clientes cliente = new Clientes();
         cliente.setNome(txtNome.getText());
         cliente.setCpf(txtCPF.getText());
+        // verifica e valida a data de nascimento
         try {
+            // configura o SimpleDateFormat para não aceitar datas inválidas ex: 35/13
             sdf.setLenient(false);
             Date dataNasc = sdf.parse(txtDataNasc.getText());
-
+            // verifica se a data fornecida está no futuro 
             if (dataNasc.after(new Date())) {
                 JOptionPane.showMessageDialog(null, "Data de nascimento fornecida está no futuro.\nForneça uma data válida.", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -490,10 +494,11 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnPesquisarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCPFActionPerformed
+        // pesquisa o cliente no banco de dados com base no cpf 
         String cpf = txtCPF.getText();
         ClientesDAO clienteDao = new ClientesDAO();
         Clientes cliente = clienteDao.buscarCliente(cpf);
-
+        // verifica se o cliente já está cadastrado no banco de dados e preenche os campos com as informações
         if (cliente.getCpf() != null) {
             txtId.setText(String.valueOf(cliente.getId()));
             txtNome.setText(cliente.getNome());
@@ -514,14 +519,17 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarCPFActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // limpa os campos do painel
         limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // atualiza com os dados ao abrir a janela
         listar();
     }//GEN-LAST:event_formWindowActivated
 
     private void btnPesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaNomeActionPerformed
+        // pesquisa e filtra os clientes na tabela com base no nome
         String nome = txtPesquisaNome.getText() + "%";
         ClientesDAO clientesDao = new ClientesDAO();
         List<Clientes> lista = clientesDao.filtrar(nome);
@@ -547,10 +555,12 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisaNomeActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        // transfere os dados da linha selecionada na tabela para os campos na aba de dados
         painelGuias.setSelectedIndex(0);
         txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
         txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 1).toString());
         String dataNasc = tabela.getValueAt(tabela.getSelectedRow(), 2).toString();
+        // formata a data de nascimento para o formato correspondente ao do campo de texto
         try {
             Date data = sdf2.parse(dataNasc);
             String dataNascFormatada = sdf.format(data);
@@ -573,13 +583,16 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // atualiza os dados do cliente no banco de dados e limpa os campos
         Clientes cliente = new Clientes();
         cliente.setNome(txtNome.getText());
         cliente.setCpf(txtCPF.getText());
+        // verifica e valida a data de nascimento
         try {
+            // configura o SimpleDateFormat para não aceitar datas inválidas ex: 35/13
             sdf.setLenient(false);
             Date dataNasc = sdf.parse(txtDataNasc.getText());
-
+            // verifica se a data fornecida está no futuro 
             if (dataNasc.after(new Date())) {
                 JOptionPane.showMessageDialog(null, "Data fornecida está no futuro.\nForneça uma data válida.", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -607,6 +620,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // exclui os dados do cliente no banco de dados e limpa os campos
         Clientes cliente = new Clientes();
         cliente.setId(Integer.parseInt(txtId.getText()));
         ClientesDAO dao = new ClientesDAO();
