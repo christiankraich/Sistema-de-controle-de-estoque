@@ -1,8 +1,23 @@
 # Compiled class file
 *.class
 
+# Build outputs
+build/
+dist/
+
+# NetBeans project-specific settings
+nbproject/private/
+nbproject/Makefile-*.mk
+
 # Log file
 *.log
+
+# Environment file
+.env
+
+# Crash logs
+hs_err_pid*
+replay_pid*
 
 # BlueJ files
 *.ctxt
@@ -18,9 +33,3 @@
 *.zip
 *.tar.gz
 *.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
-
-sistema-estoque-auto/src/module-info.java

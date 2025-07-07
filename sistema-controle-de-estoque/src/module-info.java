@@ -3,4 +3,5 @@ module SistemaEstoqueAutomotiva {
     requires java.base;
     requires java.sql;
     requires java.logging;
+    requires io.github.cdimascio.dotenv.java;
 }
