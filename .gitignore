@@ -5,14 +5,6 @@
 build/
 dist/
 
-# NetBeans project-specific settings
-nbproject/private/
-nbproject/Makefile-*.mk
-
-# Build output folders
-/build/
-/dist/
-
 # NetBeans project private files (configurações locais)
 nbproject/private/
 /nbproject/Makefile-*.mk
