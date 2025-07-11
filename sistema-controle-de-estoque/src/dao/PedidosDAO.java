@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import jdbc.MySQLConnection;
 import model.Pedidos;
 
 public class PedidosDAO {
@@ -13,8 +12,8 @@ public class PedidosDAO {
     private final Connection conn;
 
     // construtor que inicializa a conexão com o banco de dados
-    public PedidosDAO() {
-        this.conn = new MySQLConnection().getConnection();
+    public PedidosDAO(Connection conn) {
+        this.conn = conn;
     }
 
     // salva o pedido no banco de dados

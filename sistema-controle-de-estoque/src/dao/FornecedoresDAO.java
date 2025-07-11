@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import jdbc.MySQLConnection;
 import model.Fornecedores;
 
 public class FornecedoresDAO {
@@ -15,8 +14,8 @@ public class FornecedoresDAO {
     private final Connection conn;
 
     // construtor que inicializa a conexão com o banco de dados
-    public FornecedoresDAO() {
-        this.conn = new MySQLConnection().getConnection();
+    public FornecedoresDAO(Connection conn) {
+        this.conn = conn;
     }
 
     public void salvar(Fornecedores fornecedor) {

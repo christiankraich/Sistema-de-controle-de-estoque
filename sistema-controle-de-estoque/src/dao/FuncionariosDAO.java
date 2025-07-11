@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import jdbc.MySQLConnection;
 import model.Cargos;
 import model.Funcionarios;
 
@@ -16,8 +15,8 @@ public class FuncionariosDAO {
     private final Connection conn;    
 
     // construtor que inicializa a conexão com o banco de dados
-    public FuncionariosDAO() {
-        this.conn = new MySQLConnection().getConnection();
+    public FuncionariosDAO(Connection conn) {
+        this.conn = conn;
     }
 
     public void salvar(Funcionarios funcionario) {
@@ -67,7 +66,7 @@ public class FuncionariosDAO {
                 funcionario.setId(rs.getInt("id"));
                 // busca o nome do cargo correspondente ao id
                 int idCargo = rs.getInt("id_cargo");
-                CargosDAO cargosDao = new CargosDAO();
+                CargosDAO cargosDao = new CargosDAO(conn);
                 Cargos cargo = cargosDao.buscarIdCargo(idCargo);
                 funcionario.setCargos(cargo);
                 
@@ -164,7 +163,7 @@ public class FuncionariosDAO {
                 funcionario.setId(rs.getInt("id"));
                 // busca o nome do cargo correspondente ao id
                 int idCargo = rs.getInt("id_cargo");
-                CargosDAO cargosDao = new CargosDAO();
+                CargosDAO cargosDao = new CargosDAO(conn);
                 Cargos cargo = cargosDao.buscarIdCargo(idCargo);
                 funcionario.setCargos(cargo);
                 
@@ -264,7 +263,7 @@ public class FuncionariosDAO {
                 return true;
            }            
         } catch (SQLException e) {
-            // exibe a mensagem em caso de erro
+            e.printStackTrace();
         }
         return false;
     }

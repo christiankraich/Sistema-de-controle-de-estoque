@@ -1,12 +1,14 @@
 package gui;
 
 import dao.ClientesDAO;
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import jdbc.MySQLConnection;
 import model.Clientes;
 import utilidades.LimpaComponente;
 
@@ -15,10 +17,11 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
     private final LimpaComponente limpar = new LimpaComponente();
+    private final Connection conn;
 
     // carrega e exibe os clientes na tabela
     public void listar() {
-        ClientesDAO clientesDao = new ClientesDAO();
+        ClientesDAO clientesDao = new ClientesDAO(conn);
         List<Clientes> lista = clientesDao.listar();
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
@@ -41,8 +44,9 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         }
     }
 
-    public TelaFormularioClientes() {
+    public TelaFormularioClientes(Connection conn) {
         initComponents();
+        this.conn = conn;
     }
 
     /**
@@ -413,6 +417,11 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -488,7 +497,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         cliente.setCidade(txtCidade.getText());
         cliente.setEstado(cbUF.getSelectedItem().toString());
 
-        ClientesDAO dao = new ClientesDAO();
+        ClientesDAO dao = new ClientesDAO(conn);
         dao.salvar(cliente);
         limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnAdicionarActionPerformed
@@ -496,7 +505,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     private void btnPesquisarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCPFActionPerformed
         // pesquisa o cliente no banco de dados com base no cpf 
         String cpf = txtCPF.getText();
-        ClientesDAO clienteDao = new ClientesDAO();
+        ClientesDAO clienteDao = new ClientesDAO(conn);
         Clientes cliente = clienteDao.buscarCliente(cpf);
         // verifica se o cliente já está cadastrado no banco de dados e preenche os campos com as informações
         if (cliente.getCpf() != null) {
@@ -531,7 +540,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     private void btnPesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaNomeActionPerformed
         // pesquisa e filtra os clientes na tabela com base no nome
         String nome = txtPesquisaNome.getText() + "%";
-        ClientesDAO clientesDao = new ClientesDAO();
+        ClientesDAO clientesDao = new ClientesDAO(conn);
         List<Clientes> lista = clientesDao.filtrar(nome);
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
@@ -614,7 +623,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         cliente.setEstado(cbUF.getSelectedItem().toString());
         cliente.setId(Integer.parseInt(txtId.getText()));
 
-        ClientesDAO dao = new ClientesDAO();
+        ClientesDAO dao = new ClientesDAO(conn);
         dao.editar(cliente);
         limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -623,10 +632,14 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         // exclui os dados do cliente no banco de dados e limpa os campos
         Clientes cliente = new Clientes();
         cliente.setId(Integer.parseInt(txtId.getText()));
-        ClientesDAO dao = new ClientesDAO();
+        ClientesDAO dao = new ClientesDAO(conn);
         dao.excluir(cliente);
         limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -661,7 +674,11 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaFormularioClientes().setVisible(true);
+                try {
+                    Connection conn = MySQLConnection.getConnection();
+                    new TelaFormularioClientes(conn).setVisible(true);
+                } catch (Exception e) {
+                }
             }
         });
     }

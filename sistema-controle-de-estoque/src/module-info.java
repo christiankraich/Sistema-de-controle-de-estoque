@@ -4,4 +4,5 @@ module SistemaEstoqueAutomotiva {
     requires java.sql;
     requires java.logging;
     requires io.github.cdimascio.dotenv.java;
+    requires mysql.connector.j;
 }

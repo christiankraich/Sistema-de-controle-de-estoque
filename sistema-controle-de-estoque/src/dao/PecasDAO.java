@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import jdbc.MySQLConnection;
 import model.Fornecedores;
 import model.Pecas;
 
@@ -16,8 +15,8 @@ public class PecasDAO {
     private final Connection conn;
     
     // construtor que inicializa a conexão com o banco de dados
-    public PecasDAO() {
-        this.conn = new MySQLConnection().getConnection();
+    public PecasDAO(Connection conn) {
+        this.conn = conn;
     }
 
     // salva a peça no banco de dados
@@ -136,7 +135,7 @@ public class PecasDAO {
                 peca.setId(rs.getInt("id"));
                 // busca o nome do fornecedor correspondente ao id
                 int idFornecedor = rs.getInt("id_fornecedor");
-                FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
+                FornecedoresDAO fornecedoresDao = new FornecedoresDAO(conn);
                 Fornecedores fornecedor = fornecedoresDao.buscarIdFornecedor(idFornecedor);
                 peca.setFornecedores(fornecedor);
 
@@ -170,7 +169,7 @@ public class PecasDAO {
                 peca.setId(rs.getInt("id"));
                 // busca o nome do fornecedor correspondente ao id
                 int idFornecedor = rs.getInt("id_fornecedor");
-                FornecedoresDAO fornecedorDao = new FornecedoresDAO();
+                FornecedoresDAO fornecedorDao = new FornecedoresDAO(conn);
                 Fornecedores fornecedor = fornecedorDao.buscarIdFornecedor(idFornecedor);
                 peca.setFornecedores(fornecedor);
 
@@ -223,7 +222,7 @@ public class PecasDAO {
                 peca.setId(rs.getInt("id"));
                 // busca o nome do fornecedor correspondente ao id
                 int idFornecedor = rs.getInt("id_fornecedor");
-                FornecedoresDAO fornecedorDao = new FornecedoresDAO();
+                FornecedoresDAO fornecedorDao = new FornecedoresDAO(conn);
                 Fornecedores fornecedor = fornecedorDao.buscarIdFornecedor(idFornecedor);
                 peca.setFornecedores(fornecedor);
 

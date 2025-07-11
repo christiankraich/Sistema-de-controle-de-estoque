@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import jdbc.MySQLConnection;
 import model.Cargos;
 
 public class CargosDAO {
@@ -15,8 +14,8 @@ public class CargosDAO {
     private final Connection conn;
 
     // construtor que inicializa a conexão com o banco de dados
-    public CargosDAO() {
-        this.conn = new MySQLConnection().getConnection();
+    public CargosDAO(Connection conn) {
+        this.conn = conn;
     }
 
     public void salvar(Cargos cargo) {

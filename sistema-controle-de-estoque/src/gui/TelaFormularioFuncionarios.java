@@ -2,12 +2,14 @@ package gui;
 
 import dao.CargosDAO;
 import dao.FuncionariosDAO;
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import jdbc.MySQLConnection;
 import model.Cargos;
 import model.Funcionarios;
 import utilidades.LimpaComponente;
@@ -18,10 +20,11 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     private final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
     private final LimpaComponente limpar = new LimpaComponente();
     private boolean cargosCarregados = false;
+    private final Connection conn;
 
     // carrega e exibe os funcionários na tabela
     public void listar() {
-        FuncionariosDAO funcionariosDao = new FuncionariosDAO();
+        FuncionariosDAO funcionariosDao = new FuncionariosDAO(conn);
         List<Funcionarios> lista = funcionariosDao.listar();
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
@@ -58,9 +61,10 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         }
     }
 
-    public TelaFormularioFuncionarios() {
+    public TelaFormularioFuncionarios(Connection conn) {
         initComponents();
         listarDadosEnumComboBox();
+        this.conn = conn;
     }
 
     /**
@@ -570,7 +574,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         Funcionarios.NivelAcesso nivelAcessoSelecionado = (Funcionarios.NivelAcesso) cbNivelAcesso.getSelectedItem();
         funcionario.setNivelAcesso(nivelAcessoSelecionado);
 
-        FuncionariosDAO dao = new FuncionariosDAO();
+        FuncionariosDAO dao = new FuncionariosDAO(conn);
         dao.salvar(funcionario);
         limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnAdicionarActionPerformed
@@ -578,7 +582,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     private void btnPesquisarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCPFActionPerformed
         // pesquisa o funcionário no banco de dados com base no cpf
         String cpf = txtCPF.getText();
-        FuncionariosDAO funcionarioDao = new FuncionariosDAO();
+        FuncionariosDAO funcionarioDao = new FuncionariosDAO(conn);
         Funcionarios funcionario = funcionarioDao.buscarFuncionario(cpf);
         // verifica se o funcionário já está cadastrado no banco de dados e preenche os campos com as informações
         if (funcionario.getCpf() != null) {
@@ -625,7 +629,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     private void btnPesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaNomeActionPerformed
         // pesquisa e filtra os funcionários com base no nome
         String nome = txtPesquisaNome.getText() + "%";
-        FuncionariosDAO funcionariosDao = new FuncionariosDAO();
+        FuncionariosDAO funcionariosDao = new FuncionariosDAO(conn);
         List<Funcionarios> lista = funcionariosDao.filtrar(nome);
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
@@ -746,7 +750,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         funcionario.setNivelAcesso((Funcionarios.NivelAcesso) cbNivelAcesso.getSelectedItem());
         funcionario.setId(Integer.parseInt(txtId.getText()));
 
-        FuncionariosDAO dao = new FuncionariosDAO();
+        FuncionariosDAO dao = new FuncionariosDAO(conn);
         dao.editar(funcionario);
         limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -755,7 +759,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         // exclui os dados do funcionário no banco de dados e limpa os campos
         Funcionarios funcionario = new Funcionarios();
         funcionario.setId(Integer.parseInt(txtId.getText()));
-        FuncionariosDAO dao = new FuncionariosDAO();
+        FuncionariosDAO dao = new FuncionariosDAO(conn);
         dao.excluir(funcionario);
         limpar.limparCampos(pnlDadosPessoais);
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -764,7 +768,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         // verifica se os cargos já foram carregados no comboBox,
         // se não estiverem, carrega todos os cargos existentes no banco de dados no comboBox
         if (!cargosCarregados) {
-            CargosDAO cargosDao = new CargosDAO();
+            CargosDAO cargosDao = new CargosDAO(conn);
             List<Cargos> lista = cargosDao.listar();
             cbCargos.removeAllItems();
             cbCargos.addItem("Selecione o cargo");
@@ -778,7 +782,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
     private void txtPesquisaNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaNomeKeyReleased
         // filtra a tabela ao ir digitando o nome no campo de texto
         String nome = txtPesquisaNome.getText() + "%";
-        FuncionariosDAO funcionariosDao = new FuncionariosDAO();
+        FuncionariosDAO funcionariosDao = new FuncionariosDAO(conn);
         List<Funcionarios> lista = funcionariosDao.filtrar(nome);
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
@@ -841,7 +845,11 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaFormularioFuncionarios().setVisible(true);
+                try {
+                    Connection conn = MySQLConnection.getConnection();
+                    new TelaFormularioFuncionarios(conn).setVisible(true);
+                } catch (Exception e) {
+                }
             }
         });
     }

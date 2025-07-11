@@ -2,15 +2,21 @@ package gui;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.sql.Connection;
 import javax.swing.*;
+import jdbc.MySQLConnection;
 
 public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
+    private final Connection conn;
+    
     /**
      * Creates new form TelaAreaDeTrabalho
      */
-    public TelaAreaDeTrabalho() {
+    public TelaAreaDeTrabalho(Connection conn) {
         initComponents();
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.conn = conn;
     }
 
     /**
@@ -57,6 +63,12 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -211,25 +223,25 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
     private void menuItemFormClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormClientesActionPerformed
         // abre o formulário de clientes na tela
-        TelaFormularioClientes tfc = new TelaFormularioClientes();
+        TelaFormularioClientes tfc = new TelaFormularioClientes(conn);
         tfc.setVisible(true);
     }//GEN-LAST:event_menuItemFormClientesActionPerformed
 
     private void menuItemFormFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormFuncionariosActionPerformed
         // abre o formulário de funcionários na tela
-        TelaFormularioFuncionarios tff = new TelaFormularioFuncionarios();
+        TelaFormularioFuncionarios tff = new TelaFormularioFuncionarios(conn);
         tff.setVisible(true);
     }//GEN-LAST:event_menuItemFormFuncionariosActionPerformed
 
     private void menuItemFormFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormFornecedoresActionPerformed
         // abre o formulário de fornecedores na tela
-        TelaFormularioFornecedores tff = new TelaFormularioFornecedores();
+        TelaFormularioFornecedores tff = new TelaFormularioFornecedores(conn);
         tff.setVisible(true);
     }//GEN-LAST:event_menuItemFormFornecedoresActionPerformed
 
     private void menuItemFormCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormCargosActionPerformed
         // abre o formulário de cargos na tela
-        TelaFormularioCargos tfc = new TelaFormularioCargos();
+        TelaFormularioCargos tfc = new TelaFormularioCargos(conn);
         tfc.setVisible(true);
     }//GEN-LAST:event_menuItemFormCargosActionPerformed
 
@@ -240,9 +252,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
     private void menuItemTrocarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTrocarUsuarioActionPerformed
         // solicita confirmação para trocar de usuário        
-        int opcao = JOptionPane.showConfirmDialog(null, "Você deseja trocar de usuário?", "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);       
+        int opcao = JOptionPane.showConfirmDialog(null,
+                "Você deseja trocar de usuário?", "Aviso",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);       
         if (opcao == JOptionPane.YES_OPTION) {
-            TelaLogin tl = new TelaLogin();
+            TelaLogin tl = new TelaLogin(conn);
             this.dispose();
             tl.setVisible(true);
         } 
@@ -250,30 +264,48 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
     private void menuItemSairSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSairSistemaActionPerformed
         // solicita confirmação para sair do sistema
-        int opcao = JOptionPane.showConfirmDialog(null, "Sair do sistema?", "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        int opcao = JOptionPane.showConfirmDialog(null,
+                "Sair do sistema?", "Aviso",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
-            System.exit(0);
+            this.dispose();
+            MySQLConnection.closeConnection();
         }
     }//GEN-LAST:event_menuItemSairSistemaActionPerformed
 
     private void menuItemFormPecasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormPecasActionPerformed
         // abre o formulário de Peças na tela
-        TelaFormularioPecas tfp = new TelaFormularioPecas();
+        TelaFormularioPecas tfp = new TelaFormularioPecas(conn);
         tfp.setVisible(true);
     }//GEN-LAST:event_menuItemFormPecasActionPerformed
 
     private void menuItemFormPecas2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormPecas2ActionPerformed
         // abre o formulário de Peças na tela, na aba de consulta de Peças
-        TelaFormularioPecas tfpConsulta = new TelaFormularioPecas();
+        TelaFormularioPecas tfpConsulta = new TelaFormularioPecas(conn);
         tfpConsulta.painelGuias.setSelectedIndex(1);
         tfpConsulta.setVisible(true);
     }//GEN-LAST:event_menuItemFormPecas2ActionPerformed
 
     private void menuItemFormEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormEstoqueActionPerformed
         // abre o formulário de estoque na tela
-        TelaFormularioEstoque tle = new TelaFormularioEstoque();
+        TelaFormularioEstoque tle = new TelaFormularioEstoque(conn);
         tle.setVisible(true);
     }//GEN-LAST:event_menuItemFormEstoqueActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int opcao = JOptionPane.showConfirmDialog(null,
+                "Ao fechar a área de trabalho você será desconectado."
+                + " Tem certeza que quer sair?", "Aviso", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (opcao == JOptionPane.YES_OPTION) {
+            this.dispose();           
+            MySQLConnection.closeConnection();
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        System.exit(0);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -300,7 +332,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new TelaAreaDeTrabalho().setVisible(true);
+            try {
+                Connection conn = MySQLConnection.getConnection();
+                new TelaAreaDeTrabalho(conn).setVisible(true);
+            } catch (Exception e) {
+            }
         });
     }
 

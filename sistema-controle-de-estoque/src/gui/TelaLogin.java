@@ -1,15 +1,21 @@
 package gui;
 
 import dao.FuncionariosDAO;
+import java.sql.Connection;
+import jdbc.MySQLConnection;
 
 public class TelaLogin extends javax.swing.JFrame {
+    
+    private final Connection conn;
+    private boolean loginRealizado = false;
 
     /**
      * Creates new form TelaLogin
      */
-    public TelaLogin() {
+    public TelaLogin(Connection conn) {
         initComponents();
         lblIncorreto.setVisible(false);
+        this.conn = conn;
     }
 
     /**
@@ -35,6 +41,11 @@ public class TelaLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tela de Login");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
 
@@ -158,11 +169,12 @@ public class TelaLogin extends javax.swing.JFrame {
                 lblIncorreto.setText("Campos sem informações.");
                 return;
             }
-            FuncionariosDAO dao = new FuncionariosDAO();
+            FuncionariosDAO dao = new FuncionariosDAO(conn);
             // verifica se o email e senha são validos e acessa a area de trabalho
             if (dao.login(email, senha)) {
+                loginRealizado = true;
                 this.dispose();
-                TelaAreaDeTrabalho tat = new TelaAreaDeTrabalho();
+                TelaAreaDeTrabalho tat = new TelaAreaDeTrabalho(conn);
                 tat.setVisible(true);
             } else {
                 lblIncorreto.setVisible(true);
@@ -180,6 +192,13 @@ public class TelaLogin extends javax.swing.JFrame {
             txtSenhaLogin.setEchoChar('*');
         }
     }//GEN-LAST:event_btnOlharSenhaActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        if (!loginRealizado) {
+            MySQLConnection.closeConnection();
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -211,7 +230,11 @@ public class TelaLogin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaLogin().setVisible(true);
+                try {
+                    Connection conn = MySQLConnection.getConnection();
+                    new TelaLogin(conn).setVisible(true);
+                } catch (Exception e) {
+                }
             }
         });
     }

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import jdbc.MySQLConnection;
 import model.Clientes;
 
 public class ClientesDAO {
@@ -15,8 +14,8 @@ public class ClientesDAO {
     private final Connection conn;
 
     // construtor que inicializa a conexão com o banco de dados
-    public ClientesDAO() {
-        this.conn = new MySQLConnection().getConnection();
+    public ClientesDAO(Connection conn) {
+        this.conn = conn;
     }
 
     public void salvar(Clientes cliente) {
@@ -114,7 +113,7 @@ public class ClientesDAO {
 
         } catch (SQLException e) {
             // exibe a mensagem caso ocorra um erro na consulta ao banco
-            JOptionPane.showMessageDialog(null, "Erro ao criar a lista de clientes.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao criar a lista de clientes." + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
         return lista;
     }

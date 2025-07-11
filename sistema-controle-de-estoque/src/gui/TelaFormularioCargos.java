@@ -1,18 +1,21 @@
 package gui;
 
 import dao.CargosDAO;
+import java.sql.Connection;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import jdbc.MySQLConnection;
 import model.Cargos;
 import utilidades.LimpaComponente;
 
 public class TelaFormularioCargos extends javax.swing.JFrame {
     
     private final LimpaComponente limpar = new LimpaComponente();
+    private final Connection conn;
 
     // carrega e exibe os cargos na tabela
     public void listar() {
-        CargosDAO cargosDao = new CargosDAO();
+        CargosDAO cargosDao = new CargosDAO(conn);
         List<Cargos> lista = cargosDao.listar();
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
@@ -24,8 +27,9 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
         }
     }
     
-    public TelaFormularioCargos() {
+    public TelaFormularioCargos(Connection conn) {
         initComponents();
+        this.conn = conn;
     }
 
     /**
@@ -232,7 +236,7 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
         Cargos cargo = new Cargos();
         cargo.setNome(txtNome.getText());
         
-        CargosDAO dao = new CargosDAO();
+        CargosDAO dao = new CargosDAO(conn);
         dao.salvar(cargo);
         limpar.limparCampos(panelDados);
     }//GEN-LAST:event_btnCadastrarActionPerformed
@@ -253,7 +257,7 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
         // exclui o cargo do banco de dados e limpa os campos de texto
         Cargos cargo = new Cargos();
         cargo.setId(Integer.parseInt(txtId.getText()));
-        CargosDAO cargosDao = new CargosDAO();
+        CargosDAO cargosDao = new CargosDAO(conn);
         cargosDao.excluir(cargo);
         limpar.limparCampos(panelDados);
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -264,7 +268,7 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
         cargo.setNome(txtNome.getText());
         cargo.setId(Integer.parseInt(txtId.getText()));
         
-        CargosDAO dao = new CargosDAO();
+        CargosDAO dao = new CargosDAO(conn);
         dao.editar(cargo);
         limpar.limparCampos(panelDados);
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -299,7 +303,11 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaFormularioCargos().setVisible(true);
+                try {
+                    Connection conn = MySQLConnection.getConnection();
+                    new TelaFormularioCargos(conn).setVisible(true);
+                } catch (Exception e) {
+                }
             }
         });
     }

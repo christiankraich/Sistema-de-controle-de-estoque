@@ -2,6 +2,7 @@ package gui;
 
 import dao.FornecedoresDAO;
 import dao.PecasDAO;
+import java.sql.Connection;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import jdbc.MySQLConnection;
 import model.Fornecedores;
 import model.Pecas;
 import utilidades.LimpaComponente;
@@ -19,6 +21,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
 
     private final LimpaComponente limpar = new LimpaComponente();
     private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private final Connection conn;
 
     String dataFormatada = sdf.format(new Date());
     double subtotal, total;
@@ -29,7 +32,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     // filtra as peças na tabela pelo fornecedor selecionado
     public void filtrar() {
         String nome = cbNomeFornecedor.getSelectedItem().toString();
-        PecasDAO pecasDao = new PecasDAO();
+        PecasDAO pecasDao = new PecasDAO(conn);
         List<Pecas> lista = pecasDao.filtrarPecasFornecedor(nome);
         DefaultTableModel dados = (DefaultTableModel) tabelaPecasFornecedor.getModel();
         dados.setNumRows(0);
@@ -75,8 +78,9 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
 
     }
 
-    public TelaFormularioPedidos() {
+    public TelaFormularioPedidos(Connection conn) {
         initComponents();
+        this.conn = conn;
     }
 
     /**
@@ -574,7 +578,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             return;
         }
 
-        FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
+        FornecedoresDAO fornecedoresDao = new FornecedoresDAO(conn);
         Fornecedores fornecedor = fornecedoresDao.buscarNomeFornecedor(nome);
         // verifica se o fornecedor foi encontrado no banco de dados e filtra as peças na tabela
         if (fornecedor.getNome() != null) {
@@ -631,7 +635,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private void btnAdicionarPecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarPecaActionPerformed
         // adiciona ou atualiza peça na tabela
         String nome = txtNomePeca.getText();
-        PecasDAO pecasDao = new PecasDAO();
+        PecasDAO pecasDao = new PecasDAO(conn);
         Pecas peca = pecasDao.buscarPeca(nome);
 
         //verifica se a peça foi encontrada no banco de dados antes de continuar
@@ -702,7 +706,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
 
     private void cbNomeFornecedorAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbNomeFornecedorAncestorAdded
         // carrega todos os fornecedores existentes no banco de dados no comboBox
-        FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
+        FornecedoresDAO fornecedoresDao = new FornecedoresDAO(conn);
         List<Fornecedores> lista = fornecedoresDao.listar();
         cbNomeFornecedor.removeAllItems();
         cbNomeFornecedor.addItem("Selecione o fornecedor");
@@ -784,7 +788,11 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaFormularioPedidos().setVisible(true);
+                try {
+                    Connection conn = MySQLConnection.getConnection();
+                    new TelaFormularioPedidos(conn).setVisible(true);
+                } catch (Exception e) {                 
+                }
             }
         });
     }

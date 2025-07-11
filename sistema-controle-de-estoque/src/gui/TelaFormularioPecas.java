@@ -3,9 +3,11 @@ package gui;
 import dao.FornecedoresDAO;
 import dao.PecasDAO;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import jdbc.MySQLConnection;
 import model.Fornecedores;
 import model.Pecas;
 import utilidades.LimpaComponente;
@@ -14,10 +16,11 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
 
     private final LimpaComponente limpar = new LimpaComponente();
     private boolean fornecedoresCarregados = false;
+    private final Connection conn;
     
     // carrega e exibe as peças na tabela
     public void listar() {
-        PecasDAO pecasDao = new PecasDAO();
+        PecasDAO pecasDao = new PecasDAO(conn);
         List<Pecas> lista = pecasDao.listar();
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
@@ -35,8 +38,9 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         }
     }
 
-    public TelaFormularioPecas() {
+    public TelaFormularioPecas(Connection conn) {
         initComponents();
+        this.conn = conn;
     }
 
     /**
@@ -464,7 +468,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         peca.setValorUnidadeFornecedor(Double.parseDouble(txtPrecoFornecedor.getText()));
         peca.setValorUnidadeCliente(Double.parseDouble(txtPrecoCliente.getText()));
 
-        PecasDAO pecasDao = new PecasDAO();
+        PecasDAO pecasDao = new PecasDAO(conn);
         pecasDao.salvar(peca);
         limpar.limparCampos(pnlDadosPecas);
     }//GEN-LAST:event_btnAdicionarActionPerformed
@@ -472,7 +476,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     private void btnPesquisarNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarNomeActionPerformed
         // pesquisa a peça no banco de dados com base no nome
         String nome = txtNome.getText();
-        PecasDAO pecasDao = new PecasDAO();
+        PecasDAO pecasDao = new PecasDAO(conn);
         Pecas peca = pecasDao.buscarPeca(nome);
         // verifica se a peça está cadastrada no banco de dados e preenche os campos com as informações
         if (peca.getNome() != null) {
@@ -511,7 +515,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     private void btnPesquisaNomeTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaNomeTabelaActionPerformed
         // pesquisa e filtra as peças na tabela com base no nome
         String nome = txtPesquisaNome.getText() + "%";
-        PecasDAO pecasDao = new PecasDAO();
+        PecasDAO pecasDao = new PecasDAO(conn);
         List<Pecas> lista = pecasDao.filtrar(nome);
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
@@ -563,7 +567,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
 
         peca.setId(Integer.parseInt(txtId.getText()));
 
-        PecasDAO dao = new PecasDAO();
+        PecasDAO dao = new PecasDAO(conn);
         dao.editar(peca);
         limpar.limparCampos(pnlDadosPecas);
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -572,7 +576,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         // exclui os dados da peça no banco de dados e limpa os campos
         Pecas peca = new Pecas();
         peca.setId(Integer.parseInt(txtId.getText()));
-        PecasDAO dao = new PecasDAO();
+        PecasDAO dao = new PecasDAO(conn);
         dao.excluir(peca);
         limpar.limparCampos(pnlDadosPecas);
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -581,7 +585,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         // verifica se os fornecedores já foram carregados no comboBox,
         // se não estiverem, carrega todos os os fornecedores existentes no banco de dados no comboBox
         if (!fornecedoresCarregados) {
-            FornecedoresDAO fornecedoresDao = new FornecedoresDAO();
+            FornecedoresDAO fornecedoresDao = new FornecedoresDAO(conn);
             List<Fornecedores> lista = fornecedoresDao.listar();
             cbFornecedor.removeAllItems();
             for (Fornecedores f : lista) {
@@ -595,7 +599,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         // ao pressionar ENTER ou BACK SPACE no campo de texto, pesquisa e filtra as peças na tabela
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
             String nome = txtPesquisaNome.getText() + "%";
-            PecasDAO pecasDao = new PecasDAO();
+            PecasDAO pecasDao = new PecasDAO(conn);
             List<Pecas> lista = pecasDao.filtrar(nome);
             DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
             dados.setNumRows(0);
@@ -650,7 +654,11 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaFormularioPecas().setVisible(true);
+                try {
+                    Connection conn = MySQLConnection.getConnection();
+                    new TelaFormularioPecas(conn).setVisible(true);
+                } catch (Exception e) {
+                }
             }
         });
     }

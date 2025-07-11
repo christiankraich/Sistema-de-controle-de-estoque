@@ -1,9 +1,11 @@
 package gui;
 
 import dao.PecasDAO;
+import java.sql.Connection;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import jdbc.MySQLConnection;
 import model.Pecas;
 import utilidades.LimpaComponente;
 
@@ -11,9 +13,11 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
 
     private final LimpaComponente util = new LimpaComponente();
     int idPeca, qtdAtualizada;
+    private final Connection conn;
+    
     // carrega e exibe as peças na tabela
     public void listar() {
-        PecasDAO pecasDao = new PecasDAO();
+        PecasDAO pecasDao = new PecasDAO(conn);
         List<Pecas> lista = pecasDao.listar();
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
@@ -31,8 +35,9 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
         }
     }
 
-    public TelaFormularioEstoque() {
+    public TelaFormularioEstoque(Connection conn) {
         initComponents();
+        this.conn = conn;
     }
 
     /**
@@ -325,7 +330,7 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
                 
                 qtdAtualizada = qtdAtual + qtdNova;
                 
-                PecasDAO pecasDao = new PecasDAO();
+                PecasDAO pecasDao = new PecasDAO(conn);
                 pecasDao.alterarEstoque(idPeca, qtdAtualizada);
                 util.limparCampos(panelDados);  
                 
@@ -350,7 +355,7 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
                 } 
                 qtdAtualizada = qtdAtual - qtdNova;
 
-                PecasDAO pecasDao = new PecasDAO();
+                PecasDAO pecasDao = new PecasDAO(conn);
                 pecasDao.alterarEstoque(idPeca, qtdAtualizada);
                 util.limparCampos(panelDados);
 
@@ -391,7 +396,11 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaFormularioEstoque().setVisible(true);
+                try {
+                    Connection conn = MySQLConnection.getConnection();
+                    new TelaFormularioEstoque(conn).setVisible(true);
+                } catch (Exception e) {
+                }
             }
         });
     }
