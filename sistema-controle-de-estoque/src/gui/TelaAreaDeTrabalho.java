@@ -1,20 +1,67 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.sql.Connection;
 import javax.swing.*;
 import jdbc.MySQLConnection;
 
-public class TelaAreaDeTrabalho extends javax.swing.JFrame {
+public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
     private final Connection conn;
-    
-    public void JanelaCliente() {
+
+    public void janelaCliente() {
         TelaFormularioClientes tfc = new TelaFormularioClientes(conn);
         tfc.setVisible(true);
     }
     
+    public void janelaFornecedor() {
+        TelaFormularioFornecedores tff = new TelaFormularioFornecedores(conn);
+        tff.setVisible(true);
+    }
+    
+    public void janelaFuncionario() {
+        TelaFormularioFuncionarios tff = new TelaFormularioFuncionarios(conn);
+        tff.setVisible(true);
+    }
+    
+    public void janelaPecas() {
+        TelaFormularioPecas tfp = new TelaFormularioPecas(conn);
+        tfp.setVisible(true);
+    }
+    
+    public void janelaPedido() {
+        TelaFormularioPedidos tfpd = new TelaFormularioPedidos(conn);
+        tfpd.setVisible(true);
+    }
+
+    public void aplicarHoverTranslucido(JButton botao, Color hoverColor, Color defaultColor) {
+        botao.setOpaque(true);
+        botao.setBackground(defaultColor);
+        botao.setBorderPainted(false);
+        botao.setFocusPainted(false);
+        botao.setContentAreaFilled(true);
+
+        botao.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botao.setBackground(hoverColor);
+                botao.repaint();
+                botao.getParent().revalidate();
+                botao.getParent().repaint();
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botao.setBackground(defaultColor);
+                botao.repaint();
+                botao.getParent().revalidate();
+                botao.getParent().repaint();
+            }
+        });
+    }
+
     /**
      * Creates new form TelaAreaDeTrabalho
      */
@@ -22,6 +69,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.conn = conn;
+        aplicarHoverTranslucido(btnCliente, new Color(0, 120, 215, 80), new Color(0, 0, 0, 0));
+        aplicarHoverTranslucido(btnFornecedor, new Color(0, 120, 215, 80), new Color(0, 0, 0, 0));
+        aplicarHoverTranslucido(btnFuncionario, new Color(0, 120, 215, 80), new Color(0, 0, 0, 0));
+        aplicarHoverTranslucido(btnPecas, new Color(0, 120, 215, 80), new Color(0, 0, 0, 0));
+        aplicarHoverTranslucido(btnPedido, new Color(0, 120, 215, 80), new Color(0, 0, 0, 0));
     }
 
     /**
@@ -90,14 +142,6 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         btnCliente.setBorderPainted(false);
         btnCliente.setContentAreaFilled(false);
         btnCliente.setFocusPainted(true);
-        btnCliente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnClienteMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnClienteMouseExited(evt);
-            }
-        });
         btnCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClienteActionPerformed(evt);
@@ -111,6 +155,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         btnFuncionario.setBorderPainted(false);
         btnFuncionario.setContentAreaFilled(false);
         btnFuncionario.setFocusPainted(false);
+        btnFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFuncionarioActionPerformed(evt);
+            }
+        });
 
         btnFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fornecedores.png"))); // NOI18N
         btnFornecedor.setText("Fornecedores");
@@ -119,6 +168,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         btnFornecedor.setBorderPainted(false);
         btnFornecedor.setContentAreaFilled(false);
         btnFornecedor.setFocusPainted(false);
+        btnFornecedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFornecedorActionPerformed(evt);
+            }
+        });
 
         btnPecas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pecas.png"))); // NOI18N
         btnPecas.setText("Peças");
@@ -127,6 +181,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         btnPecas.setBorderPainted(false);
         btnPecas.setContentAreaFilled(false);
         btnPecas.setFocusPainted(false);
+        btnPecas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPecasActionPerformed(evt);
+            }
+        });
 
         btnPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pedido.png"))); // NOI18N
         btnPedido.setText("Pedido");
@@ -135,6 +194,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         btnPedido.setBorderPainted(false);
         btnPedido.setContentAreaFilled(false);
         btnPedido.setFocusPainted(false);
+        btnPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPedidoActionPerformed(evt);
+            }
+        });
 
         painelDesktop.setLayer(btnCliente, javax.swing.JLayeredPane.DEFAULT_LAYER);
         painelDesktop.setLayer(btnFuncionario, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -260,6 +324,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
         menuItemFormPedidos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuItemFormPedidos.setText("Formulário de Pedidos");
+        menuItemFormPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemFormPedidosActionPerformed(evt);
+            }
+        });
         jMenu7.add(menuItemFormPedidos);
 
         jMenuBar1.add(jMenu7);
@@ -312,19 +381,17 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
     private void menuItemFormClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormClientesActionPerformed
         // abre o formulário de clientes na tela
-        JanelaCliente();
+        janelaCliente();
     }//GEN-LAST:event_menuItemFormClientesActionPerformed
 
     private void menuItemFormFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormFuncionariosActionPerformed
         // abre o formulário de funcionários na tela
-        TelaFormularioFuncionarios tff = new TelaFormularioFuncionarios(conn);
-        tff.setVisible(true);
+        janelaFuncionario();
     }//GEN-LAST:event_menuItemFormFuncionariosActionPerformed
 
     private void menuItemFormFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormFornecedoresActionPerformed
         // abre o formulário de fornecedores na tela
-        TelaFormularioFornecedores tff = new TelaFormularioFornecedores(conn);
-        tff.setVisible(true);
+        janelaFornecedor();
     }//GEN-LAST:event_menuItemFormFornecedoresActionPerformed
 
     private void menuItemFormCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormCargosActionPerformed
@@ -342,12 +409,12 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         // solicita confirmação para trocar de usuário        
         int opcao = JOptionPane.showConfirmDialog(null,
                 "Você deseja trocar de usuário?", "Aviso",
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);       
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
             TelaLogin tl = new TelaLogin(conn);
             this.dispose();
             tl.setVisible(true);
-        } 
+        }
     }//GEN-LAST:event_menuItemTrocarUsuarioActionPerformed
 
     private void menuItemSairSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSairSistemaActionPerformed
@@ -363,8 +430,7 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
     private void menuItemFormPecasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormPecasActionPerformed
         // abre o formulário de Peças na tela
-        TelaFormularioPecas tfp = new TelaFormularioPecas(conn);
-        tfp.setVisible(true);
+        janelaPecas();
     }//GEN-LAST:event_menuItemFormPecasActionPerformed
 
     private void menuItemFormPecas2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormPecas2ActionPerformed
@@ -383,10 +449,10 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         int opcao = JOptionPane.showConfirmDialog(null,
                 "Ao fechar a área de trabalho você será desconectado."
-                + " Tem certeza que quer sair?", "Aviso", 
+                + " Tem certeza que quer sair?", "Aviso",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
-            this.dispose();           
+            this.dispose();
             MySQLConnection.closeConnection();
         }
     }//GEN-LAST:event_formWindowClosing
@@ -396,17 +462,28 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        JanelaCliente();
+        janelaCliente();
     }//GEN-LAST:event_btnClienteActionPerformed
 
-    private void btnClienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClienteMouseEntered
-        btnCliente.setContentAreaFilled(true);
-        btnCliente.setBackground(new java.awt.Color(0, 120, 215, 80));
-    }//GEN-LAST:event_btnClienteMouseEntered
+    private void menuItemFormPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormPedidosActionPerformed
+        janelaPedido();
+    }//GEN-LAST:event_menuItemFormPedidosActionPerformed
 
-    private void btnClienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClienteMouseExited
-        btnCliente.setContentAreaFilled(false);
-    }//GEN-LAST:event_btnClienteMouseExited
+    private void btnFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFuncionarioActionPerformed
+        janelaFuncionario();
+    }//GEN-LAST:event_btnFuncionarioActionPerformed
+
+    private void btnFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFornecedorActionPerformed
+        janelaFornecedor();
+    }//GEN-LAST:event_btnFornecedorActionPerformed
+
+    private void btnPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidoActionPerformed
+        janelaPedido();
+    }//GEN-LAST:event_btnPedidoActionPerformed
+
+    private void btnPecasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPecasActionPerformed
+        janelaPecas();
+    }//GEN-LAST:event_btnPecasActionPerformed
 
     /**
      * @param args the command line arguments

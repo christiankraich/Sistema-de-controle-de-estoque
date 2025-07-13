@@ -125,6 +125,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Formul&#xe1;rio de Pedidos"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemFormPedidosActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -273,8 +276,6 @@
             <Property name="text" type="java.lang.String" value="Clientes"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnClienteMouseEntered"/>
-            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnClienteMouseExited"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClienteActionPerformed"/>
           </Events>
           <AuxValues>
@@ -288,6 +289,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Funcion&#xe1;rios"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFuncionarioActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnFuncionario.setHorizontalTextPosition(SwingConstants.CENTER);&#xa;btnFuncionario.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;btnFuncionario.setBorderPainted(false);&#xa;btnFuncionario.setContentAreaFilled(false);&#xa;btnFuncionario.setFocusPainted(false);"/>
           </AuxValues>
@@ -299,6 +303,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Fornecedores"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFornecedorActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnFornecedor.setHorizontalTextPosition(SwingConstants.CENTER);&#xa;btnFornecedor.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;btnFornecedor.setBorderPainted(false);&#xa;btnFornecedor.setContentAreaFilled(false);&#xa;btnFornecedor.setFocusPainted(false);"/>
           </AuxValues>
@@ -310,6 +317,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Pe&#xe7;as"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPecasActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnPecas.setHorizontalTextPosition(SwingConstants.CENTER);&#xa;btnPecas.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;btnPecas.setBorderPainted(false);&#xa;btnPecas.setContentAreaFilled(false);&#xa;btnPecas.setFocusPainted(false);"/>
           </AuxValues>
@@ -321,6 +331,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Pedido"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPedidoActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnPedido.setHorizontalTextPosition(SwingConstants.CENTER);&#xa;btnPedido.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;btnPedido.setBorderPainted(false);&#xa;btnPedido.setContentAreaFilled(false);&#xa;btnPedido.setFocusPainted(false);"/>
           </AuxValues>
