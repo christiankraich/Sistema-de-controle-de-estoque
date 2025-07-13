@@ -1,19 +1,30 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.sql.Connection;
 import javax.swing.*;
 import jdbc.MySQLConnection;
 
-public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
+public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
     private final Connection conn;
+    private boolean trocarUsuario = false;
+    private boolean isMaximized = false;
 
     public void janelaCliente() {
         TelaFormularioClientes tfc = new TelaFormularioClientes(conn);
         tfc.setVisible(true);
+    }
+    
+    public void janelaCargos() {
+        TelaFormularioCargos tfc = new TelaFormularioCargos(conn);
+        tfc.setVisible(true);
+    }
+    
+    public void janelaEstoque() {
+        TelaFormularioEstoque tle = new TelaFormularioEstoque(conn);
+        tle.setVisible(true);
     }
     
     public void janelaFornecedor() {
@@ -34,32 +45,18 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
     public void janelaPedido() {
         TelaFormularioPedidos tfpd = new TelaFormularioPedidos(conn);
         tfpd.setVisible(true);
-    }
-
-    public void aplicarHoverTranslucido(JButton botao, Color hoverColor, Color defaultColor) {
-        botao.setOpaque(true);
-        botao.setBackground(defaultColor);
-        botao.setBorderPainted(false);
-        botao.setFocusPainted(false);
-        botao.setContentAreaFilled(true);
-
-        botao.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                botao.setBackground(hoverColor);
-                botao.repaint();
-                botao.getParent().revalidate();
-                botao.getParent().repaint();
-            }
-
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                botao.setBackground(defaultColor);
-                botao.repaint();
-                botao.getParent().revalidate();
-                botao.getParent().repaint();
-            }
-        });
+    }    
+    
+    public void janelaTrocaUsuario() {
+        int opcao = JOptionPane.showConfirmDialog(null,
+                "Você deseja trocar de usuário?", "Aviso",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (opcao == JOptionPane.YES_OPTION) {
+            trocarUsuario = true;
+            this.dispose();
+            TelaLogin tl = new TelaLogin(conn);
+            tl.setVisible(true);
+        }
     }
 
     /**
@@ -69,11 +66,6 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.conn = conn;
-        aplicarHoverTranslucido(btnCliente, new Color(0, 120, 215, 80), new Color(0, 0, 0, 0));
-        aplicarHoverTranslucido(btnFornecedor, new Color(0, 120, 215, 80), new Color(0, 0, 0, 0));
-        aplicarHoverTranslucido(btnFuncionario, new Color(0, 120, 215, 80), new Color(0, 0, 0, 0));
-        aplicarHoverTranslucido(btnPecas, new Color(0, 120, 215, 80), new Color(0, 0, 0, 0));
-        aplicarHoverTranslucido(btnPedido, new Color(0, 120, 215, 80), new Color(0, 0, 0, 0));
     }
 
     /**
@@ -97,6 +89,11 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
         btnFornecedor = new javax.swing.JButton();
         btnPecas = new javax.swing.JButton();
         btnPedido = new javax.swing.JButton();
+        btnCargos = new javax.swing.JButton();
+        btnEstoque = new javax.swing.JButton();
+        btnOS = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
+        btnTrocarUsuario = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemFormClientes = new javax.swing.JMenuItem();
@@ -121,6 +118,7 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Area de Trabalho");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMinimumSize(new java.awt.Dimension(900, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -134,24 +132,37 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
         });
 
         painelDesktop.setBackground(new java.awt.Color(242, 242, 242));
+        painelDesktop.setPreferredSize(new java.awt.Dimension(800, 600));
 
+        btnCliente.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCliente.setForeground(new java.awt.Color(204, 204, 255));
         btnCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clientes.png"))); // NOI18N
         btnCliente.setText("Clientes");
+        btnCliente.setMaximumSize(new java.awt.Dimension(135, 71));
+        btnCliente.setMinimumSize(new java.awt.Dimension(135, 71));
+        btnCliente.setPreferredSize(new java.awt.Dimension(135, 71));
         btnCliente.setHorizontalTextPosition(SwingConstants.CENTER);
         btnCliente.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCliente.setBorderPainted(false);
         btnCliente.setContentAreaFilled(false);
-        btnCliente.setFocusPainted(true);
+        btnCliente.setFocusPainted(false);
         btnCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClienteActionPerformed(evt);
             }
         });
 
+        btnFuncionario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnFuncionario.setForeground(new java.awt.Color(204, 204, 255));
         btnFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/funcionarios.png"))); // NOI18N
         btnFuncionario.setText("Funcionários");
+        btnFuncionario.setMaximumSize(new java.awt.Dimension(135, 71));
+        btnFuncionario.setMinimumSize(new java.awt.Dimension(135, 71));
+        btnFuncionario.setPreferredSize(new java.awt.Dimension(135, 71));
         btnFuncionario.setHorizontalTextPosition(SwingConstants.CENTER);
         btnFuncionario.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnFuncionario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnFuncionario.setBorderPainted(false);
         btnFuncionario.setContentAreaFilled(false);
         btnFuncionario.setFocusPainted(false);
@@ -161,10 +172,16 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
             }
         });
 
+        btnFornecedor.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnFornecedor.setForeground(new java.awt.Color(204, 204, 255));
         btnFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fornecedores.png"))); // NOI18N
         btnFornecedor.setText("Fornecedores");
+        btnFornecedor.setMaximumSize(new java.awt.Dimension(135, 71));
+        btnFornecedor.setMinimumSize(new java.awt.Dimension(135, 71));
+        btnFornecedor.setPreferredSize(new java.awt.Dimension(135, 71));
         btnFornecedor.setHorizontalTextPosition(SwingConstants.CENTER);
         btnFornecedor.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnFornecedor.setBorderPainted(false);
         btnFornecedor.setContentAreaFilled(false);
         btnFornecedor.setFocusPainted(false);
@@ -174,10 +191,16 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
             }
         });
 
+        btnPecas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnPecas.setForeground(new java.awt.Color(204, 204, 255));
         btnPecas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pecas.png"))); // NOI18N
         btnPecas.setText("Peças");
+        btnPecas.setMaximumSize(new java.awt.Dimension(135, 71));
+        btnPecas.setMinimumSize(new java.awt.Dimension(135, 71));
+        btnPecas.setPreferredSize(new java.awt.Dimension(135, 71));
         btnPecas.setHorizontalTextPosition(SwingConstants.CENTER);
         btnPecas.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnPecas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPecas.setBorderPainted(false);
         btnPecas.setContentAreaFilled(false);
         btnPecas.setFocusPainted(false);
@@ -187,10 +210,13 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
             }
         });
 
+        btnPedido.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnPedido.setForeground(new java.awt.Color(204, 204, 255));
         btnPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pedido.png"))); // NOI18N
         btnPedido.setText("Pedido");
         btnPedido.setHorizontalTextPosition(SwingConstants.CENTER);
         btnPedido.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnPedido.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPedido.setBorderPainted(false);
         btnPedido.setContentAreaFilled(false);
         btnPedido.setFocusPainted(false);
@@ -200,42 +226,148 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
             }
         });
 
+        btnCargos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCargos.setForeground(new java.awt.Color(204, 204, 255));
+        btnCargos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cargos.png"))); // NOI18N
+        btnCargos.setText("Cargos");
+        btnCargos.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnCargos.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnCargos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCargos.setBorderPainted(false);
+        btnCargos.setContentAreaFilled(false);
+        btnCargos.setFocusPainted(false);
+        btnCargos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargosActionPerformed(evt);
+            }
+        });
+
+        btnEstoque.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEstoque.setForeground(new java.awt.Color(204, 204, 255));
+        btnEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/estoque.png"))); // NOI18N
+        btnEstoque.setText("Estoque");
+        btnEstoque.setMaximumSize(new java.awt.Dimension(135, 71));
+        btnEstoque.setMinimumSize(new java.awt.Dimension(135, 71));
+        btnEstoque.setPreferredSize(new java.awt.Dimension(135, 71));
+        btnEstoque.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnEstoque.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnEstoque.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEstoque.setBorderPainted(false);
+        btnEstoque.setContentAreaFilled(false);
+        btnEstoque.setFocusPainted(false);
+        btnEstoque.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEstoqueActionPerformed(evt);
+            }
+        });
+
+        btnOS.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnOS.setForeground(new java.awt.Color(204, 204, 255));
+        btnOS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ordem-de-servico.png"))); // NOI18N
+        btnOS.setText("Ordem de Serviço");
+        btnOS.setMaximumSize(new java.awt.Dimension(135, 71));
+        btnOS.setMinimumSize(new java.awt.Dimension(135, 71));
+        btnOS.setPreferredSize(new java.awt.Dimension(135, 71));
+        btnOS.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnOS.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnOS.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnOS.setBorderPainted(false);
+        btnOS.setContentAreaFilled(false);
+        btnOS.setFocusPainted(false);
+
+        btnSair.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSair.setForeground(new java.awt.Color(255, 102, 102));
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sair.png"))); // NOI18N
+        btnSair.setText("Sair");
+        btnSair.setMaximumSize(new java.awt.Dimension(135, 71));
+        btnSair.setMinimumSize(new java.awt.Dimension(135, 71));
+        btnSair.setPreferredSize(new java.awt.Dimension(135, 71));
+        btnSair.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnSair.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSair.setBorderPainted(false);
+        btnSair.setContentAreaFilled(false);
+        btnSair.setFocusPainted(false);
+
+        btnTrocarUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnTrocarUsuario.setForeground(new java.awt.Color(255, 102, 102));
+        btnTrocarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/funcionarios.png"))); // NOI18N
+        btnTrocarUsuario.setText("Trocar Usuário");
+        btnTrocarUsuario.setMaximumSize(new java.awt.Dimension(135, 71));
+        btnTrocarUsuario.setMinimumSize(new java.awt.Dimension(135, 71));
+        btnTrocarUsuario.setPreferredSize(new java.awt.Dimension(135, 71));
+        btnTrocarUsuario.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnTrocarUsuario.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnTrocarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTrocarUsuario.setBorderPainted(false);
+        btnTrocarUsuario.setContentAreaFilled(false);
+        btnTrocarUsuario.setFocusPainted(false);
+        btnTrocarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTrocarUsuarioActionPerformed(evt);
+            }
+        });
+
         painelDesktop.setLayer(btnCliente, javax.swing.JLayeredPane.DEFAULT_LAYER);
         painelDesktop.setLayer(btnFuncionario, javax.swing.JLayeredPane.DEFAULT_LAYER);
         painelDesktop.setLayer(btnFornecedor, javax.swing.JLayeredPane.DEFAULT_LAYER);
         painelDesktop.setLayer(btnPecas, javax.swing.JLayeredPane.DEFAULT_LAYER);
         painelDesktop.setLayer(btnPedido, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        painelDesktop.setLayer(btnCargos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        painelDesktop.setLayer(btnEstoque, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        painelDesktop.setLayer(btnOS, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        painelDesktop.setLayer(btnSair, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        painelDesktop.setLayer(btnTrocarUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout painelDesktopLayout = new javax.swing.GroupLayout(painelDesktop);
         painelDesktop.setLayout(painelDesktopLayout);
         painelDesktopLayout.setHorizontalGroup(
             painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDesktopLayout.createSequentialGroup()
-                .addGap(125, 125, 125)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                .addGap(250, 250, 250)
+                    .addComponent(btnFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                .addGap(250, 250, 250)
-                .addComponent(btnPecas)
-                .addContainerGap(290, Short.MAX_VALUE))
+                    .addComponent(btnFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnPecas, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCargos, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnOS, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(painelDesktopLayout.createSequentialGroup()
+                .addContainerGap(240, Short.MAX_VALUE)
+                .addComponent(btnTrocarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(240, Short.MAX_VALUE))
         );
         painelDesktopLayout.setVerticalGroup(
             painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDesktopLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
+                .addContainerGap(65, Short.MAX_VALUE)
                 .addGroup(painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCliente)
-                    .addComponent(btnFornecedor)
-                    .addComponent(btnPecas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(150, 150, 150)
+                    .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPecas, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addGroup(painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnFuncionario)
-                    .addComponent(btnPedido))
-                .addContainerGap(175, Short.MAX_VALUE))
+                    .addComponent(btnFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCargos, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnOS, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addGroup(painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTrocarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Clientes");
@@ -368,11 +500,11 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelDesktop)
+            .addComponent(painelDesktop, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelDesktop)
+            .addComponent(painelDesktop, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
         );
 
         pack();
@@ -396,25 +528,20 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
     private void menuItemFormCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormCargosActionPerformed
         // abre o formulário de cargos na tela
-        TelaFormularioCargos tfc = new TelaFormularioCargos(conn);
-        tfc.setVisible(true);
+        janelaCargos();
     }//GEN-LAST:event_menuItemFormCargosActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // maximiza a janela
-        this.setExtendedState(MAXIMIZED_BOTH);
+        if (!isMaximized) {
+            this.setExtendedState(MAXIMIZED_BOTH);
+            isMaximized = true;
+        }
     }//GEN-LAST:event_formWindowActivated
 
     private void menuItemTrocarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTrocarUsuarioActionPerformed
         // solicita confirmação para trocar de usuário        
-        int opcao = JOptionPane.showConfirmDialog(null,
-                "Você deseja trocar de usuário?", "Aviso",
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        if (opcao == JOptionPane.YES_OPTION) {
-            TelaLogin tl = new TelaLogin(conn);
-            this.dispose();
-            tl.setVisible(true);
-        }
+        janelaTrocaUsuario();
     }//GEN-LAST:event_menuItemTrocarUsuarioActionPerformed
 
     private void menuItemSairSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSairSistemaActionPerformed
@@ -442,8 +569,7 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
     private void menuItemFormEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormEstoqueActionPerformed
         // abre o formulário de estoque na tela
-        TelaFormularioEstoque tle = new TelaFormularioEstoque(conn);
-        tle.setVisible(true);
+        janelaEstoque();
     }//GEN-LAST:event_menuItemFormEstoqueActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -458,7 +584,9 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        System.exit(0);
+        if (!trocarUsuario) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_formWindowClosed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
@@ -484,6 +612,18 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
     private void btnPecasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPecasActionPerformed
         janelaPecas();
     }//GEN-LAST:event_btnPecasActionPerformed
+
+    private void btnCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargosActionPerformed
+        janelaCargos();
+    }//GEN-LAST:event_btnCargosActionPerformed
+
+    private void btnEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstoqueActionPerformed
+        janelaEstoque();
+    }//GEN-LAST:event_btnEstoqueActionPerformed
+
+    private void btnTrocarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrocarUsuarioActionPerformed
+        janelaTrocaUsuario();
+    }//GEN-LAST:event_btnTrocarUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -519,11 +659,16 @@ public final class TelaAreaDeTrabalho extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCargos;
     private javax.swing.JButton btnCliente;
+    private javax.swing.JButton btnEstoque;
     private javax.swing.JButton btnFornecedor;
     private javax.swing.JButton btnFuncionario;
+    private javax.swing.JButton btnOS;
     private javax.swing.JButton btnPecas;
     private javax.swing.JButton btnPedido;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnTrocarUsuario;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
