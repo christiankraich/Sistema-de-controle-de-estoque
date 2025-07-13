@@ -10,6 +10,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
     private final Connection conn;
     
+    public void JanelaCliente() {
+        TelaFormularioClientes tfc = new TelaFormularioClientes(conn);
+        tfc.setVisible(true);
+    }
+    
     /**
      * Creates new form TelaAreaDeTrabalho
      */
@@ -35,6 +40,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
             }
         };
+        btnCliente = new javax.swing.JButton();
+        btnFuncionario = new javax.swing.JButton();
+        btnFornecedor = new javax.swing.JButton();
+        btnPecas = new javax.swing.JButton();
+        btnPedido = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuItemFormClientes = new javax.swing.JMenuItem();
@@ -59,7 +69,6 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Area de Trabalho");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(null);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -74,15 +83,95 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
         painelDesktop.setBackground(new java.awt.Color(242, 242, 242));
 
+        btnCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clientes.png"))); // NOI18N
+        btnCliente.setText("Clientes");
+        btnCliente.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnCliente.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnCliente.setBorderPainted(false);
+        btnCliente.setContentAreaFilled(false);
+        btnCliente.setFocusPainted(true);
+        btnCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnClienteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnClienteMouseExited(evt);
+            }
+        });
+        btnCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteActionPerformed(evt);
+            }
+        });
+
+        btnFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/funcionarios.png"))); // NOI18N
+        btnFuncionario.setText("Funcionários");
+        btnFuncionario.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnFuncionario.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnFuncionario.setBorderPainted(false);
+        btnFuncionario.setContentAreaFilled(false);
+        btnFuncionario.setFocusPainted(false);
+
+        btnFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fornecedores.png"))); // NOI18N
+        btnFornecedor.setText("Fornecedores");
+        btnFornecedor.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnFornecedor.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnFornecedor.setBorderPainted(false);
+        btnFornecedor.setContentAreaFilled(false);
+        btnFornecedor.setFocusPainted(false);
+
+        btnPecas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pecas.png"))); // NOI18N
+        btnPecas.setText("Peças");
+        btnPecas.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnPecas.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnPecas.setBorderPainted(false);
+        btnPecas.setContentAreaFilled(false);
+        btnPecas.setFocusPainted(false);
+
+        btnPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pedido.png"))); // NOI18N
+        btnPedido.setText("Pedido");
+        btnPedido.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnPedido.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnPedido.setBorderPainted(false);
+        btnPedido.setContentAreaFilled(false);
+        btnPedido.setFocusPainted(false);
+
+        painelDesktop.setLayer(btnCliente, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        painelDesktop.setLayer(btnFuncionario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        painelDesktop.setLayer(btnFornecedor, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        painelDesktop.setLayer(btnPecas, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        painelDesktop.setLayer(btnPedido, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout painelDesktopLayout = new javax.swing.GroupLayout(painelDesktop);
         painelDesktop.setLayout(painelDesktopLayout);
         painelDesktopLayout.setHorizontalGroup(
             painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 769, Short.MAX_VALUE)
+            .addGroup(painelDesktopLayout.createSequentialGroup()
+                .addGap(125, 125, 125)
+                .addGroup(painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                .addGap(250, 250, 250)
+                .addGroup(painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                .addGap(250, 250, 250)
+                .addComponent(btnPecas)
+                .addContainerGap(290, Short.MAX_VALUE))
         );
         painelDesktopLayout.setVerticalGroup(
             painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 332, Short.MAX_VALUE)
+            .addGroup(painelDesktopLayout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addGroup(painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCliente)
+                    .addComponent(btnFornecedor)
+                    .addComponent(btnPecas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(150, 150, 150)
+                .addGroup(painelDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnFuncionario)
+                    .addComponent(btnPedido))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Clientes");
@@ -223,8 +312,7 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
     private void menuItemFormClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormClientesActionPerformed
         // abre o formulário de clientes na tela
-        TelaFormularioClientes tfc = new TelaFormularioClientes(conn);
-        tfc.setVisible(true);
+        JanelaCliente();
     }//GEN-LAST:event_menuItemFormClientesActionPerformed
 
     private void menuItemFormFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormFuncionariosActionPerformed
@@ -307,6 +395,19 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_formWindowClosed
 
+    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
+        JanelaCliente();
+    }//GEN-LAST:event_btnClienteActionPerformed
+
+    private void btnClienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClienteMouseEntered
+        btnCliente.setContentAreaFilled(true);
+        btnCliente.setBackground(new java.awt.Color(0, 120, 215, 80));
+    }//GEN-LAST:event_btnClienteMouseEntered
+
+    private void btnClienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClienteMouseExited
+        btnCliente.setContentAreaFilled(false);
+    }//GEN-LAST:event_btnClienteMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -341,6 +442,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCliente;
+    private javax.swing.JButton btnFornecedor;
+    private javax.swing.JButton btnFuncionario;
+    private javax.swing.JButton btnPecas;
+    private javax.swing.JButton btnPedido;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
