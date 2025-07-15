@@ -1,5 +1,6 @@
 package gui;
 
+import dao.CargosDAO;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.sql.Connection;
@@ -18,7 +19,8 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
     }
     
     public void janelaCargos() {
-        TelaFormularioCargos tfc = new TelaFormularioCargos(conn);
+        CargosDAO dao = new CargosDAO(conn);
+        TelaFormularioCargos tfc = new TelaFormularioCargos(dao);
         tfc.setVisible(true);
     }
     
@@ -291,7 +293,7 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
 
         btnTrocarUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnTrocarUsuario.setForeground(new java.awt.Color(255, 102, 102));
-        btnTrocarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/funcionarios.png"))); // NOI18N
+        btnTrocarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/troca-user.png"))); // NOI18N
         btnTrocarUsuario.setText("Trocar Usuário");
         btnTrocarUsuario.setMaximumSize(new java.awt.Dimension(135, 71));
         btnTrocarUsuario.setMinimumSize(new java.awt.Dimension(135, 71));

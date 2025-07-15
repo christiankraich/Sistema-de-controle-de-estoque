@@ -1,21 +1,23 @@
+
 package gui;
 
 import dao.CargosDAO;
 import java.sql.Connection;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import jdbc.MySQLConnection;
 import model.Cargos;
 import utilidades.LimpaComponente;
 
+
 public class TelaFormularioCargos extends javax.swing.JFrame {
     
+    private final CargosDAO cargosDao;
     private final LimpaComponente limpar = new LimpaComponente();
-    private final Connection conn;
 
     // carrega e exibe os cargos na tabela
     public void listar() {
-        CargosDAO cargosDao = new CargosDAO(conn);
         List<Cargos> lista = cargosDao.listar();
         DefaultTableModel dados = (DefaultTableModel) tabela.getModel();
         dados.setNumRows(0);
@@ -27,9 +29,29 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
         }
     }
     
-    public TelaFormularioCargos(Connection conn) {
+    public boolean verificaNomeVazio(String nome) {
+        if (nome == null || nome.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Insira o nome do cargo.", "Atenção", 
+                    JOptionPane.WARNING_MESSAGE);   
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean verificaNomeIgual(String nome) {
+        if (cargosDao.cargoExiste(nome)) {
+            JOptionPane.showMessageDialog(null, 
+                    "Este cargo já está cadastrado!", "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    public TelaFormularioCargos(CargosDAO cargosDao) {
         initComponents();
-        this.conn = conn;
+        this.cargosDao = cargosDao;
     }
 
     /**
@@ -232,12 +254,16 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        String nomeCargo = txtNome.getText();
+        if (!verificaNomeVazio(nomeCargo)) return;
+                    
+        if (!verificaNomeIgual(nomeCargo)) return;
+
         // cadastra o cargo no banco de dados e limpa os campos de texto
         Cargos cargo = new Cargos();
-        cargo.setNome(txtNome.getText());
-        
-        CargosDAO dao = new CargosDAO(conn);
-        dao.salvar(cargo);
+        cargo.setNome(nomeCargo);
+
+        cargosDao.salvar(cargo);
         limpar.limparCampos(panelDados);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
@@ -257,19 +283,22 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
         // exclui o cargo do banco de dados e limpa os campos de texto
         Cargos cargo = new Cargos();
         cargo.setId(Integer.parseInt(txtId.getText()));
-        CargosDAO cargosDao = new CargosDAO(conn);
         cargosDao.excluir(cargo);
         limpar.limparCampos(panelDados);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        String nomeCargo = txtNome.getText();
+        if (!verificaNomeVazio(nomeCargo)) return;
+        
+        if (!verificaNomeIgual(nomeCargo)) return;
+        
         // atualiza o cargo no banco de dados e limpa os campos de texto
         Cargos cargo = new Cargos();
-        cargo.setNome(txtNome.getText());
+        cargo.setNome(nomeCargo);
         cargo.setId(Integer.parseInt(txtId.getText()));
-        
-        CargosDAO dao = new CargosDAO(conn);
-        dao.editar(cargo);
+
+        cargosDao.editar(cargo);
         limpar.limparCampos(panelDados);
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -277,40 +306,41 @@ public class TelaFormularioCargos extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+     */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Windows".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaFormularioCargos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaFormularioCargos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaFormularioCargos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaFormularioCargos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Connection conn = MySQLConnection.getConnection();
-                    new TelaFormularioCargos(conn).setVisible(true);
-                } catch (Exception e) {
-                }
-            }
-        });
+    } catch (ClassNotFoundException ex) {
+        java.util.logging.Logger.getLogger(TelaFormularioCargos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        java.util.logging.Logger.getLogger(TelaFormularioCargos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        java.util.logging.Logger.getLogger(TelaFormularioCargos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        java.util.logging.Logger.getLogger(TelaFormularioCargos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
+    //</editor-fold>
+
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            try {
+                Connection conn = MySQLConnection.getConnection();
+                CargosDAO cargosDao = new CargosDAO(conn);
+                new TelaFormularioCargos(cargosDao).setVisible(true);
+            } catch (Exception e) {
+            }
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;

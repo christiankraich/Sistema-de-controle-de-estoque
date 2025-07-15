@@ -32,7 +32,6 @@ public class CargosDAO {
             // exibe a mensagem em caso de erro
             JOptionPane.showMessageDialog(null, "Erro ao salvar o cargo. " + e, "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     public List<Cargos> listar() {
@@ -114,6 +113,24 @@ public class CargosDAO {
             JOptionPane.showMessageDialog(null, "Erro ao buscar cargo por ID. " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
         return null;
+    }
+    
+    public boolean cargoExiste(String nome) {
+        // define o comando sql
+        String sql = "select count(*) from cargos where nome = ?";
+        // prepara a declaração sql
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            // executa a consulta
+            ResultSet rs = stmt.executeQuery();
+            // verifica se já existe um cargo com o nome
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (Exception e) {
+        }
+        return false;
     }
 
 }
