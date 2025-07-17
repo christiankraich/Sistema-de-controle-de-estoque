@@ -1,6 +1,7 @@
 package gui;
 
 import dao.CargosDAO;
+import dao.ClientesDAO;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.sql.Connection;
@@ -14,13 +15,14 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
     private boolean isMaximized = false;
 
     public void janelaCliente() {
-        TelaFormularioClientes tfc = new TelaFormularioClientes(conn);
+        ClientesDAO clientesDao = new ClientesDAO(conn);
+        TelaFormularioClientes tfc = new TelaFormularioClientes(clientesDao);
         tfc.setVisible(true);
     }
     
     public void janelaCargos() {
-        CargosDAO dao = new CargosDAO(conn);
-        TelaFormularioCargos tfc = new TelaFormularioCargos(dao);
+        CargosDAO cargosDao = new CargosDAO(conn);
+        TelaFormularioCargos tfc = new TelaFormularioCargos(cargosDao);
         tfc.setVisible(true);
     }
     
