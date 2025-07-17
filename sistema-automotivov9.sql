@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `sistema automotivo`;
-USE `sistema automotivo`;
+CREATE DATABASE  IF NOT EXISTS `estoque_mecanica`;
+USE `estoque_mecanica`;
 
 DROP TABLE IF EXISTS `cargos`;
 CREATE TABLE `cargos` (
@@ -9,6 +9,7 @@ CREATE TABLE `cargos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 LOCK TABLES `cargos` WRITE;
+INSERT INTO `cargos` VALUES (11,'Teste');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `clientes`;
@@ -98,6 +99,7 @@ CREATE TABLE `funcionarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 LOCK TABLES `funcionarios` WRITE;
+INSERT INTO `funcionarios` VALUES (8,11,'Teste da Silva','2000-01-01','teste@teste','123.456.789-01','(65) 4 1846-5416','65465-416','Rua dos testes',1,'Casa ','Bairro','Cidade','AC','teste','ADMINISTRADOR');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `ordem_de_servico`;
