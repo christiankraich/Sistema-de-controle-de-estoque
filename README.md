@@ -3,10 +3,12 @@
 
 ## Ferramentas
  - NetBeans IDE
+ - JDK 23
  - JavaSwing
- - MySQL Workbench
+ - MySQL
  - JDBC
  - XAMPP
+ - Dotenv (Opcional)
 
 ## Funcionalidades
  - Tela de Login
@@ -22,23 +24,36 @@
  - [XAMPP](https://www.apachefriends.org/pt_br/index.html) instalado e rodando (Apache + MySQL).
  - Java JDK instalado.
  - NetBeans IDE.
- - [Driver JDBC](https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.4.0/) para MySQL.
- - [Dotenv-java](https://repo1.maven.org/maven2/io/github/cdimascio/dotenv-java/3.0.0/) se quiser usar um `.env` para armazenar as credenciais de conexão. (Opcional)
+ - [Driver JDBC](https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.4.0/) para MySQL. Baixe o arquivo `mysql-connector-j-8.4.0.jar`
+ - (Opcional) Baixe o arquivo [dotenv-java-3.0.0.jar](https://repo1.maven.org/maven2/io/github/cdimascio/dotenv-java/3.0.0/) se for usar um `.env` para armazenar as credenciais de conexão. 
+
+**IMPORTANTE**: Adicione ambos `mysql-connector-j-8.4.0.jar` e `dotenv-java-3.0.0.jar` na biblioteca.
+ <div align="center">
+ <img src="https://github.com/user-attachments/assets/09d8395e-ca37-4351-b8d3-9b7c7f387866" />
+ </div>
 
  ## Configuração do Banco de Dados
  1. Faça o download do XAMPP.
  2. Inicie o XAMPP e ative **Apache** e **MySQL**.
- 3. Acesse o **phpMyAdmin**.
- 4. Copie e cole código encontrado no arquivo `.sql` do repositório.
+ <div align="center">
+ <img src="https://github.com/user-attachments/assets/ed48724c-e550-4d7c-8fd3-b086ca791376" />
+ </div>
+ 
+ 3. Acesse o **phpMyAdmin** clicando em **Admin**.
+ 4. Clique em Novo -> MySQL.
+ 5. Copie e cole código encontrado no arquivo `.sql` do repositório.
+ <div align="center">
+ <img src="https://github.com/user-attachments/assets/49b6d720-b0b7-43c2-aea0-217140a2271f" />
+ </div>
 
  ## Configurando a Conexão
  Se optou por usar `.env`:
  Crie um arquivo .env colocando-o na **pasta raiz** do projeto, e insira o as linhas:
-<pre lang="markdown">
+```env
 DB_URL=jdbc:mysql://localhost:3306/nome-do-banco-de-dados
 DB_USER=root
 DB_PASSWORD=
-</pre>
+```
 
 Se não usar `.env`, edite a classe `MySQLConnection`:
 <pre lang="java">
@@ -51,7 +66,7 @@ import javax.swing.JOptionPane;
 
 public class MySQLConnection {
         
-    private static final String URL = "jdbc:mysql://localhost/sistema%20automotiva";
+    private static final String URL = "jdbc:mysql://localhost/estoque_mecanica";
     private static final String USER = "root";
     private static final String SENHA = ""; // por padrão a senha é vazia no XAMPP
     
