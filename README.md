@@ -29,21 +29,21 @@
 
 **IMPORTANTE**: Adicione ambos `mysql-connector-j-8.4.0.jar` e `dotenv-java-3.0.0.jar` na biblioteca.
  <div align="center">
- <img src="https://github.com/user-attachments/assets/09d8395e-ca37-4351-b8d3-9b7c7f387866" />
+  <img src="https://github.com/user-attachments/assets/09d8395e-ca37-4351-b8d3-9b7c7f387866" />
  </div>
 
  ## Configuração do Banco de Dados
  1. Faça o download do XAMPP.
  2. Inicie o XAMPP e ative **Apache** e **MySQL**.
  <div align="center">
- <img src="https://github.com/user-attachments/assets/ed48724c-e550-4d7c-8fd3-b086ca791376" />
+  <img src="https://github.com/user-attachments/assets/ed48724c-e550-4d7c-8fd3-b086ca791376" />
  </div>
  
  3. Acesse o **phpMyAdmin** clicando em **Admin**.
  4. Clique em Novo -> MySQL.
  5. Copie e cole código encontrado no arquivo `.sql` do repositório.
  <div align="center">
- <img src="https://github.com/user-attachments/assets/49b6d720-b0b7-43c2-aea0-217140a2271f" />
+  <img src="https://github.com/user-attachments/assets/49b6d720-b0b7-43c2-aea0-217140a2271f" />
  </div>
 
  ## Configurando a Conexão
@@ -82,6 +82,12 @@ public class MySQLConnection {
     
 }
 </pre>
+
+## Executando o Projeto
+Ao executar o projeto você entrará na tela de login, insira o email e senha do funcionário já criado:
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/a6fb05b2-afe3-4091-866c-8a0a8369f346" />
+</div>
 
 **ATENÇÃO**  
 -- Projeto em andamento.  
