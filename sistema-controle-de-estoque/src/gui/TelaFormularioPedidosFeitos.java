@@ -1,20 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package gui;
 
-/**
- *
- * @author Cliente
- */
-public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
+import dao.PedidosDAO;
+import java.sql.Connection;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import jdbc.MySQLConnection;
+import model.Pedidos;
 
-    /**
-     * Creates new form TelaFormularioPedidosFeitos
-     */
-    public TelaFormularioPedidosFeitos() {
+public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
+    
+    private final PedidosDAO pedidosDao;
+
+    public void listarPedidosPendentes() {
+        List<Pedidos> listaPendente = pedidosDao.listarPendentes();
+        DefaultTableModel dadosPendentes = (DefaultTableModel) tabelaPendentes.getModel();
+        dadosPendentes.setNumRows(0);
+        for (Pedidos p : listaPendente) {
+            if (p.getStatus().equals(Pedidos.Status.PENDENTE)) {
+                dadosPendentes.addRow(new Object[]{
+                    p.getId(),
+                    p.getFornecedor(),
+                    p.getData(),
+                    p.getValorTotal(),
+                    p.getStatus()
+                });
+            }
+        }
+    }
+    
+    public TelaFormularioPedidosFeitos(PedidosDAO pedidosDao) {
         initComponents();
+        this.pedidosDao = pedidosDao;
     }
 
     /**
@@ -49,7 +65,6 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Formulário de Pedidos Realizados");
-        setPreferredSize(new java.awt.Dimension(809, 405));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(809, 75));
@@ -261,6 +276,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -293,7 +309,13 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaFormularioPedidosFeitos().setVisible(true);
+               try {
+                Connection conn = MySQLConnection.getConnection();               
+                PedidosDAO pedidosDao = new PedidosDAO(conn);
+                new TelaFormularioPedidosFeitos(pedidosDao).setVisible(true);
+               } catch (Exception e) {
+                   
+               }
             }
         });
     }

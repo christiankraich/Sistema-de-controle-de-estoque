@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import model.Fornecedores;
 import model.Pedidos;
 
 public class PedidosDAO {
@@ -23,10 +26,10 @@ public class PedidosDAO {
         // prepara a declaração sql
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             // atribui os valores do pedido para cada parâmetro do sql
-            stmt.setInt(0, pedido.getFornecedor().getId());
-            stmt.setObject(1, pedido.getData());
-            stmt.setDouble(2, pedido.getValorTotal());
-            stmt.setString(3, pedido.getStatus().name());
+            stmt.setInt(1, pedido.getFornecedor().getId());
+            stmt.setObject(2, pedido.getData());
+            stmt.setDouble(3, pedido.getValorTotal());
+            stmt.setString(4, pedido.getStatus().name());
             // executa o comando sql
             stmt.execute();
             // exibe a mensagem em caso de sucesso
@@ -35,6 +38,35 @@ public class PedidosDAO {
             // exibe a mensagem em caso de erro
             JOptionPane.showMessageDialog(null, "Erro ao fazer o pedido!" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    public List<Pedidos> listarPendentes() {
+        List<Pedidos> lista = new ArrayList<>();
+        String sql = "select p.*, f.nome as nome_fornecedor from pedidos p "
+                + "inner join fornecedores f on p.id_fornecedor = f.id where p.status = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, Pedidos.Status.PENDENTE.name());
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                Pedidos pedido = new Pedidos();
+                pedido.setId(rs.getInt("id"));
+                
+                Fornecedores fornecedor = new Fornecedores();
+                fornecedor.setNome(rs.getString("nome_fornecedor"));
+                pedido.setFornecedor(fornecedor);
+                
+                pedido.setData(rs.getDate("data"));
+                pedido.setValorTotal(rs.getDouble("valor_total"));
+                pedido.setStatus(Pedidos.Status.valueOf(rs.getString("status")));
+                
+                lista.add(pedido);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao criar a lista de pedidos pendentes.\n" + e, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        return lista;
     }
 
     public int retornaUltimoIdVenda() {
