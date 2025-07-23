@@ -205,6 +205,21 @@ public class PecasDAO {
             JOptionPane.showMessageDialog(null, "Erro ao alterar o estoque!\n" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    public int retornaQuantidadeEstoque(int id) {
+        int quantidadeAtual = 0;
+        String sql = "select quantidade from pecas where id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                quantidadeAtual = rs.getInt("quantidade");
+            }
+            return quantidadeAtual;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao retornar a quantidade atual do estoque." + e);
+        }
+    }
 
     public List<Pecas> filtrarPecasFornecedor(String nome) {
         List<Pecas> lista = new ArrayList<>();

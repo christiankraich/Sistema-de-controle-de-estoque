@@ -2,6 +2,8 @@ package gui;
 
 import dao.FornecedoresDAO;
 import dao.PecasDAO;
+import dao.PecasPedidosDAO;
+import dao.PedidosDAO;
 import java.sql.Connection;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -15,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
 import jdbc.MySQLConnection;
 import model.Fornecedores;
 import model.Pecas;
+import model.PecasPedidos;
+import model.Pedidos;
 import utilidades.LimpaComponente;
 
 public class TelaFormularioPedidos extends javax.swing.JFrame {
@@ -76,6 +80,22 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
 
     public void listarPecasFornecedor() {
 
+    }
+    
+    public void limparTudo() {
+        limpar.limparTabela(tabelaCarrinho);
+        limpar.limparTabela(tabelaPecasFornecedor);
+        limpar.limparCampos(panelPedido);
+        limpar.limparCampos(panelDadosPeca);
+        limpar.limparCampos(panelDadosFornecedor);
+        
+        subtotal = 0;
+        total = 0;
+        idFornecedorCarrinho = 0;
+        idPecaTabela.clear();
+        
+        cbNomeFornecedor.setEnabled(true);
+        cbNomeFornecedor.setSelectedIndex(0);
     }
 
     public TelaFormularioPedidos(Connection conn) {
@@ -621,14 +641,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                 """,
                 "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
-            limpar.limparCampos(panelDadosFornecedor);
-            limpar.limparTabela(tabelaPecasFornecedor);
-            limpar.limparCampos(panelDadosPeca);
-            limpar.limparCampos(panelPedido);
-            limpar.limparTabela(tabelaCarrinho);
-            total = 0;
-            idFornecedorCarrinho = 0;
-            cbNomeFornecedor.setEnabled(true);
+            limparTudo();
         }
     }//GEN-LAST:event_btnLimparTudoActionPerformed
 
@@ -716,17 +729,48 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     }//GEN-LAST:event_cbNomeFornecedorAncestorAdded
 
     private void btnFazerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFazerPedidoActionPerformed
-        // TODO add your handling code here:
+        Pedidos pedido = new Pedidos();
+        Fornecedores fornecedor = (Fornecedores) cbNomeFornecedor.getSelectedItem();      
+        pedido.setFornecedor(fornecedor);
+        
+        Date agora = new Date();        
+        pedido.setData(agora);
+        
+        pedido.setValorTotal(total);
+        pedido.setStatus(Pedidos.Status.PENDENTE);
+        
+        PedidosDAO pedidosDao = new PedidosDAO(conn);
+        pedidosDao.Salvar(pedido);
+        pedido.setId(pedidosDao.retornaUltimoIdVenda());
+        JOptionPane.showMessageDialog(null, "ID do último pedido!" + pedido.getId());
+        
+        int quantidadeItensCarrinho = meuPedido.getRowCount();
+        for (int i = 0; i < quantidadeItensCarrinho; i++) {
+            int qtdEstoque, qtdComprada, qtdAtualizada;
+            Pecas peca = new Pecas();
+            PecasDAO pecasDao = new PecasDAO(conn);
+            PecasPedidos item = new PecasPedidos();
+            item.setPedidos(pedido);
+            peca.setId(Integer.parseInt(meuPedido.getValueAt(i, 0).toString()));
+            item.setPecas(peca);
+            item.setQuantidade(Integer.parseInt(meuPedido.getValueAt(i, 2).toString()));
+            item.setSubtotal(Double.parseDouble(meuPedido.getValueAt(i, 4).toString()));
+            qtdEstoque = pecasDao.retornaQuantidadeEstoque(peca.getId());
+            qtdComprada = Integer.parseInt(meuPedido.getValueAt(i, 2).toString());
+            qtdAtualizada = qtdEstoque - qtdComprada;
+            pecasDao.alterarEstoque(peca.getId(), qtdAtualizada);
+            PecasPedidosDAO pecasPedidosDao = new PecasPedidosDAO(conn);
+            pecasPedidosDao.salvar(item);
+        }
+        limparTudo();
+        
     }//GEN-LAST:event_btnFazerPedidoActionPerformed
 
     private void btnCancelarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarPedidoActionPerformed
         // após confirmação limpa os dados
         int opcao = JOptionPane.showConfirmDialog(null, "Você tem certeza que quer limpar o carrinho do pedido?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
-            limpar.limparTabela(tabelaCarrinho);
-            limpar.limparCampos(panelPedido);
-            total = 0;
-            idFornecedorCarrinho = 0;
+            limparTudo();
         }
     }//GEN-LAST:event_btnCancelarPedidoActionPerformed
 
@@ -747,6 +791,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
                 int idNaTabela = Integer.parseInt(meuPedido.getValueAt(i, 0).toString());
                 if (idPeca == idNaTabela) {
                     idPecaTabela.remove(Integer.valueOf(idPeca));
+                    idPecaTabela.clear();
                     break;
                 }
             }
@@ -754,6 +799,9 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             total -= subtotalRemovido;
             calcularValorTotalPedido(total);
             meuPedido.removeRow(linhaSelecionada);
+            /*if (meuPedido.getRowCount() == 0) {
+                
+            }*/
         }
     }//GEN-LAST:event_btnRemoverPecaCarrinhoActionPerformed
 
