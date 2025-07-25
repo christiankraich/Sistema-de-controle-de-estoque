@@ -1,5 +1,6 @@
 package gui;
 
+import dao.FornecedoresDAO;
 import dao.PedidosDAO;
 import java.sql.Connection;
 import java.util.List;
@@ -19,7 +20,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
             if (p.getStatus().equals(Pedidos.Status.PENDENTE)) {
                 dadosPendentes.addRow(new Object[]{
                     p.getId(),
-                    p.getFornecedor(),
+                    p.getFornecedores(),
                     p.getData(),
                     p.getValorTotal(),
                     p.getStatus()
@@ -59,12 +60,24 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         pnlPedidosPendentes = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaPendentes = new javax.swing.JTable();
+        lblFornecedorPendente = new javax.swing.JLabel();
+        txtFornecedorPendente = new javax.swing.JTextField();
+        btnPesquisarFornecedorPendente = new javax.swing.JButton();
         pnlPedidosConcluidos = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaConcluidos = new javax.swing.JTable();
+        txtFornecedorConcluido = new javax.swing.JTextField();
+        lblFornecedorConcluido = new javax.swing.JLabel();
+        btnPesquisarFornecedorConcluido = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Formulário de Pedidos Realizados");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(809, 75));
@@ -178,10 +191,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
 
         tabelaPendentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "FORNECEDOR", "DATA/HORA", "VALOR TOTAL", "STATUS"
@@ -197,19 +207,41 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabelaPendentes);
 
+        lblFornecedorPendente.setText("Fornecedor:");
+
+        btnPesquisarFornecedorPendente.setText("Pesquisar");
+        btnPesquisarFornecedorPendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarFornecedorPendenteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlPedidosPendentesLayout = new javax.swing.GroupLayout(pnlPedidosPendentes);
         pnlPedidosPendentes.setLayout(pnlPedidosPendentesLayout);
         pnlPedidosPendentesLayout.setHorizontalGroup(
             pnlPedidosPendentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPedidosPendentesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlPedidosPendentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE)
+                    .addGroup(pnlPedidosPendentesLayout.createSequentialGroup()
+                        .addComponent(lblFornecedorPendente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtFornecedorPendente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPesquisarFornecedorPendente)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlPedidosPendentesLayout.setVerticalGroup(
             pnlPedidosPendentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPedidosPendentesLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(12, 12, 12)
+                .addGroup(pnlPedidosPendentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFornecedorPendente)
+                    .addComponent(txtFornecedorPendente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisarFornecedorPendente))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -218,10 +250,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
 
         tabelaConcluidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "FORNECEDOR", "DATA/HORA", "VALOR TOTAL", "STATUS"
@@ -237,19 +266,36 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tabelaConcluidos);
 
+        lblFornecedorConcluido.setText("Fornecedor:");
+
+        btnPesquisarFornecedorConcluido.setText("Pesquisar");
+
         javax.swing.GroupLayout pnlPedidosConcluidosLayout = new javax.swing.GroupLayout(pnlPedidosConcluidos);
         pnlPedidosConcluidos.setLayout(pnlPedidosConcluidosLayout);
         pnlPedidosConcluidosLayout.setHorizontalGroup(
             pnlPedidosConcluidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPedidosConcluidosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2)
+                .addGroup(pnlPedidosConcluidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE)
+                    .addGroup(pnlPedidosConcluidosLayout.createSequentialGroup()
+                        .addComponent(lblFornecedorConcluido)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtFornecedorConcluido, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPesquisarFornecedorConcluido)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlPedidosConcluidosLayout.setVerticalGroup(
             pnlPedidosConcluidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPedidosConcluidosLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(9, 9, 9)
+                .addGroup(pnlPedidosConcluidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFornecedorConcluido)
+                    .addComponent(txtFornecedorConcluido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisarFornecedorConcluido))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -278,6 +324,26 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        listarPedidosPendentes();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void btnPesquisarFornecedorPendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarFornecedorPendenteActionPerformed
+        String nomeFornecedor = txtFornecedorPendente.getText() + "%";
+        List<Pedidos> listaPedidosPendentes = pedidosDao.filtrarPedidosPendentesFornecedor(nomeFornecedor);
+        DefaultTableModel dadosPedidosPendentes = (DefaultTableModel) tabelaPendentes.getModel();
+        dadosPedidosPendentes.setRowCount(0);
+        for (Pedidos pedidos : listaPedidosPendentes) {
+            dadosPedidosPendentes.addRow(new Object[]{
+                pedidos.getId(),
+                pedidos.getFornecedores(),
+                pedidos.getData(),
+                pedidos.getStatus(),
+                pedidos.getValorTotal()
+            });
+        }
+    }//GEN-LAST:event_btnPesquisarFornecedorPendenteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,6 +387,8 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPesquisarFornecedorConcluido;
+    private javax.swing.JButton btnPesquisarFornecedorPendente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -330,6 +398,8 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblFornecedorConcluido;
+    private javax.swing.JLabel lblFornecedorPendente;
     private javax.swing.JPanel pnlDadosPedido;
     private javax.swing.JPanel pnlPedidosConcluidos;
     private javax.swing.JPanel pnlPedidosPendentes;
@@ -339,6 +409,8 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
     private javax.swing.JTable tabelaPendentes;
     private javax.swing.JFormattedTextField txtDataEHora;
     private javax.swing.JTextField txtFornecedor;
+    private javax.swing.JTextField txtFornecedorConcluido;
+    private javax.swing.JTextField txtFornecedorPendente;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtValorTotal;
     // End of variables declaration//GEN-END:variables

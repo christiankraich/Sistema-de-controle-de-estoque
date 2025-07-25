@@ -6,7 +6,7 @@ public class Pedidos {
     
     // atributos encapsulados da entidade pedido
     private int id;
-    private Fornecedores fornecedor;
+    private Fornecedores fornecedores;
     private Date data;
     private double valorTotal;
     private Status status;
@@ -20,12 +20,12 @@ public class Pedidos {
         this.id = id;
     }
 
-    public Fornecedores getFornecedor() {
-        return fornecedor;
+    public Fornecedores getFornecedores() {
+        return fornecedores;
     }
 
-    public void setFornecedor(Fornecedores fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setFornecedores(Fornecedores fornecedor) {
+        this.fornecedores = fornecedor;
     }
 
     public Date getData() {

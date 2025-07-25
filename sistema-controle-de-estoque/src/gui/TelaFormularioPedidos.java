@@ -731,7 +731,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private void btnFazerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFazerPedidoActionPerformed
         Pedidos pedido = new Pedidos();
         Fornecedores fornecedor = (Fornecedores) cbNomeFornecedor.getSelectedItem();      
-        pedido.setFornecedor(fornecedor);
+        pedido.setFornecedores(fornecedor);
         
         Date agora = new Date();        
         pedido.setData(agora);
