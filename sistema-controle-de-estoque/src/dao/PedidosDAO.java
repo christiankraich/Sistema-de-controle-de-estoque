@@ -57,7 +57,7 @@ public class PedidosDAO {
                 fornecedor.setNome(rs.getString("nome_fornecedor"));
                 pedido.setFornecedores(fornecedor);
                 
-                pedido.setData(rs.getDate("data"));
+                pedido.setData(rs.getTimestamp("data"));
                 pedido.setValorTotal(rs.getDouble("valor_total"));
                 pedido.setStatus(Pedidos.Status.valueOf(rs.getString("status")));
                 

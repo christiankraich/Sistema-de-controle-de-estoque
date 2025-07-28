@@ -1,8 +1,8 @@
 package gui;
 
-import dao.FornecedoresDAO;
 import dao.PedidosDAO;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import jdbc.MySQLConnection;
@@ -16,12 +16,13 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         List<Pedidos> listaPendente = pedidosDao.listarPendentes();
         DefaultTableModel dadosPendentes = (DefaultTableModel) tabelaPendentes.getModel();
         dadosPendentes.setNumRows(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         for (Pedidos p : listaPendente) {
             if (p.getStatus().equals(Pedidos.Status.PENDENTE)) {
                 dadosPendentes.addRow(new Object[]{
                     p.getId(),
                     p.getFornecedores(),
-                    p.getData(),
+                    sdf.format(p.getData()),
                     p.getValorTotal(),
                     p.getStatus()
                 });
@@ -43,20 +44,21 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnGroupStatus = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        painelGuias = new javax.swing.JTabbedPane();
         pnlDadosPedido = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtFornecedor = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtDataEHora = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
         txtValorTotal = new javax.swing.JTextField();
         radBtnConcluido = new javax.swing.JRadioButton();
         radBtnPendente = new javax.swing.JRadioButton();
+        txtDataEHora = new javax.swing.JTextField();
         pnlPedidosPendentes = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaPendentes = new javax.swing.JTable();
@@ -98,7 +100,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.setPreferredSize(new java.awt.Dimension(797, 100));
+        painelGuias.setPreferredSize(new java.awt.Dimension(797, 100));
 
         jLabel2.setText("Id:");
 
@@ -112,22 +114,19 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
 
         jLabel4.setText("Data e Hora:");
 
-        txtDataEHora.setEditable(false);
-        try {
-            txtDataEHora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/#### || ##:##:##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtDataEHora.setEnabled(false);
-
         jLabel5.setText("Valor Total:");
 
         txtValorTotal.setEditable(false);
         txtValorTotal.setEnabled(false);
 
+        btnGroupStatus.add(radBtnConcluido);
         radBtnConcluido.setText("Concluído");
 
+        btnGroupStatus.add(radBtnPendente);
         radBtnPendente.setText("Pendente");
+
+        txtDataEHora.setEditable(false);
+        txtDataEHora.setEnabled(false);
 
         javax.swing.GroupLayout pnlDadosPedidoLayout = new javax.swing.GroupLayout(pnlDadosPedido);
         pnlDadosPedido.setLayout(pnlDadosPedidoLayout);
@@ -151,7 +150,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
                         .addGroup(pnlDadosPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlDadosPedidoLayout.createSequentialGroup()
                                 .addComponent(radBtnConcluido)
@@ -160,7 +159,8 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
                             .addGroup(pnlDadosPedidoLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDataEHora, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtDataEHora, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(30, 30, 30)))
                 .addGap(62, 62, 62))
         );
         pnlDadosPedidoLayout.setVerticalGroup(
@@ -182,10 +182,10 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
                 .addGroup(pnlDadosPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Dados do Pedido", pnlDadosPedido);
+        painelGuias.addTab("Dados do Pedido", pnlDadosPedido);
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 402));
 
@@ -203,6 +203,11 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tabelaPendentes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaPendentesMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tabelaPendentes);
@@ -246,7 +251,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Pedidos Pendentes", pnlPedidosPendentes);
+        painelGuias.addTab("Pedidos Pendentes", pnlPedidosPendentes);
 
         tabelaConcluidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -300,7 +305,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Pedidos Concluídos", pnlPedidosConcluidos);
+        painelGuias.addTab("Pedidos Concluídos", pnlPedidosConcluidos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -309,7 +314,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(painelGuias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -317,7 +322,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelGuias, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
@@ -344,6 +349,15 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
             });
         }
     }//GEN-LAST:event_btnPesquisarFornecedorPendenteActionPerformed
+
+    private void tabelaPendentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPendentesMouseClicked
+        painelGuias.setSelectedIndex(0);
+        txtId.setText(tabelaPendentes.getValueAt(tabelaPendentes.getSelectedRow(), 0).toString());
+        txtFornecedor.setText(tabelaPendentes.getValueAt(tabelaPendentes.getSelectedRow(), 1).toString());
+        txtDataEHora.setText(tabelaPendentes.getValueAt(tabelaPendentes.getSelectedRow(), 2).toString());
+        txtValorTotal.setText(tabelaPendentes.getValueAt(tabelaPendentes.getSelectedRow(), 3).toString());
+        radBtnPendente.setSelected(true);
+    }//GEN-LAST:event_tabelaPendentesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -387,6 +401,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup btnGroupStatus;
     private javax.swing.JButton btnPesquisarFornecedorConcluido;
     private javax.swing.JButton btnPesquisarFornecedorPendente;
     private javax.swing.JLabel jLabel1;
@@ -397,9 +412,9 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblFornecedorConcluido;
     private javax.swing.JLabel lblFornecedorPendente;
+    private javax.swing.JTabbedPane painelGuias;
     private javax.swing.JPanel pnlDadosPedido;
     private javax.swing.JPanel pnlPedidosConcluidos;
     private javax.swing.JPanel pnlPedidosPendentes;
@@ -407,7 +422,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
     private javax.swing.JRadioButton radBtnPendente;
     private javax.swing.JTable tabelaConcluidos;
     private javax.swing.JTable tabelaPendentes;
-    private javax.swing.JFormattedTextField txtDataEHora;
+    private javax.swing.JTextField txtDataEHora;
     private javax.swing.JTextField txtFornecedor;
     private javax.swing.JTextField txtFornecedorConcluido;
     private javax.swing.JTextField txtFornecedorPendente;
