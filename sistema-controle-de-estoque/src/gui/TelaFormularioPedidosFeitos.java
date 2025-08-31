@@ -1,16 +1,28 @@
 package gui;
 
+import dao.PecasDAO;
+import dao.PecasPedidosDAO;
 import dao.PedidosDAO;
+import java.awt.Component;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import jdbc.MySQLConnection;
+import model.PecasPedidos;
 import model.Pedidos;
+import utilidades.LimpaComponente;
 
 public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
-    
+
     private final PedidosDAO pedidosDao;
+    private final PecasPedidosDAO pecasPedidosDao;
+    private final PecasDAO pecasDao;
+    private final LimpaComponente limpar = new LimpaComponente();
 
     public void listarPedidosPendentes() {
         List<Pedidos> listaPendente = pedidosDao.listarPendentes();
@@ -30,9 +42,40 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         }
     }
     
-    public TelaFormularioPedidosFeitos(PedidosDAO pedidosDao) {
+    public void listarPedidosConcluidos() {
+        List<Pedidos> listaConcluido = pedidosDao.listarConcluidos();
+        DefaultTableModel dadosConcluidos = (DefaultTableModel) tabelaConcluidos.getModel();
+        dadosConcluidos.setNumRows(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd//MM//yyyy HH:mm");
+        for (Pedidos p : listaConcluido) {
+            if (p.getStatus().equals(Pedidos.Status.CONCLUÍDO)) {
+                dadosConcluidos.addRow(new Object[]{
+                    p.getId(),
+                    p.getFornecedores(),
+                    sdf.format(p.getData()),
+                    p.getValorTotal(),
+                    p.getStatus()
+                });
+            }
+        }
+    }
+
+    public boolean validaConclusaoPedido(JPanel painel, JRadioButton radBtnConcluido) {
+        for (Component componente : painel.getComponents()) {
+            if (componente instanceof JTextField txtField) {
+                if (txtField.getText().trim().isEmpty()) {
+                    return false;
+                }
+            }
+        }
+        return radBtnConcluido.isSelected();
+    }
+
+    public TelaFormularioPedidosFeitos(PedidosDAO pedidosDao, PecasPedidosDAO pecasPedidosDao, PecasDAO pecasDao) {
         initComponents();
         this.pedidosDao = pedidosDao;
+        this.pecasPedidosDao = pecasPedidosDao;
+        this.pecasDao = pecasDao;
     }
 
     /**
@@ -71,6 +114,8 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         txtFornecedorConcluido = new javax.swing.JTextField();
         lblFornecedorConcluido = new javax.swing.JLabel();
         btnPesquisarFornecedorConcluido = new javax.swing.JButton();
+        btnConcluido = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Formulário de Pedidos Realizados");
@@ -307,6 +352,20 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
 
         painelGuias.addTab("Pedidos Concluídos", pnlPedidosConcluidos);
 
+        btnConcluido.setText("Concluído");
+        btnConcluido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConcluidoActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -316,6 +375,12 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(painelGuias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(220, 220, 220)
+                .addComponent(btnConcluido)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLimpar)
+                .addGap(220, 220, 220))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -323,7 +388,11 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelGuias, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnConcluido)
+                    .addComponent(btnLimpar))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -332,6 +401,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         listarPedidosPendentes();
+        listarPedidosConcluidos();
     }//GEN-LAST:event_formWindowActivated
 
     private void btnPesquisarFornecedorPendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarFornecedorPendenteActionPerformed
@@ -358,6 +428,38 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         txtValorTotal.setText(tabelaPendentes.getValueAt(tabelaPendentes.getSelectedRow(), 3).toString());
         radBtnPendente.setSelected(true);
     }//GEN-LAST:event_tabelaPendentesMouseClicked
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        btnGroupStatus.clearSelection();
+        limpar.limparCampos(pnlDadosPedido);
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnConcluidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConcluidoActionPerformed
+        boolean podeConcluir = validaConclusaoPedido(pnlDadosPedido, radBtnConcluido);
+        if (podeConcluir) {
+            int id = Integer.parseInt(txtId.getText());
+            boolean sucesso = pedidosDao.setConcluido(id, Pedidos.Status.CONCLUÍDO);
+            if (sucesso) {
+                JOptionPane.showMessageDialog(this, "Status do pedido atualizado com sucesso.");
+
+                List<PecasPedidos> itensPedido = pecasPedidosDao.buscarItensPorPedido(id);
+                
+                for (PecasPedidos item : itensPedido) {
+                    int idPeca = item.getPecas().getId();
+                    int qtdEstoque = pecasDao.retornaQuantidadeEstoque(idPeca);
+                    int qtdComprada = item.getQuantidade();
+                    int qtdAtualziada = qtdEstoque + qtdComprada;
+                    
+                    pecasDao.alterarEstoque(idPeca, qtdAtualziada);
+                }
+
+                btnGroupStatus.clearSelection();
+                limpar.limparCampos(pnlDadosPedido);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Verifique se os campos estao preenchidos e selecione o botão Concluído");
+        }
+    }//GEN-LAST:event_btnConcluidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -389,19 +491,24 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               try {
-                Connection conn = MySQLConnection.getConnection();               
-                PedidosDAO pedidosDao = new PedidosDAO(conn);
-                new TelaFormularioPedidosFeitos(pedidosDao).setVisible(true);
-               } catch (Exception e) {
-                   
-               }
+                try {
+                    Connection conn = MySQLConnection.getConnection();
+                    PedidosDAO pedidosDao = new PedidosDAO(conn);
+                    PecasPedidosDAO pecasPedidosDao = new PecasPedidosDAO(conn);
+                    PecasDAO pecasDao = new PecasDAO(conn);
+
+                    new TelaFormularioPedidosFeitos(pedidosDao, pecasPedidosDao, pecasDao).setVisible(true);
+                } catch (Exception e) {
+
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConcluido;
     private javax.swing.ButtonGroup btnGroupStatus;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnPesquisarFornecedorConcluido;
     private javax.swing.JButton btnPesquisarFornecedorPendente;
     private javax.swing.JLabel jLabel1;

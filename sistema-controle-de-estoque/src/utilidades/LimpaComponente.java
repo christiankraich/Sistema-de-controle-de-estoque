@@ -18,7 +18,7 @@ public class LimpaComponente {
             }
             if (componente instanceof JComboBox jComboBox) {
                 jComboBox.setSelectedIndex(0);
-            }
+            }            
         }
     }
 

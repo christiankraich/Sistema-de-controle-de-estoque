@@ -70,9 +70,34 @@ public class PedidosDAO {
         return lista;
     }
     
-    public void mudarStatus() {
-        
-    }
+    public List<Pedidos> listarConcluidos() {
+        List<Pedidos> lista = new ArrayList<>();
+        String sql = "select p.*, f.nome as nome_fornecedor from pedidos p "
+                + "inner join fornecedores f on p.id_fornecedor = f.id where p.status = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, Pedidos.Status.CONCLUÍDO.name());
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                Pedidos pedido = new Pedidos();
+                pedido.setId(rs.getInt("id"));
+                
+                Fornecedores fornecedor = new Fornecedores();
+                fornecedor.setNome(rs.getString("nome_fornecedor"));
+                pedido.setFornecedores(fornecedor);
+                
+                pedido.setData(rs.getTimestamp("data"));
+                pedido.setValorTotal(rs.getDouble("valor_total"));
+                pedido.setStatus(Pedidos.Status.valueOf(rs.getString("status")));
+                
+                lista.add(pedido);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao criar a lista de pedidos concluídos. \n" + e, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        return lista;
+    }   
     
     public List<Pedidos> filtrarPedidosPendentesFornecedor(String nome) {
         List<Pedidos> listaPedidosPendentes = new ArrayList<>();
@@ -118,5 +143,18 @@ public class PedidosDAO {
             JOptionPane.showMessageDialog(null, "Erro ao retornar o último id do pedido!" + e, "Erro", JOptionPane.ERROR_MESSAGE);
         }
         return ultimoId;
+    }
+    
+    public boolean setConcluido(int idPedido, Pedidos.Status novoStatus) {
+        String sql = "update pedidos set status = ? where id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, novoStatus.name());
+            stmt.setInt(2, idPedido);
+            int linhasAlteradas = stmt.executeUpdate();
+            return linhasAlteradas > 0;            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar o status do pedido." + e, "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
 }

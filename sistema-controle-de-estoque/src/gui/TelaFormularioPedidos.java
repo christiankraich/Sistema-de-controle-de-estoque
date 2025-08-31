@@ -745,20 +745,18 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "ID do último pedido!" + pedido.getId());
         
         int quantidadeItensCarrinho = meuPedido.getRowCount();
-        for (int i = 0; i < quantidadeItensCarrinho; i++) {
-            int qtdEstoque, qtdComprada, qtdAtualizada;
+        for (int i = 0; i < quantidadeItensCarrinho; i++) {            
             Pecas peca = new Pecas();
-            PecasDAO pecasDao = new PecasDAO(conn);
             PecasPedidos item = new PecasPedidos();
+            
             item.setPedidos(pedido);
             peca.setId(Integer.parseInt(meuPedido.getValueAt(i, 0).toString()));
+            
             item.setPecas(peca);
             item.setQuantidade(Integer.parseInt(meuPedido.getValueAt(i, 2).toString()));
+            
             item.setSubtotal(Double.parseDouble(meuPedido.getValueAt(i, 4).toString()));
-            qtdEstoque = pecasDao.retornaQuantidadeEstoque(peca.getId());
-            qtdComprada = Integer.parseInt(meuPedido.getValueAt(i, 2).toString());
-            qtdAtualizada = qtdEstoque - qtdComprada;
-            pecasDao.alterarEstoque(peca.getId(), qtdAtualizada);
+            
             PecasPedidosDAO pecasPedidosDao = new PecasPedidosDAO(conn);
             pecasPedidosDao.salvar(item);
         }
