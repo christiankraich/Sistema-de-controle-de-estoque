@@ -1,14 +1,18 @@
 package model;
 
+import java.util.Date;
+
 public class OrdemDeServico {
     
     // atributos encapsulados da entidade OrdemDeServico
     private int id;
     private Clientes cliente;
     private Funcionarios funcionario;
-    private String dataAbertura;
-    private String dataConcluido;
+    private Date dataAbertura;
+    private Date dataConcluido;
     private String descricao;
+    private double valorTotal;
+    private String observacoes;
     private Status status;
 
     // metodos especiais (getters e setters)
@@ -36,19 +40,19 @@ public class OrdemDeServico {
         this.funcionario = funcionario;
     }
 
-    public String getDataAbertura() {
+    public Date getDataAbertura() {
         return dataAbertura;
     }
 
-    public void setDataAbertura(String dataAbertura) {
+    public void setDataAbertura(Date dataAbertura) {
         this.dataAbertura = dataAbertura;
     }
 
-    public String getDataConcluido() {
+    public Date getDataConcluido() {
         return dataConcluido;
     }
 
-    public void setDataConcluido(String dataConcluido) {
+    public void setDataConcluido(Date dataConcluido) {
         this.dataConcluido = dataConcluido;
     }
 
@@ -58,6 +62,22 @@ public class OrdemDeServico {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    
+    public double getValorTotal() {
+        return valorTotal;
+    }
+    
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+    
+    public String getObervacoes() {
+        return observacoes;
+    }
+    
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
     }
 
     public Status getStatus() {

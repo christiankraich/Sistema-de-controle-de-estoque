@@ -48,7 +48,7 @@ public class ClientesDAO {
         }
     }
 
-    public Clientes buscarCliente(String cpf) {
+    public Clientes buscarCpfCliente(String cpf) {
         // define o comando sql
         String sql = "select * from clientes where cpf = ?";
         // prepara a declaração sql com o cpf como parâmetro
@@ -79,6 +79,35 @@ public class ClientesDAO {
         } catch (SQLException e) {
             // exibe a mensagem caso ocorra um erro na consulta ao banco
             JOptionPane.showMessageDialog(null, "Cliente não cadastrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+        return null;
+    }
+    
+    public Clientes buscarNomeCliente(String nome) {
+        String sql = "select * from clientes where nome = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next()) {
+                Clientes cliente = new Clientes();
+                cliente.setId(rs.getInt("id"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setDataNascimento(rs.getDate("data_nascimento"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setCpf(rs.getString("cpf"));
+                cliente.setTelefone(rs.getString("telefone"));
+                cliente.setCep(rs.getString("cep"));
+                cliente.setEndereco(rs.getString("endereco"));
+                cliente.setNumero(rs.getShort("numero"));
+                cliente.setComplemento(rs.getString("complemento"));
+                cliente.setBairro(rs.getString("bairro"));
+                cliente.setCidade(rs.getString("cidade"));
+                cliente.setEstado(rs.getString("estado"));
+                
+                return cliente;
+            }
+        } catch (SQLException e) {            
         }
         return null;
     }

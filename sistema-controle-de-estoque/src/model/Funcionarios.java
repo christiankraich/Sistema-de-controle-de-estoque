@@ -33,6 +33,11 @@ public class Funcionarios extends Clientes {
         this.nivelAcesso = nivelAcesso;
     }
     
+    @Override
+    public String toString() {
+        return getNome();
+    }
+    
     // enum que representa o nivel de acesso do usuário
     public enum NivelAcesso {
         ADMINISTRADOR,

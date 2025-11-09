@@ -104,6 +104,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Formulário de Clientes");
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -494,7 +495,7 @@ public class TelaFormularioClientes extends javax.swing.JFrame {
     private void btnPesquisarCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCPFActionPerformed
         // pesquisa o cliente no banco de dados com base no cpf 
         String cpf = txtCPF.getText();
-        Clientes cliente = clientesDao.buscarCliente(cpf);
+        Clientes cliente = clientesDao.buscarCpfCliente(cpf);
         // verifica se o cliente já está cadastrado no banco de dados e preenche os campos com as informações
         if (cliente.getCpf() != null) {
             txtId.setText(String.valueOf(cliente.getId()));

@@ -67,5 +67,10 @@ public class Pecas {
     public void setValorUnidadeCliente(double valorUnidadeCliente) {
         this.valorUnidadeCliente = valorUnidadeCliente;
     }
+    
+    @Override
+    public String toString() {
+        return getNome();
+    }
         
 }
