@@ -140,6 +140,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Formul&#xe1;rio de OS"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemFormOrdemServicoActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -504,6 +507,9 @@
               <Dimension value="[135, 71]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOSActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnOS.setHorizontalTextPosition(SwingConstants.CENTER);&#xa;btnOS.setVerticalTextPosition(SwingConstants.BOTTOM);&#xa;btnOS.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));&#xa;btnOS.setBorderPainted(false);&#xa;btnOS.setContentAreaFilled(false);&#xa;btnOS.setFocusPainted(false);"/>
           </AuxValues>

@@ -51,6 +51,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         tfpd.setVisible(true);
     }    
     
+    public void janelaOS() {
+        TelaFormularioOS tfos = new TelaFormularioOS(conn);
+        tfos.setVisible(true);
+    }
+    
     public void janelaTrocaUsuario() {
         int opcao = JOptionPane.showConfirmDialog(null,
                 "Você deseja trocar de usuário?", "Aviso",
@@ -278,6 +283,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         btnOS.setBorderPainted(false);
         btnOS.setContentAreaFilled(false);
         btnOS.setFocusPainted(false);
+        btnOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOSActionPerformed(evt);
+            }
+        });
 
         btnSair.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnSair.setForeground(new java.awt.Color(255, 102, 102));
@@ -472,6 +482,11 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
         jMenu5.setText("Ordem de Serviço");
 
         menuItemFormOrdemServico.setText("Formulário de OS");
+        menuItemFormOrdemServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemFormOrdemServicoActionPerformed(evt);
+            }
+        });
         jMenu5.add(menuItemFormOrdemServico);
 
         jMenuBar1.add(jMenu5);
@@ -628,6 +643,14 @@ public class TelaAreaDeTrabalho extends javax.swing.JFrame {
     private void btnTrocarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrocarUsuarioActionPerformed
         janelaTrocaUsuario();
     }//GEN-LAST:event_btnTrocarUsuarioActionPerformed
+
+    private void menuItemFormOrdemServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFormOrdemServicoActionPerformed
+        janelaOS();
+    }//GEN-LAST:event_menuItemFormOrdemServicoActionPerformed
+
+    private void btnOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOSActionPerformed
+        janelaOS();
+    }//GEN-LAST:event_btnOSActionPerformed
 
     /**
      * @param args the command line arguments

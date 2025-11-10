@@ -741,7 +741,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         pedido.setStatus(Pedidos.Status.PENDENTE);
         
         PedidosDAO pedidosDao = new PedidosDAO(conn);
-        pedidosDao.Salvar(pedido);
+        pedidosDao.salvar(pedido);
         pedido.setId(pedidosDao.retornaUltimoIdVenda());
         JOptionPane.showMessageDialog(null, "ID do último pedido!" + pedido.getId());
         

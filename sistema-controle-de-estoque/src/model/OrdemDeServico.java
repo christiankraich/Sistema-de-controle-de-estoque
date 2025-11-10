@@ -72,7 +72,7 @@ public class OrdemDeServico {
         this.valorTotal = valorTotal;
     }
     
-    public String getObervacoes() {
+    public String getObservacoes() {
         return observacoes;
     }
     

@@ -143,7 +143,7 @@ public class PecasDAO {
                 peca.setDescricao(rs.getString("descricao"));
                 peca.setQuantidade(rs.getShort("quantidade"));
                 peca.setValorUnidadeFornecedor(rs.getDouble("valor_unidade_fornecedor"));
-                peca.setValorUnidadeCliente(rs.getDouble("valor_unidade_fornecedor"));
+                peca.setValorUnidadeCliente(rs.getDouble("valor_unidade_cliente"));
                 
                 return peca;
             }

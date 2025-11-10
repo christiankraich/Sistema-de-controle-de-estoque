@@ -21,7 +21,7 @@ public class PedidosDAO {
     }
 
     // salva o pedido no banco de dados
-    public void Salvar(Pedidos pedido) {
+    public void salvar(Pedidos pedido) {
         String sql = "insert into pedidos (id_fornecedor, data, valor_total, status)"
                 + "values (?, ?, ?, ?)";
         // prepara a declaração sql

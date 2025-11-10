@@ -3,9 +3,12 @@ package gui;
 import dao.ClientesDAO;
 import dao.FuncionariosDAO;
 import dao.PecasDAO;
+import java.awt.event.ItemEvent;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import jdbc.MySQLConnection;
 import model.Clientes;
 import model.Funcionarios;
@@ -20,6 +23,9 @@ public class TelaFormularioOS extends javax.swing.JFrame {
     private final Validador validador = new Validador();
     private final LimpaComponente limpar = new LimpaComponente();
     private final Connection conn;
+    
+    double valorCliente, subtotal;
+    List<Integer> idPecaTabela = new ArrayList<>();
 
     public TelaFormularioOS(Connection conn) {
         initComponents();
@@ -274,8 +280,18 @@ public class TelaFormularioOS extends javax.swing.JFrame {
         jLabel12.setText("Quantidade:");
 
         txtQuantidade.setEditable(false);
+        txtQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtQuantidadeKeyReleased(evt);
+            }
+        });
 
         btnAdicionarPeca.setText("Adicionar");
+        btnAdicionarPeca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarPecaActionPerformed(evt);
+            }
+        });
 
         tabelaPecas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -681,12 +697,16 @@ public class TelaFormularioOS extends javax.swing.JFrame {
     }//GEN-LAST:event_cbPecaAncestorAdded
 
     private void cbPecaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbPecaItemStateChanged
+        if (evt.getStateChange() != ItemEvent.SELECTED) return;
+        
         String nome = cbPeca.getSelectedItem().toString();
         
         if (nome.equals("Selecione a peça")) {
             txtFornecedor.setText("");
             txtQuantidade.setText("");
+            valorCliente = 0;
             txtQuantidade.setEditable(false);
+            System.out.println("valor Cliente: " + valorCliente);
             return;
         }
         
@@ -695,8 +715,32 @@ public class TelaFormularioOS extends javax.swing.JFrame {
         if (peca != null) {
             txtFornecedor.setText(peca.getFornecedores().getNome());
             txtQuantidade.setEditable(true);
+            valorCliente = peca.getValorUnidadeCliente();
         }
+            System.out.println("valor Cliente: " + valorCliente);
     }//GEN-LAST:event_cbPecaItemStateChanged
+
+    private void btnAdicionarPecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarPecaActionPerformed
+        String nome = cbPeca.getSelectedItem().toString();
+        PecasDAO pecasDao = new PecasDAO(conn);
+        Pecas peca = pecasDao.buscarPeca(nome);
+        
+        if (peca != null) {
+            int idPeca = peca.getId();
+            boolean temNaTabela = idPecaTabela.contains(idPeca);
+            String qtd = txtQuantidade.getText();
+            
+            if (qtd.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Adicione a quantidade de peças na OS!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+        }
+    }//GEN-LAST:event_btnAdicionarPecaActionPerformed
+
+    private void txtQuantidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantidadeKeyReleased
+        
+    }//GEN-LAST:event_txtQuantidadeKeyReleased
 
     /**
      * @param args the command line arguments
