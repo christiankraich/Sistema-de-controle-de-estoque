@@ -5,8 +5,9 @@ DROP TABLE IF EXISTS `cargos`;
 CREATE TABLE `cargos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_nome` (`nome`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 LOCK TABLES `cargos` WRITE;
 INSERT INTO `cargos` VALUES (11,'Teste');
@@ -88,15 +89,15 @@ CREATE TABLE `funcionarios` (
   `complemento` varchar(17) DEFAULT NULL,
   `bairro` varchar(20) DEFAULT NULL,
   `cidade` varchar(25) DEFAULT NULL,
-  `estado` varchar(19) DEFAULT NULL,
+  `estado` varchar(2) DEFAULT NULL,
   `senha` varchar(20) DEFAULT NULL,
-  `nivel_acesso` enum('Administrador','Comum') NOT NULL DEFAULT 'Comum',
+  `nivel_acesso` enum('ADMINISTRADOR','COMUM') NOT NULL DEFAULT 'COMUM',
   PRIMARY KEY (`id`),
   UNIQUE KEY `cpf` (`cpf`),
   UNIQUE KEY `email` (`email`),
   KEY `funcionarios_ibfk_1` (`id_cargo`),
   CONSTRAINT `funcionarios_ibfk_1` FOREIGN KEY (`id_cargo`) REFERENCES `cargos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 LOCK TABLES `funcionarios` WRITE;
 INSERT INTO `funcionarios` VALUES (8,11,'Teste da Silva','2000-01-01','teste@teste','123.456.789-01','(65) 4 1846-5416','65465-416','Rua dos testes',1,'Casa ','Bairro','Cidade','AC','teste','ADMINISTRADOR');
@@ -112,7 +113,7 @@ CREATE TABLE `ordem_de_servico` (
   `descricao` text DEFAULT NULL,
   `valor_total` decimal(10,2) DEFAULT NULL,
   `observacoes` text DEFAULT NULL,
-  `status` enum('CONCLUÍDA','PENDENTE') NOT NULL DEFAULT 'PENDENTE',
+  `status` enum('CONCLUIDA','PENDENTE') NOT NULL DEFAULT 'PENDENTE',
   PRIMARY KEY (`id`),
   KEY `id_cliente` (`id_cliente`),
   KEY `id_funcionario` (`id_funcionario`),
@@ -177,9 +178,9 @@ DROP TABLE IF EXISTS `pedidos`;
 CREATE TABLE `pedidos` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_fornecedor` int(10) unsigned NOT NULL,
-  `data` date DEFAULT NULL,
+  `data` datetime NOT NULL,
   `valor_total` decimal(10,2) DEFAULT NULL,
-  `status` enum('Concluído','Pendente') DEFAULT NULL,
+  `status` enum('CONCLUIDO','PENDENTE') NOT NULL DEFAULT 'PENDENTE',
   PRIMARY KEY (`id`),
   KEY `id_fornecedor` (`id_fornecedor`),
   CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`id_fornecedor`) REFERENCES `fornecedores` (`id`)
