@@ -706,14 +706,13 @@ public class TelaFormularioOS extends javax.swing.JFrame {
             txtQuantidade.setText("");
             valorCliente = 0;
             txtQuantidade.setEditable(false);
-            System.out.println("valor Cliente: " + valorCliente);
             return;
         }
         
         PecasDAO pecasDao = new PecasDAO(conn);
         Pecas peca = pecasDao.buscarPeca(nome);
         if (peca != null) {
-            txtFornecedor.setText(peca.getFornecedores().getNome());
+            txtFornecedor.setText(peca.getFornecedor().getRazaoSocial());
             txtQuantidade.setEditable(true);
             valorCliente = peca.getValorUnidadeCliente();
         }

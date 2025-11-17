@@ -26,7 +26,7 @@ public class FornecedoresDAO {
         // prepara a declaração sql
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             // atribui os valores do fornecedor para cada parâmetro do sql
-            stmt.setString(1, fornecedor.getNome());
+            stmt.setString(1, fornecedor.getRazaoSocial());
             stmt.setString(2, fornecedor.getEmail());
             stmt.setString(3, fornecedor.getCnpj());
             stmt.setString(4, fornecedor.getTelefone());
@@ -61,7 +61,7 @@ public class FornecedoresDAO {
                 // cria e preenche um objeto fornecedor com os dados encontrados
                 Fornecedores fornecedor = new Fornecedores();
                 fornecedor.setId(rs.getInt("id"));
-                fornecedor.setNome(rs.getString("nome"));
+                fornecedor.setRazaoSocial(rs.getString("nome"));
                 fornecedor.setEmail(rs.getString("email"));
                 fornecedor.setCnpj(rs.getString("cnpj"));
                 fornecedor.setTelefone(rs.getString("telefone"));
@@ -94,7 +94,7 @@ public class FornecedoresDAO {
             while (rs.next()) {
                 Fornecedores fornecedor = new Fornecedores();
                 fornecedor.setId(rs.getInt("id"));
-                fornecedor.setNome(rs.getString("nome"));
+                fornecedor.setRazaoSocial(rs.getString("nome"));
                 fornecedor.setEmail(rs.getString("email"));
                 fornecedor.setCnpj(rs.getString("cnpj"));
                 fornecedor.setTelefone(rs.getString("telefone"));
@@ -128,7 +128,7 @@ public class FornecedoresDAO {
             while (rs.next()) {
                 Fornecedores fornecedor = new Fornecedores();
                 fornecedor.setId(rs.getInt("id"));
-                fornecedor.setNome(rs.getString("nome"));
+                fornecedor.setRazaoSocial(rs.getString("nome"));
                 fornecedor.setEmail(rs.getString("email"));
                 fornecedor.setCnpj(rs.getString("cnpj"));
                 fornecedor.setTelefone(rs.getString("telefone"));
@@ -157,7 +157,7 @@ public class FornecedoresDAO {
         // prepara a declaração sql
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             // atribui os valores para cada parâmetro do comando sql
-            stmt.setString(1, fornecedor.getNome());
+            stmt.setString(1, fornecedor.getRazaoSocial());
             stmt.setString(2, fornecedor.getEmail());
             stmt.setString(3, fornecedor.getCnpj());
             stmt.setString(4, fornecedor.getTelefone());
@@ -209,7 +209,7 @@ public class FornecedoresDAO {
             if (rs.next()) {
                 fornecedor = new Fornecedores();
                 fornecedor.setId(rs.getInt("id"));
-                fornecedor.setNome(rs.getString("nome"));
+                fornecedor.setRazaoSocial(rs.getString("nome"));
             }
         } catch (SQLException e) {
             // exibe a mensagem em caso de erro
@@ -230,7 +230,7 @@ public class FornecedoresDAO {
             if (rs.next()) {
                 Fornecedores fornecedor = new Fornecedores();
                 fornecedor.setId(rs.getInt("id"));
-                fornecedor.setNome(rs.getString("nome"));
+                fornecedor.setRazaoSocial(rs.getString("nome"));
                 fornecedor.setEmail(rs.getString("email"));
                 fornecedor.setCnpj(rs.getString("cnpj"));
                 fornecedor.setTelefone(rs.getString("telefone"));

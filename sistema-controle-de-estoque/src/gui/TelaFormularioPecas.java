@@ -27,7 +27,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         for (Pecas p : lista) {
             dados.addRow(new Object[]{
                 p.getId(),
-                p.getFornecedores(),
+                p.getFornecedor(),
                 p.getNome(),
                 p.getDescricao(),
                 p.getQuantidade(),
@@ -460,7 +460,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         Pecas peca = new Pecas();
 
         Fornecedores fornecedor = (Fornecedores) cbFornecedor.getSelectedItem();
-        peca.setFornecedores(fornecedor);
+        peca.setFornecedor(fornecedor);
 
         peca.setNome(txtNome.getText());
         peca.setDescricao(txtDescricao.getText());
@@ -482,7 +482,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         if (peca.getNome() != null) {
             txtId.setText(String.valueOf(peca.getId()));
             // percorre os itens do comboBox para selecionar o fornecedor com id correspondente ao da peça
-            Fornecedores fornecedorSelecionado = peca.getFornecedores();
+            Fornecedores fornecedorSelecionado = peca.getFornecedor();
             for (int i = 0; i < cbFornecedor.getItemCount(); i++) {
                 Fornecedores fornecedor = (Fornecedores) cbFornecedor.getItemAt(i);
                 if (fornecedor.getId() == fornecedorSelecionado.getId()) {
@@ -522,7 +522,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         for (Pecas p : lista) {
             dados.addRow(new Object[]{
                 p.getId(),
-                p.getFornecedores().getNome(),
+                p.getFornecedor().getRazaoSocial(),
                 p.getNome(),
                 p.getDescricao(),
                 p.getQuantidade(),
@@ -540,7 +540,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
         String nomeFornecedor = tabela.getValueAt(tabela.getSelectedRow(), 1).toString();
         for (int i = 0; i < cbFornecedor.getItemCount(); i++) {
             Fornecedores fornecedor = (Fornecedores) cbFornecedor.getItemAt(i);
-            if (fornecedor.getNome().equals(nomeFornecedor)) {
+            if (fornecedor.getRazaoSocial().equals(nomeFornecedor)) {
                 cbFornecedor.setSelectedItem(fornecedor);
                 break;
             }
@@ -558,7 +558,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // atualiza os dados da peça no banco de dados e limpa os campos
         Pecas peca = new Pecas();
-        peca.setFornecedores((Fornecedores) cbFornecedor.getSelectedItem());
+        peca.setFornecedor((Fornecedores) cbFornecedor.getSelectedItem());
         peca.setNome(txtNome.getText());
         peca.setDescricao(txtDescricao.getText());
         peca.setQuantidade(Short.parseShort(txtQuantidade.getText()));
@@ -606,7 +606,7 @@ public class TelaFormularioPecas extends javax.swing.JFrame {
             for (Pecas p : lista) {
                 dados.addRow(new Object[]{
                     p.getId(),
-                    p.getFornecedores().getNome(),
+                    p.getFornecedor().getRazaoSocial(),
                     p.getNome(),
                     p.getDescricao(),
                     p.getQuantidade(),

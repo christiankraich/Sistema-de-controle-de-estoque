@@ -4,8 +4,8 @@ public class PecasPedidos {
     
     //  atributos encapsulados da entidade PecasPedidos
     private int id;
-    private Pecas pecas;
-    private Pedidos pedidos;
+    private Pecas peca;
+    private Pedidos pedido;
     private int quantidade;
     private double subtotal;
     
@@ -18,20 +18,20 @@ public class PecasPedidos {
         this.id = id;
     }
 
-    public Pecas getPecas() {
-        return pecas;
+    public Pecas getPeca() {
+        return peca;
     }
 
-    public void setPecas(Pecas pecas) {
-        this.pecas = pecas;
+    public void setPeca(Pecas peca) {
+        this.peca = peca;
     }
 
-    public Pedidos getPedidos() {
-        return pedidos;
+    public Pedidos getPedido() {
+        return pedido;
     }
 
-    public void setPedidos(Pedidos pedidos) {
-        this.pedidos = pedidos;
+    public void setPedido(Pedidos pedido) {
+        this.pedido = pedido;
     }
 
     public int getQuantidade() {

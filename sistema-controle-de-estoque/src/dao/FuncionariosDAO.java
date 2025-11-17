@@ -27,7 +27,7 @@ public class FuncionariosDAO {
         // prepara a declaração sql
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {   
             // atribui os valores do funcionário para cada parâmetro do sql
-            stmt.setInt(1, funcionario.getCargos().getId());
+            stmt.setInt(1, funcionario.getCargo().getId());
             stmt.setString(2, funcionario.getNome());
             stmt.setObject(3, funcionario.getDataNascimento());
             stmt.setString(4, funcionario.getEmail());
@@ -68,7 +68,7 @@ public class FuncionariosDAO {
                 int idCargo = rs.getInt("id_cargo");
                 CargosDAO cargosDao = new CargosDAO(conn);
                 Cargos cargo = cargosDao.buscarIdCargo(idCargo);
-                funcionario.setCargos(cargo);
+                funcionario.setCargo(cargo);
                 
                 funcionario.setNome(rs.getString("nome"));
                 funcionario.setDataNascimento(rs.getDate("data_nascimento"));
@@ -115,7 +115,7 @@ public class FuncionariosDAO {
                 // instancia um cargo com o nome retornado da consulta
                 Cargos cargo = new Cargos();
                 cargo.setNome(rs.getString("cargo_nome"));
-                funcionario.setCargos(cargo);
+                funcionario.setCargo(cargo);
 
                 funcionario.setNome(rs.getString("nome"));
                 funcionario.setDataNascimento(rs.getDate("data_nascimento"));
@@ -165,7 +165,7 @@ public class FuncionariosDAO {
                 int idCargo = rs.getInt("id_cargo");
                 CargosDAO cargosDao = new CargosDAO(conn);
                 Cargos cargo = cargosDao.buscarIdCargo(idCargo);
-                funcionario.setCargos(cargo);
+                funcionario.setCargo(cargo);
                 
                 funcionario.setNome(rs.getString("nome"));
                 funcionario.setDataNascimento(rs.getDate("data_nascimento"));
@@ -206,7 +206,7 @@ public class FuncionariosDAO {
         // prepara a declaração sql
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             // atribui os valores para cada parâmetro do comando sql
-            stmt.setInt(1, funcionario.getCargos().getId());
+            stmt.setInt(1, funcionario.getCargo().getId());
             stmt.setString(2, funcionario.getNome());
             stmt.setObject(3, funcionario.getDataNascimento());
             stmt.setString(4, funcionario.getEmail());

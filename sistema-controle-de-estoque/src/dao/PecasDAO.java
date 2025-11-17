@@ -28,7 +28,7 @@ public class PecasDAO {
         // prepara a declaração sql
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             // atribui os valores da peça para cada parâmetro do sql
-            stmt.setInt(1, peca.getFornecedores().getId());
+            stmt.setInt(1, peca.getFornecedor().getId());
             stmt.setString(2, peca.getNome());
             stmt.setString(3, peca.getDescricao());
             stmt.setShort(4, peca.getQuantidade());
@@ -53,7 +53,7 @@ public class PecasDAO {
         // prepara a declaração sql
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             // atribui os valores para cada parâmetro do comando sql
-            stmt.setInt(1, peca.getFornecedores().getId());
+            stmt.setInt(1, peca.getFornecedor().getId());
             stmt.setString(2, peca.getNome());
             stmt.setString(3, peca.getDescricao());
             stmt.setShort(4, peca.getQuantidade());
@@ -102,8 +102,8 @@ public class PecasDAO {
                 peca.setId(rs.getInt("id"));
                 // instancia um fornecedor com o nome retornado da consulta
                 Fornecedores fornecedor = new Fornecedores();
-                fornecedor.setNome(rs.getString("nome_fornecedor"));
-                peca.setFornecedores(fornecedor);
+                fornecedor.setRazaoSocial(rs.getString("nome_fornecedor"));
+                peca.setFornecedor(fornecedor);
 
                 peca.setNome(rs.getString("nome"));
                 peca.setDescricao(rs.getString("descricao"));
@@ -137,7 +137,7 @@ public class PecasDAO {
                 int idFornecedor = rs.getInt("id_fornecedor");
                 FornecedoresDAO fornecedoresDao = new FornecedoresDAO(conn);
                 Fornecedores fornecedor = fornecedoresDao.buscarIdFornecedor(idFornecedor);
-                peca.setFornecedores(fornecedor);
+                peca.setFornecedor(fornecedor);
 
                 peca.setNome(rs.getString("nome"));
                 peca.setDescricao(rs.getString("descricao"));
@@ -171,7 +171,7 @@ public class PecasDAO {
                 int idFornecedor = rs.getInt("id_fornecedor");
                 FornecedoresDAO fornecedorDao = new FornecedoresDAO(conn);
                 Fornecedores fornecedor = fornecedorDao.buscarIdFornecedor(idFornecedor);
-                peca.setFornecedores(fornecedor);
+                peca.setFornecedor(fornecedor);
 
                 peca.setNome(rs.getString("nome"));
                 peca.setDescricao(rs.getString("descricao"));
@@ -239,7 +239,7 @@ public class PecasDAO {
                 int idFornecedor = rs.getInt("id_fornecedor");
                 FornecedoresDAO fornecedorDao = new FornecedoresDAO(conn);
                 Fornecedores fornecedor = fornecedorDao.buscarIdFornecedor(idFornecedor);
-                peca.setFornecedores(fornecedor);
+                peca.setFornecedor(fornecedor);
 
                 peca.setNome(rs.getString("nome"));
                 peca.setDescricao(rs.getString("descricao"));

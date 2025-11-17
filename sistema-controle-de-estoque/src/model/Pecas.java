@@ -4,7 +4,7 @@ public class Pecas {
     
     // atributos encapsulados da entidade Pecas
     private int id;
-    private Fornecedores fornecedores;
+    private Fornecedores fornecedor;
     private String nome;
     private String descricao;
     private short quantidade;
@@ -20,12 +20,12 @@ public class Pecas {
         this.id = id;
     }
 
-    public Fornecedores getFornecedores() {
-        return fornecedores;
+    public Fornecedores getFornecedor() {
+        return fornecedor;
     }
 
-    public void setFornecedores(Fornecedores fornecedores) {
-        this.fornecedores = fornecedores;
+    public void setFornecedor(Fornecedores fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
     public String getNome() {

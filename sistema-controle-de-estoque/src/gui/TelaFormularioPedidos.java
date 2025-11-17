@@ -43,7 +43,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         for (Pecas p : lista) {
             dados.addRow(new Object[]{
                 p.getId(),
-                p.getFornecedores(),
+                p.getFornecedor(),
                 p.getNome(),
                 p.getDescricao(),
                 p.getQuantidade(),
@@ -602,7 +602,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
         FornecedoresDAO fornecedoresDao = new FornecedoresDAO(conn);
         Fornecedores fornecedor = fornecedoresDao.buscarNomeFornecedor(nome);
         // verifica se o fornecedor foi encontrado no banco de dados e filtra as peças na tabela
-        if (fornecedor.getNome() != null) {
+        if (fornecedor.getRazaoSocial() != null) {
             txtCnpj.setText(fornecedor.getCnpj());
             txtEmailFornecedor.setText(fornecedor.getEmail());
             cbNomeFornecedor.setEnabled(false);
@@ -654,8 +654,8 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
 
         //verifica se a peça foi encontrada no banco de dados antes de continuar
         if (peca != null) {
-            idFornecedor = peca.getFornecedores().getId();
-            int idFornecedorPeca = peca.getFornecedores().getId();
+            idFornecedor = peca.getFornecedor().getId();
+            int idFornecedorPeca = peca.getFornecedor().getId();
             int idPeca = peca.getId();
             boolean temNoCarrinho = idPecaTabela.contains(idPeca);
             String qtd = txtQtdPedido.getText();
@@ -732,7 +732,7 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
     private void btnFazerPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFazerPedidoActionPerformed
         Pedidos pedido = new Pedidos();
         Fornecedores fornecedor = (Fornecedores) cbNomeFornecedor.getSelectedItem();      
-        pedido.setFornecedores(fornecedor);
+        pedido.setFornecedor(fornecedor);
         
         Date agora = new Date();        
         pedido.setData(agora);
@@ -750,10 +750,10 @@ public class TelaFormularioPedidos extends javax.swing.JFrame {
             Pecas peca = new Pecas();
             PecasPedidos item = new PecasPedidos();
             
-            item.setPedidos(pedido);
+            item.setPedido(pedido);
             peca.setId(Integer.parseInt(meuPedido.getValueAt(i, 0).toString()));
             
-            item.setPecas(peca);
+            item.setPeca(peca);
             item.setQuantidade(Integer.parseInt(meuPedido.getValueAt(i, 2).toString()));
             
             item.setSubtotal(Double.parseDouble(meuPedido.getValueAt(i, 4).toString()));

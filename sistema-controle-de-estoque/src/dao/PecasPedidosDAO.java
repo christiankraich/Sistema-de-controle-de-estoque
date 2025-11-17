@@ -22,8 +22,8 @@ public class PecasPedidosDAO {
         String sql = "insert into pecas_pedidos (id_peca, id_pedido, quantidade, subtotal)"
                 + "value (?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, pecasPedidos.getPecas().getId());
-            stmt.setInt(2, pecasPedidos.getPedidos().getId());
+            stmt.setInt(1, pecasPedidos.getPeca().getId());
+            stmt.setInt(2, pecasPedidos.getPedido().getId());
             stmt.setInt(3, pecasPedidos.getQuantidade());
             stmt.setDouble(4, pecasPedidos.getSubtotal());
             stmt.execute();
@@ -45,7 +45,7 @@ public class PecasPedidosDAO {
                 Pecas peca = new Pecas();
                 
                 peca.setId(rs.getInt("id_peca"));
-                item.setPecas(peca);
+                item.setPeca(peca);
                 
                 item.setQuantidade(rs.getInt("quantidade"));
                 item.setSubtotal(rs.getInt("subtotal"));

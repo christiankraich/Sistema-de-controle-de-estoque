@@ -33,7 +33,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
             if (p.getStatus().equals(Pedidos.Status.PENDENTE)) {
                 dadosPendentes.addRow(new Object[]{
                     p.getId(),
-                    p.getFornecedores(),
+                    p.getFornecedor(),
                     sdf.format(p.getData()),
                     p.getValorTotal(),
                     p.getStatus()
@@ -48,10 +48,10 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         dadosConcluidos.setNumRows(0);
         SimpleDateFormat sdf = new SimpleDateFormat("dd//MM//yyyy HH:mm");
         for (Pedidos p : listaConcluido) {
-            if (p.getStatus().equals(Pedidos.Status.CONCLUÍDO)) {
+            if (p.getStatus().equals(Pedidos.Status.CONCLUIDO)) {
                 dadosConcluidos.addRow(new Object[]{
                     p.getId(),
-                    p.getFornecedores(),
+                    p.getFornecedor(),
                     sdf.format(p.getData()),
                     p.getValorTotal(),
                     p.getStatus()
@@ -412,7 +412,7 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         for (Pedidos pedidos : listaPedidosPendentes) {
             dadosPedidosPendentes.addRow(new Object[]{
                 pedidos.getId(),
-                pedidos.getFornecedores(),
+                pedidos.getFornecedor(),
                 pedidos.getData(),
                 pedidos.getStatus(),
                 pedidos.getValorTotal()
@@ -438,14 +438,14 @@ public class TelaFormularioPedidosFeitos extends javax.swing.JFrame {
         boolean podeConcluir = validaConclusaoPedido(pnlDadosPedido, radBtnConcluido);
         if (podeConcluir) {
             int id = Integer.parseInt(txtId.getText());
-            boolean sucesso = pedidosDao.setConcluido(id, Pedidos.Status.CONCLUÍDO);
+            boolean sucesso = pedidosDao.setConcluido(id, Pedidos.Status.CONCLUIDO);
             if (sucesso) {
                 JOptionPane.showMessageDialog(this, "Status do pedido atualizado com sucesso.");
 
                 List<PecasPedidos> itensPedido = pecasPedidosDao.buscarItensPorPedido(id);
                 
                 for (PecasPedidos item : itensPedido) {
-                    int idPeca = item.getPecas().getId();
+                    int idPeca = item.getPeca().getId();
                     int qtdEstoque = pecasDao.retornaQuantidadeEstoque(idPeca);
                     int qtdComprada = item.getQuantidade();
                     int qtdAtualziada = qtdEstoque + qtdComprada;

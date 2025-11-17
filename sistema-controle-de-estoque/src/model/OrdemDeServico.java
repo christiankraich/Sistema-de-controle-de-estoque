@@ -90,7 +90,7 @@ public class OrdemDeServico {
     
     // enum que representa o status do pedido
     public enum Status {
-        CONCLUÍDA,
+        CONCLUIDA,
         PENDENTE
     }
     

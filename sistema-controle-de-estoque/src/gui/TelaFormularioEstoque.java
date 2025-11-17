@@ -24,7 +24,7 @@ public class TelaFormularioEstoque extends javax.swing.JFrame {
         for (Pecas p : lista) {
             dados.addRow(new Object[]{
                 p.getId(),
-                p.getFornecedores(),
+                p.getFornecedor(),
                 p.getNome(),
                 p.getDescricao(),
                 p.getQuantidade(),

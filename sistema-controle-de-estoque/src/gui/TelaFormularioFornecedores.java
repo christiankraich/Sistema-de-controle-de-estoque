@@ -24,7 +24,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
         for (Fornecedores fornec : lista) {
             dados.addRow(new Object[]{
                 fornec.getId(),
-                fornec.getNome(),
+                fornec.getRazaoSocial(),
                 fornec.getEmail(),
                 fornec.getCnpj(),
                 fornec.getTelefone(),
@@ -444,7 +444,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         // cadastra o fornecedor no banco de dados e limpa os campos de texto
         Fornecedores fornecedores = new Fornecedores();
-        fornecedores.setNome(txtNome.getText());
+        fornecedores.setRazaoSocial(txtNome.getText());
         fornecedores.setCnpj(txtCNPJ.getText());
         fornecedores.setEmail(txtEmail.getText());
         fornecedores.setTelefone(txtTelefone.getText());
@@ -469,7 +469,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
         // verifica se o fornecedor já está cadastrado no banco de dados e preenche os campos com as informações
         if (fornecedor.getCnpj() != null) {
             txtId.setText(String.valueOf(fornecedor.getId()));
-            txtNome.setText(fornecedor.getNome());
+            txtNome.setText(fornecedor.getRazaoSocial());
             txtCNPJ.setText(fornecedor.getCnpj());
             txtEmail.setText(fornecedor.getEmail());
             txtTelefone.setText(fornecedor.getTelefone());
@@ -505,7 +505,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
         for (Fornecedores fornec : lista) {
             dados.addRow(new Object[]{
                 fornec.getId(),
-                fornec.getNome(),
+                fornec.getRazaoSocial(),
                 fornec.getEmail(),
                 fornec.getCnpj(),
                 fornec.getTelefone(),
@@ -541,7 +541,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // atualiza os dados do fornecedor no banco de dados e limpa os campos
         Fornecedores fornecedores = new Fornecedores();
-        fornecedores.setNome(txtNome.getText());
+        fornecedores.setRazaoSocial(txtNome.getText());
         fornecedores.setCnpj(txtCNPJ.getText());
         fornecedores.setEmail(txtEmail.getText());
         fornecedores.setTelefone(txtTelefone.getText());
@@ -579,7 +579,7 @@ public class TelaFormularioFornecedores extends javax.swing.JFrame {
             for (Fornecedores fornec : lista) {
                 dados.addRow(new Object[]{
                     fornec.getId(),
-                    fornec.getNome(),
+                    fornec.getRazaoSocial(),
                     fornec.getEmail(),
                     fornec.getCnpj(),
                     fornec.getTelefone(),

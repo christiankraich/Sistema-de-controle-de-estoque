@@ -1,20 +1,19 @@
 package model;
 
-// essa classe herda os atributos e métodos da classe Clientes
-public class Funcionarios extends Clientes {
+public class Funcionarios extends PessoaFisica {
     
     // atributos encapsulados da entidade Funcionarios
-    private Cargos cargos;    
+    private Cargos cargo;    
     private String senha;
     private NivelAcesso nivelAcesso;
-
-    // metodos especiais (getters e setters    
-    public Cargos getCargos() {
-        return cargos;
+    
+    // metodos especiais (getters e setters        
+    public Cargos getCargo() {
+        return cargo;
     }
     
-    public void setCargos(Cargos cargos) {
-        this.cargos = cargos;
+    public void setCargo(Cargos cargo) {
+        this.cargo = cargo;
     }
 
     public String getSenha() {

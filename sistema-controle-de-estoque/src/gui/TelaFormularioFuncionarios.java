@@ -31,7 +31,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         for (Funcionarios func : lista) {
             dados.addRow(new Object[]{
                 func.getId(),
-                func.getCargos().getNome(),
+                func.getCargo().getNome(),
                 func.getNome(),
                 func.getDataNascimento(),
                 func.getEmail(),
@@ -569,7 +569,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
             return;
         }
         Cargos cargo = (Cargos) cbCargos.getSelectedItem();
-        funcionario.setCargos(cargo);
+        funcionario.setCargo(cargo);
 
         Funcionarios.NivelAcesso nivelAcessoSelecionado = (Funcionarios.NivelAcesso) cbNivelAcesso.getSelectedItem();
         funcionario.setNivelAcesso(nivelAcessoSelecionado);
@@ -601,7 +601,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
             cbUF.setSelectedItem(funcionario.getEstado());
             txtSenha.setText(funcionario.getSenha());
             // percorre os itens do comboBox para selecionar o cargo com id correspondente ao do funcionário
-            Cargos cargoSelecionado = funcionario.getCargos();
+            Cargos cargoSelecionado = funcionario.getCargo();
             for (int i = 0, numeroCargos = cbCargos.getItemCount(); i < numeroCargos; i++) {
                 Cargos cargo = (Cargos) cbCargos.getItemAt(i);
                 if (cargo.getId() == cargoSelecionado.getId()) {
@@ -636,7 +636,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         for (Funcionarios func : lista) {
             dados.addRow(new Object[]{
                 func.getId(),
-                func.getCargos().getNome(),
+                func.getCargo().getNome(),
                 func.getNome(),
                 func.getDataNascimento(),
                 func.getEmail(),
@@ -745,7 +745,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
             return;
         }
         Cargos cargo = (Cargos) cbCargos.getSelectedItem();
-        funcionario.setCargos(cargo);
+        funcionario.setCargo(cargo);
         
         funcionario.setNivelAcesso((Funcionarios.NivelAcesso) cbNivelAcesso.getSelectedItem());
         funcionario.setId(Integer.parseInt(txtId.getText()));
@@ -789,7 +789,7 @@ public class TelaFormularioFuncionarios extends javax.swing.JFrame {
         for (Funcionarios func : lista) {
             dados.addRow(new Object[]{
                 func.getId(),
-                func.getCargos().getNome(),
+                func.getCargo().getNome(),
                 func.getNome(),
                 func.getDataNascimento(),
                 func.getEmail(),

@@ -27,7 +27,7 @@ public class PedidosDAO {
         // prepara a declaração sql
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             // atribui os valores do pedido para cada parâmetro do sql
-            stmt.setInt(1, pedido.getFornecedores().getId());
+            stmt.setInt(1, pedido.getFornecedor().getId());
             stmt.setObject(2, pedido.getData());
             stmt.setDouble(3, pedido.getValorTotal());
             stmt.setString(4, pedido.getStatus().name());
@@ -54,8 +54,8 @@ public class PedidosDAO {
                 pedido.setId(rs.getInt("id"));
                 
                 Fornecedores fornecedor = new Fornecedores();
-                fornecedor.setNome(rs.getString("nome_fornecedor"));
-                pedido.setFornecedores(fornecedor);
+                fornecedor.setRazaoSocial(rs.getString("nome_fornecedor"));
+                pedido.setFornecedor(fornecedor);
                 
                 pedido.setData(rs.getTimestamp("data"));
                 pedido.setValorTotal(rs.getDouble("valor_total"));
@@ -75,7 +75,7 @@ public class PedidosDAO {
         String sql = "select p.*, f.nome as nome_fornecedor from pedidos p "
                 + "inner join fornecedores f on p.id_fornecedor = f.id where p.status = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, Pedidos.Status.CONCLUÍDO.name());
+            stmt.setString(1, Pedidos.Status.CONCLUIDO.name());
             ResultSet rs = stmt.executeQuery();
             
             while (rs.next()) {
@@ -83,8 +83,8 @@ public class PedidosDAO {
                 pedido.setId(rs.getInt("id"));
                 
                 Fornecedores fornecedor = new Fornecedores();
-                fornecedor.setNome(rs.getString("nome_fornecedor"));
-                pedido.setFornecedores(fornecedor);
+                fornecedor.setRazaoSocial(rs.getString("nome_fornecedor"));
+                pedido.setFornecedor(fornecedor);
                 
                 pedido.setData(rs.getTimestamp("data"));
                 pedido.setValorTotal(rs.getDouble("valor_total"));
@@ -114,7 +114,7 @@ public class PedidosDAO {
                 int idFornecedor = rs.getInt("id_fornecedor");
                 FornecedoresDAO fornecedoresDao = new FornecedoresDAO(conn);
                 Fornecedores fornecedor = fornecedoresDao.buscarIdFornecedor(idFornecedor);
-                pedido.setFornecedores(fornecedor);
+                pedido.setFornecedor(fornecedor);
                 
                 pedido.setData(rs.getDate("data"));
                 
